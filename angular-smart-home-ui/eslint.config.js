@@ -1,19 +1,3 @@
-// import eslintPluginUnicorn from 'eslint-plugin-unicorn';
-// import unicorn from 'eslint-plugin-unicorn';
-
-// export default [
-//   {
-//     files: ['**/*.ts'],
-//     plugins: {
-//       unicorn,
-//     },
-//     rules: {
-//       ...unicorn.configs.recommended.rules,
-//       'unicorn/prefer-top-level-await': 'off',
-//     },
-//   },
-// ];
-
 // eslint.config.js
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
@@ -46,6 +30,7 @@ export default [
     },
 
     rules: {
+      '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-unused-vars': 'warn',
       ...unicorn.configs.recommended.rules,
       // Angular naming
