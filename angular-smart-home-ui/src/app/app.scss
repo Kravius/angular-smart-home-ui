@@ -1,0 +1,25 @@
+:host {
+  overflow: hidden;
+  box-sizing: border-box;
+
+  .main-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    border: var(--main-border);
+    background-color: var(--background-color);
+    padding: var(--padding-full);
+
+  }
+
+  .main-container__sidebar {
+    // max-width: 30%;
+    height: 100%;
+  }
+
+  .main-container__content {
+    border: var(--main-border);
+    width: 100%;
+    // border-radius: 20px;
+  }
+}

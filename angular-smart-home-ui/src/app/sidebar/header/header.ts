@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './header.scss',
 })
 export class Header {
-
+  // isMobile = input.required();
 }

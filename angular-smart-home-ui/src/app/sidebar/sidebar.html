@@ -1,1 +1,12 @@
-<p>sidebar works!</p>
+<mat-drawer-container class="container">
+  <div class="sidenav-content">
+    @if (isMobile()) {
+    <button type="button" matButton (click)="drawer.toggle()">Smart Home Ui</button>
+    }
+  </div>
+  <mat-drawer #drawer class="sidenav" mode="side" [opened]="!isMobile()" [position]="'end'">
+    <app-header></app-header>
+    <app-menu></app-menu>
+    <app-footer></app-footer>
+  </mat-drawer>
+</mat-drawer-container>

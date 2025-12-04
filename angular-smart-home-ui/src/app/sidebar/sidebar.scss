@@ -1,0 +1,27 @@
+:host {
+
+  .container {
+    width: 100%;
+    height: 100%;
+    border: var(--main-border);
+    // border-radius: 17px;
+  }
+
+  // mat-drawer-container container mat-drawer-transition
+  .sidenav-content {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+  }
+
+  .sidenav {
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    // padding: 20px;
+    // border-radius: 20px;
+    // height: 100%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}

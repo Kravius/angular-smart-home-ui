@@ -1,0 +1,23 @@
+:host {
+
+  .header {
+    border: 1px solid rgb(56, 52, 52);
+    display: flex;
+    align-items: center;
+    height: var(--bar-heigh);
+  }
+
+  .header-link {
+    padding: var(--padding-full);
+    width: 100%;
+    color: var(--color-link);
+    font-size: var(--first-font-size);
+    transition: var(--transition);
+
+    &:hover {
+      color: var(--color-link-hover);
+      box-shadow: var(--color-link-shadow);
+      background-color: var(--color-link-focus);
+    }
+  }
+}
