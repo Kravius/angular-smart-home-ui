@@ -6,6 +6,7 @@
     gap: 1.5rem;
     height: calc(100% - var(--bar-heigh)*2);
     border: var(--main-border);
+    border-right: 0;
     padding: var(--padding-full);
   }
 
@@ -17,6 +18,7 @@
     transition: var(--transition);
     color: var(--color-link);
     font-size: var(--first-font-size);
+    padding: var(--padding-full);
 
     &:hover {
       color: var(--color-link-hover);
@@ -27,12 +29,6 @@
     &:focus {
       background-color: var(--color-link-focus);
       color: var(--color-link-hover);
-    }
-
-    a {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
     }
   }
 }
