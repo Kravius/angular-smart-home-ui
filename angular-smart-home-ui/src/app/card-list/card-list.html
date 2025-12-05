@@ -1,1 +1,8 @@
-<p>card-list works!</p>
+<p>card-list works</p>
+<!-- <div class="cards-container">
+  @for (car of data().cards; track $index) {
+  <app-card [entityCard]="car"></app-card>
+  }
+</div> -->
+<!-- ready for loop of room -->
+<app-card [entityCard]="data().cards[0]"></app-card>

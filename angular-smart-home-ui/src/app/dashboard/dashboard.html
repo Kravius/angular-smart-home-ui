@@ -1,5 +1,7 @@
 <mat-tab-group>
-  <mat-tab label="First"><div class="content">First</div></mat-tab>
-  <mat-tab label="Second"><div class="content">Second</div></mat-tab>
-  <mat-tab label="Third"><div class="content">Third</div> </mat-tab>
+  @for (tab of data().tabs; track $index) {
+  <mat-tab [label]="tab.title"
+    ><div class="content"><app-card-list [data]="tab" /></div
+  ></mat-tab>
+  }
 </mat-tab-group>

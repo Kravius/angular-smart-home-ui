@@ -25,13 +25,13 @@ export interface DeviceItem extends BaseItem {
 // Union type for items
 export type Item = SensorItem | DeviceItem;
 
-// --- Card ---
-export type CardLayout = 'horizontalLayout' | 'verticalLayout' | 'singleDevice';
+// --- ICard ---
+export type ICardLayout = 'horizontalLayout' | 'verticalLayout' | 'singleDevice';
 
-export interface Card {
+export interface ICard {
   id: string;
   title: string;
-  layout: CardLayout;
+  layout: ICardLayout;
   items: Item[];
 }
 
@@ -39,7 +39,7 @@ export interface Card {
 export interface Tab {
   id: string;
   title: string;
-  cards: Card[];
+  cards:  ICard[];
 }
 
 // --- Root Object ---
