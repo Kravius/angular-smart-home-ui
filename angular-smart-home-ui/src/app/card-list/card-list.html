@@ -1,8 +1,7 @@
-<p>card-list works</p>
-<div class="cards-container">
+<ul class="cards-container">
   @for (car of data().cards; track $index) {
-  <app-card [entityCard]="car" (onCardChange)="onCardChange.emit($event)"></app-card>
+  <li class="cards-container__item">
+    <app-card [entityCard]="car" (onCardChange)="onCardChange.emit($event)"></app-card>
+  </li>
   }
-</div>
-<!-- ready for loop of room -->
-<!-- <app-card [entityCard]="data().cards[0]"></app-card> -->
+</ul>

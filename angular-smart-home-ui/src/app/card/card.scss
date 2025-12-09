@@ -1,6 +1,11 @@
 :host {
 
-  .example-card {}
+  .example-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--padding-items);
+  }
 
   .horizontal-layout {
     display: flex;

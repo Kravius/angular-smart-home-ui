@@ -1,4 +1,12 @@
-import { Component, input, ChangeDetectionStrategy, signal, effect, output } from '@angular/core';
+import {
+  Component,
+  input,
+  ChangeDetectionStrategy,
+  signal,
+  effect,
+  output,
+  computed,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ICard, Item, layoutDirection } from '../models/models';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,7 +35,11 @@ import { Device } from '../device/device';
 export class Card {
   public readonly entityCard = input.required<ICard>();
   protected readonly directionLayout = signal<layoutDirection>('horizontal-layout');
+
   public readonly onCardChange = output<ICard>();
+
+  protected readonly isTitleSwitcher = computed(this.calcTest.bind(this));
+  protected readonly ifAtLeastOneDeviceIsOn = computed(this.ifAllDevicesActive.bind(this));
 
   constructor() {
     effect(() => {
@@ -50,6 +62,21 @@ export class Card {
       }
     });
   }
+
+  protected calcTest(): boolean {
+    return this.entityCard().items.filter((element) => element.type === 'device').length > 1;
+  }
+
+  protected ifAllDevicesActive(): boolean {
+    const result = this.entityCard().items.filter((item) => {
+      if (item.type === 'device') {
+        return !!item.state;
+      }
+      return;
+    }).length;
+    return !!result;
+  }
+
   protected onToggleState(item: Item) {
     const updatedCard = {
       ...this.entityCard(),
@@ -57,6 +84,16 @@ export class Card {
         index.label === item.label && index.type === 'device'
           ? { ...index, state: !index.state }
           : index
+      ),
+    };
+    this.onCardChange.emit(updatedCard);
+  }
+
+  protected onAllTogglesState(state: boolean) {
+    const updatedCard = {
+      ...this.entityCard(),
+      items: this.entityCard().items.map((index) =>
+        index.type === 'device' ? { ...index, state } : index
       ),
     };
     this.onCardChange.emit(updatedCard);
