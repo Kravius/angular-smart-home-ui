@@ -2,10 +2,11 @@ import { Component, input } from '@angular/core';
 import { DeviceItem, layoutDirection } from '../models/models';
 import { MatIcon } from '@angular/material/icon';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
+import { Highlighting } from '../common/directives/highlighting';
 
 @Component({
   selector: 'app-device',
-  imports: [MatIcon, MatSlideToggle],
+  imports: [MatIcon, MatSlideToggle, Highlighting],
   templateUrl: './device.html',
   styleUrl: './device.scss',
 })

@@ -16,6 +16,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { Sensor } from '../sensor/sensor';
 import { Device } from '../device/device';
+import { Highlighting } from '../common/directives/highlighting';
 
 @Component({
   selector: 'app-card',
@@ -27,6 +28,7 @@ import { Device } from '../device/device';
     MatSlideToggleModule,
     Sensor,
     Device,
+    Highlighting
   ],
   templateUrl: './card.html',
   styleUrl: './card.scss',

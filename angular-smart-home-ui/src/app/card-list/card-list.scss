@@ -2,8 +2,6 @@
 
   .cards-container {
     display: flex;
-    // flex-direction: column;
-    // justify-content: center;
     gap: var(--padding-items);
     flex-wrap: wrap;
   }

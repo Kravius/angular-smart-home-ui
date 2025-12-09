@@ -16,7 +16,6 @@
     .examp-card__item {
       display: flex;
       flex-direction: row;
-      background-color: yellow;
     }
   }
 
@@ -24,18 +23,17 @@
     display: flex;
     flex-direction: column;
 
-    // background-color: rgb(24, 185, 48);
-
-    .examp-card__item {}
   }
 
   .single-device {
     display: flex;
     flex-direction: column;
 
-
-    // background-color: rgb(168, 27, 194);
-
-    .examp-card__item {}
   }
+
+  .active-light {
+    background-color: rgb(179, 236, 188);
+
+  }
+
 }
