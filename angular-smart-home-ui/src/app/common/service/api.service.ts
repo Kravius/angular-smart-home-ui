@@ -10,6 +10,8 @@ import { URLS } from '../consts/urls';
 export class ApiService {
   readonly #http = inject(HttpClient);
 
+  
+
   public getDashboardData(): Observable<DashboardData> {
     return this.#http.get<DashboardData>(URLS.mockData);
   }

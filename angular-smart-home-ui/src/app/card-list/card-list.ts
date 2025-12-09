@@ -1,6 +1,6 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Card } from '../card/card';
-import { Tab } from '../models/models';
+import { ICard, Tab } from '../models/models';
 
 @Component({
   selector: 'app-card-list',
@@ -10,4 +10,6 @@ import { Tab } from '../models/models';
 })
 export class CardList {
   public readonly data = input.required<Tab>();
+
+  public readonly onCardChange = output<ICard>();
 }

@@ -1,28 +1,33 @@
-<div>{{ entityCard().id }}</div>
-
-<!-- @for (cardItem of entityCard().items; track $index) {
-} -->
-
-<mat-card class="example-card" [ngClass]="directionLayout()" appearance="outlined">
+<mat-card class="example-card" appearance="outlined">
   <mat-card-header>
-    <!-- <div mat-card-avatar class="example-header-image"></div> -->
-    <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
     <mat-card-title>{{ entityCard().title }}</mat-card-title>
   </mat-card-header>
-  @for (item of entityCard().items; track $index) {
-  <mat-card-content>
-    <p>{{ item.label }}</p>
-    <mat-icon
-      aria-hidden="false"
-      aria-label="Example home icon"
-      [fontIcon]="item?.icon ?? ''"
-    ></mat-icon>
-    @if (item.type === 'sensor') {
-    <p>{{ `${item.value.amount}${item.value.unit}`}}</p>
-    <!-- <button matButton>LIKE</button> -->
-    }
-    <mat-card-actions> </mat-card-actions>
+  <mat-card-content [ngClass]="directionLayout()">
+    <ul>
+      @for (item of entityCard().items; track $index) {
+      <li class="examp-card__item">
+        <div class="item-lable">
+          <p>{{ item.label }}</p>
+        </div>
+        <div class="item-icon">
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example home icon"
+            [fontIcon]="item?.icon ?? ''"
+          ></mat-icon>
+        </div>
+        <div class="item-value">
+          @if (item.type === 'sensor') {
+          <p>{{ item.value | sensorValue }}</p>
+          } @else if (item.type === "device") {
+          <mat-slide-toggle
+            [checked]="item.state"
+            (change)="onToggleState(item)"
+          ></mat-slide-toggle>
+          }
+        </div>
+      </li>
+      }
+    </ul>
   </mat-card-content>
-
-  }
 </mat-card>
