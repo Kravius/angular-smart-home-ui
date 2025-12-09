@@ -2,31 +2,19 @@
   <mat-card-header>
     <mat-card-title>{{ entityCard().title }}</mat-card-title>
   </mat-card-header>
-  <mat-card-content [ngClass]="directionLayout()">
-    <ul>
+  <mat-card-content>
+    <ul [ngClass]="directionLayout()">
       @for (item of entityCard().items; track $index) {
-      <li class="examp-card__item">
-        <div class="item-lable">
-          <p>{{ item.label }}</p>
-        </div>
-        <div class="item-icon">
-          <mat-icon
-            aria-hidden="false"
-            aria-label="Example home icon"
-            [fontIcon]="item?.icon ?? ''"
-          ></mat-icon>
-        </div>
-        <div class="item-value">
-          @if (item.type === 'sensor') {
-          <p>{{ item.value | sensorValue }}</p>
-          } @else if (item.type === "device") {
-          <mat-slide-toggle
-            [checked]="item.state"
-            (change)="onToggleState(item)"
-          ></mat-slide-toggle>
-          }
-        </div>
-      </li>
+      <!-- <li class="examp-card__item"> -->
+      @if (item.type === 'sensor') {
+      <app-sensor [entity]="item" [layout]="directionLayout()"></app-sensor>
+      }@else if(item.type === "device"){
+      <app-device [entity]="item" [layout]="directionLayout()">
+        <mat-slide-toggle [checked]="item.state" (change)="onToggleState(item)"></mat-slide-toggle
+      ></app-device>
+      }
+      <!-- </li> -->
+
       }
     </ul>
   </mat-card-content>

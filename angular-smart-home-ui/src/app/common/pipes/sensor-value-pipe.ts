@@ -6,6 +6,6 @@ import { SensorValue } from '../../models/models';
 })
 export class SensorValuePipe implements PipeTransform {
   transform(value: SensorValue): string {
-    return `${value.amount}${value.unit}`;
+    return `${value.amount} ${value.unit}`;
   }
 }

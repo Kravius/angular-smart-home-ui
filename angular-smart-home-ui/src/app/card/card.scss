@@ -1,16 +1,36 @@
-.example-card {}
+:host {
 
-.horizontal-layout {
-  display: flex;
-  flex-direction: row;
-}
+  .example-card {}
 
-.vertical-layout {
-  display: flex;
-  flex-direction: column;
-}
+  .horizontal-layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
-.single-device {
-  display: flex;
-  flex-direction: column;
+
+    .examp-card__item {
+      display: flex;
+      flex-direction: row;
+      background-color: yellow;
+    }
+  }
+
+  .vertical-layout {
+    display: flex;
+    flex-direction: column;
+
+    // background-color: rgb(24, 185, 48);
+
+    .examp-card__item {}
+  }
+
+  .single-device {
+    display: flex;
+    flex-direction: column;
+
+
+    // background-color: rgb(168, 27, 194);
+
+    .examp-card__item {}
+  }
 }

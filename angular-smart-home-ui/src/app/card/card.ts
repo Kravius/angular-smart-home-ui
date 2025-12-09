@@ -1,22 +1,13 @@
-import {
-  Component,
-  input,
-  ChangeDetectionStrategy,
-  signal,
-  OnInit,
-  effect,
-  computed,
-  runInInjectionContext,
-  output,
-} from '@angular/core';
+import { Component, input, ChangeDetectionStrategy, signal, effect, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { ICard, ICardLayout, Item } from '../models/models';
+import { ICard, Item, layoutDirection } from '../models/models';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { NgClass } from '@angular/common';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { SensorValuePipe } from '../common/pipes/sensor-value-pipe';
-type direction = 'horizontal-layout' | 'single-device' | 'vertical-layout';
+
+import { Sensor } from '../sensor/sensor';
+import { Device } from '../device/device';
 
 @Component({
   selector: 'app-card',
@@ -26,7 +17,8 @@ type direction = 'horizontal-layout' | 'single-device' | 'vertical-layout';
     MatIconModule,
     NgClass,
     MatSlideToggleModule,
-    SensorValuePipe,
+    Sensor,
+    Device,
   ],
   templateUrl: './card.html',
   styleUrl: './card.scss',
@@ -34,7 +26,7 @@ type direction = 'horizontal-layout' | 'single-device' | 'vertical-layout';
 })
 export class Card {
   public readonly entityCard = input.required<ICard>();
-  protected readonly directionLayout = signal<direction>('horizontal-layout');
+  protected readonly directionLayout = signal<layoutDirection>('horizontal-layout');
   public readonly onCardChange = output<ICard>();
 
   constructor() {
@@ -52,9 +44,9 @@ export class Card {
           this.directionLayout.set('vertical-layout');
           break;
         }
-        // default: {
-        //   this.directionLayout.set('horizontal-layout');
-        // }
+        default: {
+          this.directionLayout.set('horizontal-layout');
+        }
       }
     });
   }

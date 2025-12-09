@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { MatSlideToggle } from "@angular/material/slide-toggle";
 
 @Component({
   selector: 'app-tab-switcher',
-  imports: [],
+  imports: [MatSlideToggle],
   templateUrl: './tab-switcher.html',
   styleUrl: './tab-switcher.scss',
 })

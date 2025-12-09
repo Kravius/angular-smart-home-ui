@@ -39,10 +39,11 @@ export interface ICard {
 export interface Tab {
   id: string;
   title: string;
-  cards:  ICard[];
+  cards: ICard[];
 }
 
 // --- Root Object ---
 export interface DashboardData {
   tabs: Tab[];
 }
+export type layoutDirection = 'horizontal-layout' | 'single-device' | 'vertical-layout';
