@@ -1,0 +1,26 @@
+<mat-drawer-container class="container">
+  @if(!drawer.opened) {
+  <button class="open-action--opened" type="button" matMiniFab (click)="drawer.toggle()">
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="menu"></mat-icon>
+  </button>
+  }
+
+  <mat-drawer #drawer class="sidenav" mode="side" [opened]="!isMobile()" [position]="'end'">
+    <app-header>
+      @if(drawer.opened){<button
+        class="open-action"
+        type="button"
+        matMiniFab
+        (click)="drawer.toggle()"
+      >
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="menu"
+        ></mat-icon></button
+      >}</app-header
+    >
+    <app-menu></app-menu>
+    <app-footer></app-footer>
+  </mat-drawer>
+</mat-drawer-container>
