@@ -2,7 +2,6 @@ import { Directive, HostBinding, input } from '@angular/core';
 
 @Directive({
   selector: '[appHighlighting]',
-  standalone: true,
 })
 export class Highlighting {
   isActive = input<boolean>();
