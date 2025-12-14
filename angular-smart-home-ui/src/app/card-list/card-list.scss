@@ -4,9 +4,16 @@
     display: flex;
     gap: var(--padding-items);
     flex-wrap: wrap;
+
   }
 
   .cards-container__item {
     min-width: 300px;
+
+    @media (max-width: 767px) {
+      min-width: 270px;
+    }
   }
+
+
 }
