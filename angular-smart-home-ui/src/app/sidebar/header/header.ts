@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
-export class Header {
-  // isMobile = input.required();
-}
+export class Header {}

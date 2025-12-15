@@ -8,14 +8,12 @@ import globals from 'globals';
 export default [
   {
     files: ['**/*.ts'],
-    // ignores: ['**/*.html'],
 
     languageOptions: {
       parser: tsParser,
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
-        // project: './tsconfig.json',
         tsconfigRootDir: process.cwd(),
       },
       globals: {
@@ -33,7 +31,6 @@ export default [
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-unused-vars': 'warn',
       ...unicorn.configs.recommended.rules,
-      // Angular naming
       '@angular-eslint/component-selector': [
         'error',
         { type: 'element', prefix: 'app', style: 'kebab-case' },
@@ -42,8 +39,6 @@ export default [
         'error',
         { type: 'attribute', prefix: 'app', style: 'camelCase' },
       ],
-
-      // Disable this unicorn rule because Angular main.ts uses promises
       'unicorn/prefer-top-level-await': 'off',
     },
   },

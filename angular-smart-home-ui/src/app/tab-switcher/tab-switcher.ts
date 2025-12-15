@@ -34,6 +34,5 @@ export class TabSwitcher {
           : tab
       ),
     }));
-    console.log(this.data());
   }
 }

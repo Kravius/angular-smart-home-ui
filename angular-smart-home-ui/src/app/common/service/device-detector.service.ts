@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { signal, Signal } from '@angular/core';
-// TODO: почитать что это inject, Injectable   providers в компонентах
+
 @Injectable({
   providedIn: 'root',
 })
