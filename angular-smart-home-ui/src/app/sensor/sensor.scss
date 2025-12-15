@@ -1,0 +1,57 @@
+:host {
+
+
+  .horizontal-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: var(--padding-items);
+  }
+
+  .vertical-layout {
+    display: flex;
+    align-items: center;
+    padding: var(--padding-items);
+
+    .item-icon {
+      order: 0;
+      margin-right: var(--padding-items);
+    }
+
+    .item-lable {
+      order: 1;
+    }
+
+    .item-value {
+      display: flex;
+      justify-content: end;
+      flex: 1;
+      order: 2;
+    }
+  }
+
+  .single-device {
+    display: flex;
+    align-items: center;
+    padding: var(--padding-items);
+
+    .item-icon {
+      order: 0;
+      margin-right: var(--padding-items);
+    }
+
+    .item-lable {
+      order: 1;
+    }
+
+    .item-value {
+      display: flex;
+      justify-content: end;
+      flex: 1;
+      order: 2;
+    }
+  }
+
+}
