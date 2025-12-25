@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DashboardData } from '../../models/models';
 import { URLS } from '@consts/urls';
-import { LoginRequest, LoginResponse } from '../../models/api-models';
+import { LoginRequest, LoginResponse, UserProfile } from '../../models/api-models';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,10 @@ export class ApiService {
     return this.#http.post<LoginResponse>(`${URLS.baseUrl}${URLS.user.login}`, payload);
   }
 
-  checkToken() {}
+  checkToken() {
+    return this.#http.get<UserProfile>(`http://localhost:3004/api/user/profile`);
+    return this.#http.get<UserProfile>(`${URLS.baseUrl}${URLS.user.profile}`);
+  }
 
   public getDashboardData(): Observable<DashboardData> {
     return this.#http.get<DashboardData>(URLS.mockData);
@@ -27,5 +30,6 @@ export class ApiService {
 // "password": "ea",
 // "fullName": "Ines Lowe",
 // "initials": "IL",
+// "token": "58ebfdf7f1f558c5c86e17f6"
 // "token": "58ebfdf7f1f558c5c86e17f6"
 // },
