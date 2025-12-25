@@ -15,7 +15,8 @@ export class AuthService {
 
   readonly token = signal<LoginResponse['token']>('');
 
-  isLoggedIn = computed(() => !!this.token);
+  isLoggedIn = computed(() => !!this.token());
+  // isLoggedIn = computed(() => false);
 
   constructor() {
     const localStorageToken = localStorage.getItem('token');
@@ -30,6 +31,7 @@ export class AuthService {
 
       this.#apiService.login(payload).subscribe({
         next: (res) => {
+          console.log(res.token);
           this.token.set(res.token);
           localStorage.setItem('token', JSON.stringify(res.token));
         },

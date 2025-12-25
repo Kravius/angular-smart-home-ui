@@ -9,7 +9,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Sensor } from '../sensor/sensor';
 import { Device } from '../device/device';
 import { Highlighting } from '../common/directives/highlighting';
-import { resolveLayoutClass } from '../common/service/utilities';
+import { resolveLayoutClass } from '../common/service/utilites';
 
 @Component({
   selector: 'app-card',
