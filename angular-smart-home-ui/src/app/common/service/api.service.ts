@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DashboardData } from '../../models/models';
-import { URLS } from '../consts/urls';
+import { URLS } from '@consts/urls';
 import { LoginRequest, LoginResponse } from '../../models/api-models';
 
 @Injectable({
@@ -15,13 +15,11 @@ export class ApiService {
     return this.#http.post<LoginResponse>(`${URLS.baseUrl}${URLS.user.login}`, payload);
   }
 
-  checkToken(){}
+  checkToken() {}
 
   public getDashboardData(): Observable<DashboardData> {
     return this.#http.get<DashboardData>(URLS.mockData);
   }
-
-
 }
 
 // {

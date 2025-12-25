@@ -1,14 +1,6 @@
-import {
-  Component,
-  input,
-  ChangeDetectionStrategy,
-  signal,
-  effect,
-  output,
-  computed,
-} from '@angular/core';
+import { Component, input, ChangeDetectionStrategy, output, computed } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { ICard, Item, layoutDirection } from '../models/models';
+import { ICard, Item } from '../models/models';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { NgClass } from '@angular/common';
@@ -37,10 +29,7 @@ import { resolveLayoutClass } from '../common/service/utilities';
 })
 export class Card {
   public readonly entityCard = input.required<ICard>();
-  protected readonly directionLayout = computed(
-    // eslint-disable-next-line unicorn/consistent-function-scoping
-    () => resolveLayoutClass(this.entityCard().layout)
-  );
+  protected readonly directionLayout = computed(() => resolveLayoutClass(this.entityCard().layout));
 
   public readonly onCardChange = output<ICard>();
 

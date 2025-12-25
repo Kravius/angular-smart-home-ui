@@ -1,14 +1,25 @@
-<div class="example-container">
+<div class="login-container">
+  <h1>Welcome To Smart Home</h1>
   <mat-form-field floatLabel="always">
-    <mat-label>Amount</mat-label>
-    <input matInput type="number" class="example-right-align" placeholder="0" />
-    <span matTextPrefix>$&nbsp;</span>
-    <span matTextSuffix>.00</span>
+    <mat-label>user</mat-label>
+    <input
+      [ngModel]="userName()"
+      (ngModelChange)="userName.set($event)"
+      matInput
+      [ngClass]="['value--login-name', 'login-inputs']"
+      placeholder="Enter your name"
+    />
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Enter your password</mat-label>
-    <input matInput [type]="hide() ? 'password' : 'text'" />
+    <input
+      [ngModel]="password()"
+      (ngModelChange)="password.set($event)"
+      [ngClass]="['value--login-password', 'login-inputs']"
+      matInput
+      [type]="hide() ? 'password' : 'text'"
+    />
     <button
       matIconButton
       matSuffix
@@ -19,4 +30,5 @@
       <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
     </button>
   </mat-form-field>
+  <button class="login-button" (click)="loginInPage()">Login</button>
 </div>
