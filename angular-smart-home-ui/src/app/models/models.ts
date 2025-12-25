@@ -4,6 +4,12 @@ export interface BaseItem {
   label: string;
 }
 
+export interface DashboardListItem {
+  id: string;
+  title: string;
+  icon: string;
+}
+
 export interface SensorValue {
   amount: number;
   unit: string;

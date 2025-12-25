@@ -7,7 +7,7 @@ export class Highlighting {
   isActive = input<boolean>();
 
   @HostBinding('class.active-light')
-  get glowClass() {
+  get glowClass() { 
     return !!this.isActive();
   }
 }

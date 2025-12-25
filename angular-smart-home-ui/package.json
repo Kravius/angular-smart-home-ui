@@ -12,6 +12,7 @@
   },
   "type": "module",
   "prettier": {
+    "tabWidth": 2,
     "printWidth": 100,
     "singleQuote": true,
     "overrides": [
