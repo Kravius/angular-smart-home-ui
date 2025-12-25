@@ -17,6 +17,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Sensor } from '../sensor/sensor';
 import { Device } from '../device/device';
 import { Highlighting } from '../common/directives/highlighting';
+import { resolveLayoutClass } from '../common/service/utilities';
 
 @Component({
   selector: 'app-card',
@@ -28,7 +29,7 @@ import { Highlighting } from '../common/directives/highlighting';
     MatSlideToggleModule,
     Sensor,
     Device,
-    Highlighting
+    Highlighting,
   ],
   templateUrl: './card.html',
   styleUrl: './card.scss',
@@ -36,40 +37,21 @@ import { Highlighting } from '../common/directives/highlighting';
 })
 export class Card {
   public readonly entityCard = input.required<ICard>();
-  protected readonly directionLayout = signal<layoutDirection>('horizontal-layout');
+  protected readonly directionLayout = computed(
+    // eslint-disable-next-line unicorn/consistent-function-scoping
+    () => resolveLayoutClass(this.entityCard().layout)
+  );
 
   public readonly onCardChange = output<ICard>();
 
-  protected readonly isTitleSwitcher = computed(this.calcTest.bind(this));
-  protected readonly ifAtLeastOneDeviceIsOn = computed(this.ifAllDevicesActive.bind(this));
+  protected readonly isTitleSwitcher = computed(this.calcActiveDevice.bind(this));
+  protected readonly isAtLeastOneDeviceIsOn = computed(this.isAllActiveDevices.bind(this));
 
-  constructor() {
-    effect(() => {
-      switch (this.entityCard().layout) {
-        case 'horizontalLayout': {
-          this.directionLayout.set('horizontal-layout');
-          break;
-        }
-        case 'singleDevice': {
-          this.directionLayout.set('single-device');
-          break;
-        }
-        case 'verticalLayout': {
-          this.directionLayout.set('vertical-layout');
-          break;
-        }
-        default: {
-          this.directionLayout.set('horizontal-layout');
-        }
-      }
-    });
-  }
-
-  protected calcTest(): boolean {
+  protected calcActiveDevice(): boolean {
     return this.entityCard().items.filter((element) => element.type === 'device').length > 1;
   }
 
-  protected ifAllDevicesActive(): boolean {
+  protected isAllActiveDevices(): boolean {
     const result = this.entityCard().items.filter((item) => {
       if (item.type === 'device') {
         return !!item.state;
@@ -99,5 +81,12 @@ export class Card {
       ),
     };
     this.onCardChange.emit(updatedCard);
+  }
+
+  isDevice(item: Item) {
+    return item.type === 'device';
+  }
+  isSensor(item: Item) {
+    return item.type === 'sensor';
   }
 }

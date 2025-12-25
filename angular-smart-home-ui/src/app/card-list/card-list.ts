@@ -10,6 +10,9 @@ import { ICard, Tab } from '../models/models';
 })
 export class CardList {
   public readonly data = input.required<Tab>();
+  public readonly cardChange = output<ICard>();
 
-  public readonly onCardChange = output<ICard>();
+  handleCardChange(card: ICard) {
+    this.cardChange.emit(card);
+  }
 }
