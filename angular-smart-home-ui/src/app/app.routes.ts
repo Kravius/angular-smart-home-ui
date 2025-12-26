@@ -23,4 +23,5 @@ export const routes: Routes = [
       },
     ],
   },
+  { path: '**', loadComponent: () => import('./layout/not-page/not-page').then((m) => m.NotPage) },
 ];
