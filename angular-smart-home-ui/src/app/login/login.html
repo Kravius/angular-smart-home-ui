@@ -1,34 +1,49 @@
-<div class="login-container">
-  <h1>Welcome To Smart Home</h1>
-  <mat-form-field floatLabel="always">
-    <mat-label>user</mat-label>
-    <input
-      [ngModel]="userName()"
-      (ngModelChange)="userName.set($event)"
-      matInput
-      [ngClass]="['value--login-name', 'login-inputs']"
-      placeholder="Enter your name"
-    />
-  </mat-form-field>
+<form class="from-container" [formGroup]="loginForm.userForm" (ngSubmit)="loginInPage()">
+  <div class="login-container">
+    <h1>Welcome To Smart Home</h1>
+    @if(this.authService.isError() === 401){
+    <mat-error>401 not right profile</mat-error>
+    }
+    <mat-form-field floatLabel="always">
+      <mat-label>user</mat-label>
+      <input
+        formControlName="username"
+        matInput
+        [ngClass]="['value--login-name', 'login-inputs']"
+        placeholder="Enter your name"
+      />
+      @if(loginForm.userForm.controls.username.hasError('required')){
+      <mat-error>Name is required</mat-error>
+      }
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Enter your password</mat-label>
-    <input
-      [ngModel]="password()"
-      (ngModelChange)="password.set($event)"
-      [ngClass]="['value--login-password', 'login-inputs']"
-      matInput
-      [type]="hide() ? 'password' : 'text'"
-    />
+    <mat-form-field>
+      <mat-label>Enter your password</mat-label>
+      <input
+        formControlName="password"
+        [ngClass]="['value--login-password', 'login-inputs']"
+        matInput
+        [type]="hide() ? 'password' : 'text'"
+      />
+      <button
+        matIconButton
+        matSuffix
+        (click)="clickEvent($event)"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide()"
+      >
+        <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      @if (loginForm.userForm.controls.password.hasError('required')) {
+      <mat-error>Password is required </mat-error>
+      }
+    </mat-form-field>
     <button
-      matIconButton
-      matSuffix
-      (click)="clickEvent($event)"
-      [attr.aria-label]="'Hide password'"
-      [attr.aria-pressed]="hide()"
+      type="submit"
+      [class.login-button]="!loginForm.userForm.invalid"
+      [disabled]="loginForm.userForm.invalid"
     >
-      <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+      Login
     </button>
-  </mat-form-field>
-  <button class="login-button" (click)="loginInPage()">Login</button>
-</div>
+  </div>
+</form>

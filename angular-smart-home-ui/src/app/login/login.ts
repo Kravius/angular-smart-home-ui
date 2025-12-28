@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, signal, effect } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  FormControl,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,6 +14,7 @@ import { AuthService } from '../common/service/auth.service';
 import { NgClass } from '@angular/common';
 
 import { Router } from '@angular/router';
+import { LoginForm } from 'app/common/service/login-form.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +25,7 @@ import { Router } from '@angular/router';
     MatIconModule,
     FormsModule,
     NgClass,
+    ReactiveFormsModule,
   ],
   templateUrl: './login.html',
   styleUrl: './login.scss',
@@ -26,11 +34,9 @@ import { Router } from '@angular/router';
 export class Login {
   authService = inject(AuthService);
   router = inject(Router);
-  userName = signal<string>('');
-  password = signal<string>('');
+  loginForm = inject(LoginForm);
 
   constructor() {
-    // посмотреть нужно ли тут ридерект
     effect(() => {
       if (this.authService.isLoggedIn()) this.router.navigateByUrl('/');
     });
@@ -43,6 +49,13 @@ export class Login {
   }
 
   loginInPage() {
-    this.authService.login({ userName: this.userName(), password: this.password() });
+    const user = this.loginForm.userForm.value.username;
+    const pas = this.loginForm.userForm.value.password;
+    if (user && pas) {
+      this.authService.login({
+        userName: user,
+        password: pas,
+      });
+    }
   }
 }

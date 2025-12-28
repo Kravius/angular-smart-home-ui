@@ -18,15 +18,14 @@ export class AuthService {
   readonly token = signal<LoginResponse['token']>('');
 
   isLoggedIn = computed(() => !!this.token());
+  isError = signal<number>(0);
   // isLoggedIn = computed(() => false);
 
   constructor() {
     const localStorageToken = localStorage.getItem('token');
     if (localStorageToken) {
       this.token.set(localStorageToken);
-      console.log(this.userProfile(), 'before localStorageToken userProfile');
       this.loadProfileApi();
-      console.log(this.userProfile(), 'after localStorageToken userProfile');
     }
 
     effect(() => {
@@ -35,13 +34,13 @@ export class AuthService {
 
       this.#apiService.login(payload).subscribe({
         next: (res) => {
-          console.log(res.token);
           localStorage.setItem('token', res.token);
           this.token.set(res.token);
           this.loadProfileApi();
         },
         error: (err) => {
           console.error('Ошибка проверки login:', err);
+          this.isError.set(err.status);
         },
       });
     });
@@ -55,12 +54,10 @@ export class AuthService {
     this.token.set('');
     this.userProfile.set({ fullName: '', initials: '' });
     localStorage.removeItem('token');
-    console.log(this.userProfile(), 'logout userProfile');
   }
 
   loadProfileApi() {
     if (this.userProfile().fullName && this.userProfile().initials) {
-      console.log(this.userProfile().fullName, 'fullName');
       return;
     }
     this.#apiService.checkToken().subscribe({
