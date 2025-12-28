@@ -17,4 +17,6 @@ export class Sidebar {
   readonly #breakPointService = inject(DeviceDetectorService);
 
   protected isMobile = this.#breakPointService.isMobile;
+
+
 }

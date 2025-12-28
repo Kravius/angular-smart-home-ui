@@ -2,14 +2,23 @@ import { Routes } from '@angular/router';
 import { isGuestGuard } from './layout/app-layout/is-guest-guard';
 import { isLoginGuard } from './layout/auth-layout/is-login-guard';
 import { AuthLayout } from './layout/auth-layout/auth-layout';
+import { menuResolver } from './sidebar/menu/menu-resolver';
+import { tabResolver } from './tab-switcher/tab-resolver';
 
 export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./layout/app-layout/app-layout').then((m) => m.AppLayout),
     canActivate: [isGuestGuard],
+    resolve: { dashboardListItem: menuResolver },
     children: [
       { path: '', loadComponent: () => import('./dashboard/dashboard').then((m) => m.Dashboard) },
+      {
+        path: 'dashboards/:dashboardId',
+        loadComponent: () => import('./tab-switcher/tab-switcher').then((m) => m.TabSwitcher),
+        resolve: { getDashboardData: tabResolver },
+        title: (route) => `${route.params['dashboardId']}`,
+      },
     ],
   },
   {

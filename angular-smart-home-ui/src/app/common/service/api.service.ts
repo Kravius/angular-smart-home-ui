@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DashboardData } from '../../models/models';
+import { DashboardData, DashboardListItem } from '../../models/models';
 import { URLS } from '@consts/urls';
 import { LoginRequest, LoginResponse, UserProfile } from '../../models/api-models';
 
@@ -16,14 +16,20 @@ export class ApiService {
   }
 
   checkToken() {
-    return this.#http.get<UserProfile>(`${URLS.baseUrl}${URLS.user.profile}`, {
-      headers: {
-      },
-    });
+    return this.#http.get<UserProfile>(`${URLS.baseUrl}${URLS.user.profile}`);
   }
 
-  public getDashboardData(): Observable<DashboardData> {
+  public getDashboardData21(): Observable<DashboardData> {
     return this.#http.get<DashboardData>(URLS.mockData);
+  }
+
+  getDashboardListItem(): Observable<DashboardListItem> {
+    return this.#http.get<DashboardListItem>(`${URLS.baseUrl}${URLS.dashboards}`);
+  }
+
+  getDashboardData(dashboardId: string): Observable<DashboardData> {
+    console.log(this.#http.get<DashboardData>(`${URLS.baseUrl}${URLS.dashboards}/${dashboardId}`));
+    return this.#http.get<DashboardData>(`${URLS.baseUrl}${URLS.dashboards}/${dashboardId}`);
   }
 }
 

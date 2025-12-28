@@ -18,7 +18,7 @@ export class AuthService {
   readonly token = signal<LoginResponse['token']>('');
 
   isLoggedIn = computed(() => !!this.token());
-  isError = signal<number>(0);
+  isError = signal<string>('');
   // isLoggedIn = computed(() => false);
 
   constructor() {
@@ -40,7 +40,7 @@ export class AuthService {
         },
         error: (err) => {
           console.error('Ошибка проверки login:', err);
-          this.isError.set(err.status);
+          this.isError.set(err.status.toString());
         },
       });
     });

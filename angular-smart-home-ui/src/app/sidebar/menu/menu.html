@@ -1,15 +1,10 @@
 <div class="sidebar-menu">
-  <a class="sidebar-menu__items" href="#"
-    ><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="search"></mat-icon
-    >Overview</a
+  @if (dashboardListItem()===null) {
+  <h1>You don’t have any dashboards yet. They’ll appear here as soon as you create them</h1>
+  } @for (item of dashboardListItem(); track item.id) {
+  <a [routerLink]="[`dashboards/${item.id}`]" class="sidebar-menu__items"
+    ><mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="item.icon"></mat-icon
+    >{{ item.title }}</a
   >
-  <a class="sidebar-menu__items" href="#"
-    ><mat-icon
-      class="sidebar-container__items"
-      aria-hidden="false"
-      aria-label="Example home icon"
-      fontIcon="info"
-    ></mat-icon
-    >About</a
-  >
+  }
 </div>

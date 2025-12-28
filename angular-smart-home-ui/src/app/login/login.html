@@ -1,8 +1,10 @@
 <form class="from-container" [formGroup]="loginForm.userForm" (ngSubmit)="loginInPage()">
   <div class="login-container">
     <h1>Welcome To Smart Home</h1>
-    @if(this.authService.isError() === 401){
-    <mat-error>401 not right profile</mat-error>
+    @if(this.authService.isError() === '401'){
+    <mat-error>Invalid login or password.</mat-error>
+    } @if(this.authService.isError()){
+    <mat-error>Unknown error occurred. Please try again later.</mat-error>
     }
     <mat-form-field floatLabel="always">
       <mat-label>user</mat-label>
