@@ -30,6 +30,7 @@ export class Login {
   password = signal<string>('');
 
   constructor() {
+    // посмотреть нужно ли тут ридерект
     effect(() => {
       if (this.authService.isLoggedIn()) this.router.navigateByUrl('/');
     });

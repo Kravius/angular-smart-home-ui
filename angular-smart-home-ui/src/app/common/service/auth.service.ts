@@ -36,29 +36,31 @@ export class AuthService {
       this.#apiService.login(payload).subscribe({
         next: (res) => {
           console.log(res.token);
+          localStorage.setItem('token', res.token);
           this.token.set(res.token);
-          localStorage.setItem('token', JSON.stringify(res.token));
+          this.loadProfileApi();
         },
-        error: console.error,
+        error: (err) => {
+          console.error('Ошибка проверки login:', err);
+        },
       });
     });
   }
 
   public login(payload: LoginRequest) {
-    console.log(payload);
     this.loginPayLoad.set(payload);
-    this.loadProfileApi();
   }
 
   logout() {
-    // this.token.set('');
-    // this.userProfile.set({ fullName: '', initials: '' });
-    // localStorage.removeItem('token');
+    this.token.set('');
+    this.userProfile.set({ fullName: '', initials: '' });
+    localStorage.removeItem('token');
     console.log(this.userProfile(), 'logout userProfile');
   }
 
   loadProfileApi() {
     if (this.userProfile().fullName && this.userProfile().initials) {
+      console.log(this.userProfile().fullName, 'fullName');
       return;
     }
     this.#apiService.checkToken().subscribe({

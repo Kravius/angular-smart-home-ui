@@ -16,8 +16,10 @@ export class ApiService {
   }
 
   checkToken() {
-    return this.#http.get<UserProfile>(`http://localhost:3004/api/user/profile`);
-    return this.#http.get<UserProfile>(`${URLS.baseUrl}${URLS.user.profile}`);
+    return this.#http.get<UserProfile>(`${URLS.baseUrl}${URLS.user.profile}`, {
+      headers: {
+      },
+    });
   }
 
   public getDashboardData(): Observable<DashboardData> {
