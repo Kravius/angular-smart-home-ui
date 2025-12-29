@@ -1,10 +1,13 @@
+@use 'mixin' as mix;
+
 :host {
 
   .footer {
     border: var(--main-border);
     display: flex;
+    flex-direction: column;
     align-items: center;
-    height: var(--bar-heigh);
+    // height: var(--bar-heigh);
   }
 
   .footer__link {
@@ -19,5 +22,41 @@
       box-shadow: var(--color-link-shadow);
       background-color: var(--color-link-focus);
     }
+  }
+
+  .user-container {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    font-size: var(--first-font-size);
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding-full);
+  }
+
+  .user-initial {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: var(--main-border);
+    border-radius: 50%;
+    padding: var(--padding-items);
+    cursor: pointer;
+    transition: var(--transition);
+
+    &:hover {
+      border-color: var(--color-link-hover);
+      background-color: var(--color-link-hover);
+
+    }
+  }
+
+  .user-logout {
+    transition: var(--transition);
+    font-size: var(--first-font-size);
+    padding: var(--padding-full);
+    color: var(--color-link);
+
+    @include mix.link-states;
   }
 }

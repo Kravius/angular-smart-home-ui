@@ -15,7 +15,7 @@ export class ApiService {
     return this.#http.post<LoginResponse>(`${URLS.baseUrl}${URLS.user.login}`, payload);
   }
 
-  checkToken() {
+  public checkToken() {
     return this.#http.get<UserProfile>(`${URLS.baseUrl}${URLS.user.profile}`);
   }
 
@@ -23,11 +23,11 @@ export class ApiService {
     return this.#http.get<DashboardData>(URLS.mockData);
   }
 
-  getDashboardListItem(): Observable<DashboardListItem> {
+  public getDashboardListItem(): Observable<DashboardListItem> {
     return this.#http.get<DashboardListItem>(`${URLS.baseUrl}${URLS.dashboards}`);
   }
 
-  getDashboardData(dashboardId: string): Observable<DashboardData> {
+  public getDashboardData(dashboardId: string): Observable<DashboardData> {
     console.log(this.#http.get<DashboardData>(`${URLS.baseUrl}${URLS.dashboards}/${dashboardId}`));
     return this.#http.get<DashboardData>(`${URLS.baseUrl}${URLS.dashboards}/${dashboardId}`);
   }

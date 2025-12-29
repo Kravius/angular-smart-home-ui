@@ -1,10 +1,34 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { SlicePipe } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
+import { ApiService } from 'app/common/service/api.service';
+import { AuthService } from 'app/common/service/auth.service';
 
 @Component({
   selector: 'app-footer',
-  imports: [],
+  imports: [SlicePipe],
   templateUrl: './footer.html',
   styleUrl: './footer.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Footer {}
+export class Footer {
+  authService = inject(AuthService);
+
+  userProfile = computed(() => this.authService.userProfile());
+  test() {
+    console.log(this.userProfile());
+  }
+  constructor() {
+    effect(() => {});
+  }
+
+  userLogout() {
+    this.authService.logout();
+  }
+}
