@@ -7,11 +7,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    // height: var(--bar-heigh);
+    height: var(--bar-heigh);
   }
 
   .footer__link {
-    padding: var(--padding-full);
+    padding: var(--bar-padding);
     width: 100%;
     color: var(--color-link);
     font-size: var(--first-font-size);
@@ -31,7 +31,7 @@
     font-size: var(--first-font-size);
     justify-content: space-between;
     align-items: center;
-    padding: var(--padding-full);
+    padding: var(--bar-padding);
   }
 
   .user-initial {

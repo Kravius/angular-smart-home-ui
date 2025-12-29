@@ -4,10 +4,11 @@ import { ApiService } from '../common/service/api.service';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 import { CardList } from '../card-list/card-list';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-tab-switcher',
-  imports: [MatTabGroup, MatTab, CardList],
+  imports: [MatTabGroup, MatTab, CardList, RouterOutlet],
   templateUrl: './tab-switcher.html',
   styleUrl: './tab-switcher.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -17,24 +18,23 @@ export class TabSwitcher {
 
   protected data = signal<DashboardData>({ tabs: [] });
   readonly dashboardId = input.required<string>();
+  readonly tabId = input.required<string>();
 
   constructor() {
     effect(() => {
       const dashboardId = this.dashboardId();
-      console.log(dashboardId, 'effect');
+
+      console.log(this.tabId(), 'effect');
       this.#appService.getDashboardData(dashboardId).subscribe({
         next: (res) => {
           this.data.set(res);
+          console.log(this.data().tabs, 'effect');
         },
         error: (err) => {
           console.error('нету табов:', err);
         },
       });
     });
-  }
-
-  test() {
-    console.log(this.data());
   }
 
   public updateCard(updatedCard: ICard, tabId: string) {

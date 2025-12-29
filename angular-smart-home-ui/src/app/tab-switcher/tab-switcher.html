@@ -1,11 +1,9 @@
 <mat-tab-group class="tab-group">
   @for (tab of data().tabs; track $index) {
-  <mat-tab [label]="tab.title"
-    ><div class="content">
+  <mat-tab [label]="tab.title">
+    <div class="content">
       <app-card-list [data]="tab" (cardChange)="updateCard($event, tab.id)" />
-      <!-- <app-card-list [data]="tab" /> -->
-    </div></mat-tab
-  >
+    </div>
+  </mat-tab>
   }
 </mat-tab-group>
-<button (click)="test()">cccddddddddddcc</button>

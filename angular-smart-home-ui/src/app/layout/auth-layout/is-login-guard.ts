@@ -9,5 +9,5 @@ export const isLoginGuard: CanActivateFn = (route, state) => {
   if (!auth.isLoggedIn()) {
     return true;
   }
-  return router.createUrlTree(['/']);
+  return router.createUrlTree(['/dashboards']);
 };

@@ -12,12 +12,19 @@ export const routes: Routes = [
     canActivate: [isGuestGuard],
     resolve: { dashboardListItem: menuResolver },
     children: [
-      { path: '', loadComponent: () => import('./dashboard/dashboard').then((m) => m.Dashboard) },
+      // { path: '', loadComponent: () => import('./dashboard/dashboard').then((m) => m.Dashboard) },
       {
         path: 'dashboards/:dashboardId',
+        // path: 'dashboards/:dashboardId/:tabId',
         loadComponent: () => import('./tab-switcher/tab-switcher').then((m) => m.TabSwitcher),
         resolve: { getDashboardData: tabResolver },
         title: (route) => `${route.params['dashboardId']}`,
+        children: [
+          {
+            path: 'dashboards/:dashboardId/:tabId',
+            loadComponent: () => import('./card-list/card-list').then((m) => m.CardList),
+          },
+        ],
       },
     ],
   },

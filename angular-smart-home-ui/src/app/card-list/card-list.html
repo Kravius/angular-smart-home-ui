@@ -2,7 +2,6 @@
   @for (car of data().cards; track $index) {
   <li class="cards-container__item">
     <app-card [entityCard]="car" (onCardChange)="handleCardChange($event)"></app-card>
-    <!-- <app-card [entityCard]="car" (onCardChange)="handleCardChange($event)"></app-card> -->
   </li>
   }
 </ul>

@@ -19,10 +19,6 @@ export class ApiService {
     return this.#http.get<UserProfile>(`${URLS.baseUrl}${URLS.user.profile}`);
   }
 
-  public getDashboardData21(): Observable<DashboardData> {
-    return this.#http.get<DashboardData>(URLS.mockData);
-  }
-
   public getDashboardListItem(): Observable<DashboardListItem> {
     return this.#http.get<DashboardListItem>(`${URLS.baseUrl}${URLS.dashboards}`);
   }
