@@ -3,7 +3,7 @@
     <h1>Welcome To Smart Home</h1>
     @if(this.authService.isError() === '401'){
     <mat-error>Invalid login or password.</mat-error>
-    } @if(this.authService.isError()){
+    } @else if(this.authService.isError()){
     <mat-error>Unknown error occurred. Please try again later.</mat-error>
     }
     <mat-form-field floatLabel="always">

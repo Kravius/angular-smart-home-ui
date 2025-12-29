@@ -17,47 +17,25 @@ export class TabSwitcher {
   protected data = signal<DashboardData>({ tabs: [] });
   readonly dashboardId = input.required<string>();
 
-  // data = toSignal(
-  //   inject(ActivatedRoute).data.pipe(map((data) => data['getDashboardData'] as DashboardData)),
-  //   { initialValue: { tabs: [] } }
-  // );
-constructor() {
-  effect(() => {
-    const dashboardId = this.dashboardId();
-    console.log('effect');
-    this.#appService.getDashboardData(dashboardId).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.data.set(res);
-      },
-      error: (err) => {
-        console.error('нету табов:', err);
-      },
-    });
-  });
-}
-  public ngOnInit() {
-    // const dataApi = this.#appService.getDashboardData21();
-    // dataApi.subscribe((data) => {
-    //   this.data.set(data);
-    // });
-
-    const dashboardId = this.dashboardId();
-    console.log(dashboardId, 'ngOnInit');
-    this.#appService.getDashboardData(this.dashboardId()).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.data.set(res);
-      },
-      error: (err) => {
-        console.error('нету табов:', err);
-      },
+  constructor() {
+    effect(() => {
+      const dashboardId = this.dashboardId();
+      console.log(dashboardId, 'effect');
+      this.#appService.getDashboardData(dashboardId).subscribe({
+        next: (res) => {
+          this.data.set(res);
+        },
+        error: (err) => {
+          console.error('нету табов:', err);
+        },
+      });
     });
   }
 
   test() {
     console.log(this.data());
   }
+
   public updateCard(updatedCard: ICard, tabId: string) {
     this.data.update((state) => ({
       ...state,
@@ -72,19 +50,3 @@ constructor() {
     }));
   }
 }
-
-// constructor() {
-//   effect(() => {
-//     const dashboardId = this.dashboardId();
-//     console.log('effect');
-//     this.#appService.getDashboardData(dashboardId).subscribe({
-//       next: (res) => {
-//         console.log(res);
-//         this.data.set(res);
-//       },
-//       error: (err) => {
-//         console.error('нету табов:', err);
-//       },
-//     });
-//   });
-// }
