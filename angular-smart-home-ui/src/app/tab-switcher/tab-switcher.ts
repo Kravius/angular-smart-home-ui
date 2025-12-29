@@ -1,4 +1,4 @@
-import { Component, inject, input, signal, effect } from '@angular/core';
+import { Component, inject, input, signal, effect, ChangeDetectionStrategy } from '@angular/core';
 import { DashboardData, ICard } from '../models/models';
 import { ApiService } from '../common/service/api.service';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
@@ -10,6 +10,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   imports: [MatTabGroup, MatTab, CardList],
   templateUrl: './tab-switcher.html',
   styleUrl: './tab-switcher.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabSwitcher {
   readonly #appService = inject(ApiService);

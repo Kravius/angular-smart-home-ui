@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
   imports: [],
   templateUrl: './not-page.html',
   styleUrl: './not-page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotPage {
   router = inject(Router);

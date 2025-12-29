@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { Card } from '../card/card';
 import { ICard, Tab } from '../models/models';
 
@@ -7,6 +7,7 @@ import { ICard, Tab } from '../models/models';
   imports: [Card],
   templateUrl: './card-list.html',
   styleUrl: './card-list.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardList {
   public readonly data = input.required<Tab>();
