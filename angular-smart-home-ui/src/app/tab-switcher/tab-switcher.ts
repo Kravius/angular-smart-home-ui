@@ -8,7 +8,7 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-tab-switcher',
-  imports: [MatTabGroup, MatTab, CardList, RouterOutlet],
+  imports: [MatTabGroup, MatTab, CardList],
   templateUrl: './tab-switcher.html',
   styleUrl: './tab-switcher.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

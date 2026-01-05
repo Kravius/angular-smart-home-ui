@@ -8,11 +8,6 @@ import { LoginRequest, LoginResponse, UserProfile } from '../../models/api-model
 export class AuthService {
   readonly #apiService = inject(ApiService);
 
-  readonly loginPayLoad = signal<LoginRequest>({
-    userName: '',
-    password: '',
-  });
-
   readonly userProfile = signal<UserProfile>({ fullName: '', initials: '' });
 
   readonly token = signal<LoginResponse['token']>('');
@@ -26,27 +21,22 @@ export class AuthService {
       this.token.set(localStorageToken);
       this.loadProfileApi();
     }
-
-    effect(() => {
-      const payload = this.loginPayLoad();
-      if (!payload?.password || !payload?.userName) return;
-
-      this.#apiService.login(payload).subscribe({
-        next: (res) => {
-          localStorage.setItem('token', res.token);
-          this.token.set(res.token);
-          this.loadProfileApi();
-        },
-        error: (err) => {
-          console.error('Ошибка проверки login:', err);
-          this.messageError.set(err.status.toString());
-        },
-      });
-    });
   }
 
   public login(payload: LoginRequest) {
-    this.loginPayLoad.set(payload);
+    this.messageError.set('');
+
+    this.#apiService.login(payload).subscribe({
+      next: (res) => {
+        localStorage.setItem('token', res.token);
+        this.token.set(res.token);
+        this.loadProfileApi();
+      },
+      error: (err) => {
+        console.error('Ошибка проверки login:', err);
+        this.messageError.set(err.status.toString());
+      },
+    });
   }
 
   logout() {

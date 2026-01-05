@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { guestGuardFn } from './layout/app-layout/is-guest-guard';
+import { guestGuardFn } from './layout/app-layout/guest-guard';
 import { isLoginGuard } from './layout/auth-layout/is-login-guard';
 import { AuthLayout } from './layout/auth-layout/auth-layout';
 import { menuResolver } from './sidebar/menu/menu-resolver';

@@ -16,4 +16,8 @@ export class LoginForm {
       validators: [Validators.required, Validators.minLength(1)],
     }),
   });
+
+  reset() {
+    this.userForm.reset({ username: '', password: '' });
+  }
 }
