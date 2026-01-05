@@ -19,9 +19,9 @@ export class Menu {
 
   readonly dashboardListItem = toSignal(
     inject(ActivatedRoute).data.pipe(
-      map((data) => data['dashboardListItem'] as DashboardListItem[] | null)
+      map((data) => data['dashboardListItem'] as DashboardListItem[])
     ),
-    { initialValue: null }
+    { initialValue: [] }
   );
   test() {
     console.log(this.dashboardListItem(), 'dashboardListItem');
@@ -33,7 +33,8 @@ export class Menu {
 
       if (!dashboards || dashboards.length === 0) return;
       const currentUrl = this.router.url;
-      if (currentUrl === '/' || currentUrl === '') {
+      console.log(currentUrl);
+      if (currentUrl === '/' || currentUrl === '' || currentUrl === '/dashboards') {
         this.router.navigate(['/dashboards', dashboards[0].id], { replaceUrl: true });
       }
     });

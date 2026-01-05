@@ -12,7 +12,7 @@ import { AuthService } from 'app/common/service/auth.service';
 
 @Component({
   selector: 'app-footer',
-  imports: [SlicePipe],
+  imports: [],
   templateUrl: './footer.html',
   styleUrl: './footer.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,12 +21,6 @@ export class Footer {
   authService = inject(AuthService);
 
   userProfile = computed(() => this.authService.userProfile());
-  test() {
-    console.log(this.userProfile());
-  }
-  constructor() {
-    effect(() => {});
-  }
 
   userLogout() {
     this.authService.logout();

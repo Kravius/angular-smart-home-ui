@@ -24,7 +24,6 @@ export class ApiService {
   }
 
   public getDashboardData(dashboardId: string): Observable<DashboardData> {
-    console.log(this.#http.get<DashboardData>(`${URLS.baseUrl}${URLS.dashboards}/${dashboardId}`));
     return this.#http.get<DashboardData>(`${URLS.baseUrl}${URLS.dashboards}/${dashboardId}`);
   }
 }

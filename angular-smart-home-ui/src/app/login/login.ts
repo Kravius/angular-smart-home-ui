@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, signal, effect } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+  effect,
+  computed,
+} from '@angular/core';
 import {
   FormsModule,
   FormControl,
@@ -49,13 +56,18 @@ export class Login {
   }
 
   loginInPage() {
-    const user = this.loginForm.userForm.value.username;
-    const pas = this.loginForm.userForm.value.password;
-    if (user && pas) {
+    const { username, password } = this.loginForm.userForm.getRawValue();
+    if (username && password) {
       this.authService.login({
-        userName: user,
-        password: pas,
+        userName: username,
+        password: password,
       });
     }
   }
+
+  loginErrorMassage() {
+    return this.authService.messageError();
+  }
+
+  isInvalidCredentials = computed(() => this.authService.messageError() === '401');
 }

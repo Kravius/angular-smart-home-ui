@@ -1,8 +1,18 @@
+export enum ItemType {
+  SENSOR = 'sensor',
+  DEVICE = 'device',
+}
+
 export interface BaseItem {
-  type: 'sensor' | 'device';
+  type: ItemType;
   icon: string;
   label: string;
 }
+// export interface BaseItem {
+//   type: 'sensor' | 'device';
+//   icon: string;
+//   label: string;
+// }
 
 export interface DashboardListItem {
   id: string;
@@ -16,12 +26,16 @@ export interface SensorValue {
 }
 
 export interface SensorItem extends BaseItem {
-  type: 'sensor';
+  type: ItemType.SENSOR;
   value: SensorValue;
 }
+// export interface SensorItem extends BaseItem {
+//   type: 'sensor';
+//   value: SensorValue;
+// }
 
 export interface DeviceItem extends BaseItem {
-  type: 'device';
+  type: ItemType.DEVICE;
   state: boolean;
 }
 

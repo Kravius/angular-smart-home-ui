@@ -1,9 +1,9 @@
-<form class="from-container" [formGroup]="loginForm.userForm" (ngSubmit)="loginInPage()">
+<form class="form-container" [formGroup]="loginForm.userForm" (ngSubmit)="loginInPage()">
   <div class="login-container">
     <h1>Welcome To Smart Home</h1>
-    @if(this.authService.isError() === '401'){
+    @if(isInvalidCredentials()){
     <mat-error>Invalid login or password.</mat-error>
-    } @else if(this.authService.isError()){
+    } @else if(loginErrorMassage()){
     <mat-error>Unknown error occurred. Please try again later.</mat-error>
     }
     <mat-form-field floatLabel="always">
