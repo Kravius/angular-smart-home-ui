@@ -23,21 +23,28 @@ import { map } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardList {
-  // public readonly data = signal<Tab | []>([]);
-  public readonly data = signal({});
   readonly tabId = input.required<string>();
   readonly dashboardId = input.required<string>();
-  readonly #appService = inject(ApiService);
 
-  // public readonly cardChange = output<ICard>();
+  public readonly cardChange = output<ICard>();
 
-  // handleCardChange(card: ICard) {
-  //   this.cardChange.emit(card);
-  // }
+  public readonly data = signal<DashboardData>({ tabs: [] });
+
+  constructor() {
+    console.log('test CardList');
+    effect(() => {
+      const res = this.dashboardListTab();
+      if (res) this.data.set(res);
+    });
+  }
+
+  handleCardChange(card: ICard) {
+    this.cardChange.emit(card);
+  }
 
   readonly dashboardListTab = toSignal(
     inject(ActivatedRoute).parent!.data.pipe(map((data) => data['tabResolver'])),
-    { initialValue: null as DashboardData | null }
+    { initialValue: { tabs: [] } as DashboardData | { tabs: [] } }
   );
 
   test() {
@@ -51,15 +58,19 @@ export class CardList {
     return data.tabs.find((tab) => tab.id === tabId) ?? null;
   });
 
-  constructor() {
-    // effect(() => {
-    //   const data = this.data();
-    //   const tabId = this.tabId();
-    //   if (!data.tabs.length) return;
-    //   const exists = data.tabs.some((t) => t.id === tabId);
-    //   if (!exists) {
-    //     this.router.navigate(['/dashboards', this.dashboardId(), data.tabs[0].id]);
-    //   }
-    // });
+  public updateCard(updatedCard: ICard, tabId: string) {
+    console.log(updatedCard.id, tabId);
+
+    this.data.update((state) => ({
+      ...state,
+      tabs: state.tabs.map((tab) =>
+        tab.id === tabId
+          ? {
+              ...tab,
+              cards: tab.cards.map((card) => (card.id === updatedCard.id ? updatedCard : card)),
+            }
+          : tab
+      ),
+    }));
   }
 }

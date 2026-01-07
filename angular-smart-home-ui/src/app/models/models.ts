@@ -8,11 +8,6 @@ export interface BaseItem {
   icon: string;
   label: string;
 }
-// export interface BaseItem {
-//   type: 'sensor' | 'device';
-//   icon: string;
-//   label: string;
-// }
 
 export interface DashboardListItem {
   id: string;
@@ -29,10 +24,6 @@ export interface SensorItem extends BaseItem {
   type: ItemType.SENSOR;
   value: SensorValue;
 }
-// export interface SensorItem extends BaseItem {
-//   type: 'sensor';
-//   value: SensorValue;
-// }
 
 export interface DeviceItem extends BaseItem {
   type: ItemType.DEVICE;

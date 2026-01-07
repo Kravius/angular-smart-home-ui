@@ -11,16 +11,18 @@
 </mat-tab-group> -->
 
 <nav mat-tab-nav-bar [tabPanel]="tabPanel">
-  @for (tab of data().tabs; track $index) {
-  <a mat-tab-link [routerLink]="['/dashboards', dashboardId(), tab.id]">
-    {{ tab.id }}
+  @for (tab of dashboardListTab().tabs; track $index) {
+  <a
+    mat-tab-link
+    [routerLink]="['/dashboards', dashboardId(), tab.id]"
+    (click)="activeLink.set(tab.id)"
+    [active]="activeLink() === tab.id"
+  >
+    {{ tab.id | uppercase }}
   </a>
   }
 </nav>
-<!-- <button (click)="test()">TabSwitcher</button> -->
 <mat-tab-nav-panel #tabPanel> <router-outlet /></mat-tab-nav-panel>
-
-<!-- <button matButton="elevated" class="example-action-button" (click)="addLink()">Add link</button> -->
 
 <!-- <a
   mat-tab-link

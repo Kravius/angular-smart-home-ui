@@ -35,6 +35,10 @@ export class Card {
 
   protected readonly isTitleSwitcher = computed(this.calcActiveDevice.bind(this));
   protected readonly isAtLeastOneDeviceIsOn = computed(this.isAllActiveDevices.bind(this));
+  
+  constructor() {
+    console.log('test Card');
+  }
 
   protected calcActiveDevice(): boolean {
     return this.entityCard().items.filter((element) => element.type === 'device').length > 1;

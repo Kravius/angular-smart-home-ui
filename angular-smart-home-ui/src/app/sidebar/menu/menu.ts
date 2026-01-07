@@ -31,7 +31,6 @@ export class Menu {
 
   test() {
     console.log(this.dashboardListTab(), 'tabResolver');
-    // console.log(this.dashboardListItem(), 'dashboardListItem');
   }
 
   constructor() {

@@ -6,14 +6,15 @@ import { menuResolver } from './sidebar/menu/menu-resolver';
 import { tabResolver } from './sidebar/menu/tab-resolver';
 
 export const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
   {
-    path: '',
+    path: 'dashboards',
     loadComponent: () => import('./layout/app-layout/app-layout').then((m) => m.AppLayout),
     canActivate: [guestGuardFn],
     resolve: { dashboardListItem: menuResolver },
     children: [
       {
-        path: 'dashboards/:dashboardId',
+        path: ':dashboardId',
         loadComponent: () => import('./tab-switcher/tab-switcher').then((m) => m.TabSwitcher),
         resolve: { tabResolver: tabResolver },
         title: (route) => `${route.params['dashboardId']}`,

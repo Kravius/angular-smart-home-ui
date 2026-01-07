@@ -45,7 +45,7 @@ export class Login {
 
   constructor() {
     effect(() => {
-      if (this.authService.isLoggedIn()) this.router.navigateByUrl('/');
+      if (this.authService.isLoggedIn()) this.router.navigateByUrl('/dashboards');
     });
   }
 

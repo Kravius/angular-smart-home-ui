@@ -12,6 +12,6 @@ export class NotPage {
   router = inject(Router);
 
   toMainPage() {
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('');
   }
 }

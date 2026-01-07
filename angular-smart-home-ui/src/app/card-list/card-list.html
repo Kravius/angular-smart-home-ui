@@ -1,9 +1,9 @@
 <ul class="cards-container">
-  @for (car of activeTab()!.cards; track car.id) {
+  @for (tab of activeTab()!.cards; track tab.id) {
   <li class="cards-container__item">
-    <app-card [entityCard]="car"></app-card>
+    <!-- <app-card [entityCard]="car"></app-card> -->
     <!-- <app-card [entityCard]="car" (onCardChange)="handleCardChange($event)"></app-card> -->
+    <app-card [entityCard]="tab" (onCardChange)="updateCard($event, tab.id)"></app-card>
   </li>
   }
-  <button (click)="test()">CardList</button>
 </ul>

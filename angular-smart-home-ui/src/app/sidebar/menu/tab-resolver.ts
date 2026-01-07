@@ -10,10 +10,6 @@ export const tabResolver: ResolveFn<DashboardData | null> = (route, state) => {
   if (!dashboardId) {
     return of(null);
   }
-  // console.log(
-  //   api.getDashboardData(dashboardId).subscribe((data) => console.log(data)),
-  //   'tabResolver'
-  // );
 
   return api.getDashboardData(dashboardId).pipe(
     catchError((err) => {
