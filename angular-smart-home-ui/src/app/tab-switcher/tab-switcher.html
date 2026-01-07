@@ -1,9 +1,32 @@
-<mat-tab-group class="tab-group">
+<!-- <mat-tab-group class="tab-group">
   @for (tab of data().tabs; track $index) {
   <mat-tab [label]="tab.title">
+    <router-outlet />
     <div class="content">
-      <app-card-list [data]="tab" (cardChange)="updateCard($event, tab.id)" />
-    </div>
+        <app-card-list [data]="tab" (cardChange)="updateCard($event, tab.id)" />
+      </div>
+      <button (click)="test()">dddddx</button>
   </mat-tab>
   }
-</mat-tab-group>
+</mat-tab-group> -->
+
+<nav mat-tab-nav-bar [tabPanel]="tabPanel">
+  @for (tab of data().tabs; track $index) {
+  <a mat-tab-link [routerLink]="['/dashboards', dashboardId(), tab.id]">
+    {{ tab.id }}
+  </a>
+  }
+</nav>
+<!-- <button (click)="test()">TabSwitcher</button> -->
+<mat-tab-nav-panel #tabPanel> <router-outlet /></mat-tab-nav-panel>
+
+<!-- <button matButton="elevated" class="example-action-button" (click)="addLink()">Add link</button> -->
+
+<!-- <a
+  mat-tab-link
+  [routerLink]="['/dashboards', dashboardId(), tab.id]"
+  (click)="activeLink = tab.id" !!!!!?????
+  [active]="activeLink == tab.id" !!!!!????
+>
+  {{ tab.id }}
+</a> -->

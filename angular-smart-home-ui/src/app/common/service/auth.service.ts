@@ -51,7 +51,6 @@ export class AuthService {
     }
     this.#apiService.checkToken().subscribe({
       next: (profile) => {
-        console.log(profile);
         this.userProfile.set(profile);
       },
       error: (err) => {

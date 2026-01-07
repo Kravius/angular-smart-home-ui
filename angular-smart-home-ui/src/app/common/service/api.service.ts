@@ -24,6 +24,12 @@ export class ApiService {
   }
 
   public getDashboardData(dashboardId: string): Observable<DashboardData> {
+    console.log(
+      this.#http
+        .get<DashboardData>(`${URLS.baseUrl}${URLS.dashboards}/${dashboardId}`)
+        .subscribe((data) => console.log(data)),
+      'tabResolver'
+    );
     return this.#http.get<DashboardData>(`${URLS.baseUrl}${URLS.dashboards}/${dashboardId}`);
   }
 }

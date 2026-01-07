@@ -3,7 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ApiService } from 'app/common/service/api.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { DashboardListItem } from 'app/models/models';
+import { DashboardData, DashboardListItem } from 'app/models/models';
 import { map } from 'rxjs';
 
 @Component({
@@ -23,8 +23,15 @@ export class Menu {
     ),
     { initialValue: [] }
   );
+
+  readonly dashboardListTab = toSignal(
+    inject(ActivatedRoute).data.pipe(map((data) => data['tabResolver'])),
+    { initialValue: null as DashboardData | null }
+  );
+
   test() {
-    console.log(this.dashboardListItem(), 'dashboardListItem');
+    console.log(this.dashboardListTab(), 'tabResolver');
+    // console.log(this.dashboardListItem(), 'dashboardListItem');
   }
 
   constructor() {
@@ -33,10 +40,16 @@ export class Menu {
 
       if (!dashboards || dashboards.length === 0) return;
       const currentUrl = this.router.url;
-      console.log(currentUrl);
       if (currentUrl === '/' || currentUrl === '' || currentUrl === '/dashboards') {
         this.router.navigate(['/dashboards', dashboards[0].id], { replaceUrl: true });
       }
+    });
+
+    effect(() => {
+      const data = this.dashboardListTab();
+      if (!data) return;
+
+      console.log(data.tabs);
     });
   }
 }

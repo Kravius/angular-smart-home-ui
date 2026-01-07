@@ -3,7 +3,7 @@ import { guestGuardFn } from './layout/app-layout/guest-guard';
 import { isLoginGuard } from './layout/auth-layout/is-login-guard';
 import { AuthLayout } from './layout/auth-layout/auth-layout';
 import { menuResolver } from './sidebar/menu/menu-resolver';
-import { tabResolver } from './tab-switcher/tab-resolver';
+import { tabResolver } from './sidebar/menu/tab-resolver';
 
 export const routes: Routes = [
   {
@@ -15,11 +15,11 @@ export const routes: Routes = [
       {
         path: 'dashboards/:dashboardId',
         loadComponent: () => import('./tab-switcher/tab-switcher').then((m) => m.TabSwitcher),
-        resolve: { getDashboardData: tabResolver },
+        resolve: { tabResolver: tabResolver },
         title: (route) => `${route.params['dashboardId']}`,
         children: [
           {
-            path: 'dashboards/:dashboardId/:tabId',
+            path: ':tabId',
             loadComponent: () => import('./card-list/card-list').then((m) => m.CardList),
           },
         ],
