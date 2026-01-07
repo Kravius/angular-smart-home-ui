@@ -24,21 +24,6 @@ export class ApiService {
   }
 
   public getDashboardData(dashboardId: string): Observable<DashboardData> {
-    console.log(
-      this.#http
-        .get<DashboardData>(`${URLS.baseUrl}${URLS.dashboards}/${dashboardId}`)
-        .subscribe((data) => console.log(data)),
-      'tabResolver'
-    );
     return this.#http.get<DashboardData>(`${URLS.baseUrl}${URLS.dashboards}/${dashboardId}`);
   }
 }
-
-// {
-// "userName": "Warner",
-// "password": "ea",
-// "fullName": "Ines Lowe",
-// "initials": "IL",
-// "token": "58ebfdf7f1f558c5c86e17f6"
-// "token": "58ebfdf7f1f558c5c86e17f6"
-// },

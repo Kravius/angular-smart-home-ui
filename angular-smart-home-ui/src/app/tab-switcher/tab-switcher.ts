@@ -1,8 +1,6 @@
 import { Component, inject, input, signal, effect, ChangeDetectionStrategy } from '@angular/core';
-import { DashboardData, DashboardListItem, ICard } from '../models/models';
-import { ApiService } from '../common/service/api.service';
-import { MatTabGroup, MatTab, MatTabsModule } from '@angular/material/tabs';
-import { CardList } from '../card-list/card-list';
+import { DashboardData } from '../models/models';
+import { MatTabsModule } from '@angular/material/tabs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterOutlet, RouterLinkWithHref } from '@angular/router';
 import { map } from 'rxjs';
@@ -11,52 +9,25 @@ import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-tab-switcher',
-  imports: [
-    MatTabGroup,
-    MatTab,
-    CardList,
-    RouterOutlet,
-    RouterLinkWithHref,
-    MatButtonModule,
-    MatTabsModule,
-    UpperCasePipe,
-  ],
+  imports: [RouterOutlet, RouterLinkWithHref, MatButtonModule, MatTabsModule, UpperCasePipe],
   templateUrl: './tab-switcher.html',
   styleUrl: './tab-switcher.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabSwitcher {
-  readonly #appService = inject(ApiService);
   private router = inject(Router);
 
   readonly dashboardId = input.required<string>();
 
-  // protected data = signal<DashboardData>({ tabs: [] });
   protected activeLink = signal('');
 
   readonly dashboardListTab = toSignal(
-    inject(ActivatedRoute).data.pipe(map((data) => data['tabResolver'])),
-    { initialValue: null as DashboardData | null }
+    inject(ActivatedRoute).data.pipe(map((data) => data['tabResolver'] as DashboardData)),
+    { initialValue: { tabs: [] } }
   );
 
   constructor() {
-    // effect(() => {
-    //   const dashboardId = this.dashboardId();
-
-    //   this.#appService.getDashboardData(dashboardId).subscribe({
-    //     next: (res) => {
-    //       // this.data.set(res);
-    //     },
-    //     error: (err) => {
-    //       console.error('нету табов:', err);
-    //     },
-    //   });
-    // });
-
     effect(() => {
-      console.log('test TabSwitcher');
-      console.log(this.dashboardListTab().tabs, ' TabSwitcher');
-      // console.log(this.data().tabs, ' TabSwitcher');
       const tabs = this.dashboardListTab().tabs;
       this.activeLink.set(tabs[0].id);
       if (!tabs || tabs.length === 0) return;
@@ -71,18 +42,4 @@ export class TabSwitcher {
       }
     });
   }
-
-  // public updateCard(updatedCard: ICard, tabId: string) {
-  //   this.data.update((state) => ({
-  //     ...state,
-  //     tabs: state.tabs.map((tab) =>
-  //       tab.id === tabId
-  //         ? {
-  //             ...tab,
-  //             cards: tab.cards.map((card) => (card.id === updatedCard.id ? updatedCard : card)),
-  //           }
-  //         : tab
-  //     ),
-  //   }));
-  // }
 }

@@ -25,8 +25,8 @@ export class Menu {
   );
 
   readonly dashboardListTab = toSignal(
-    inject(ActivatedRoute).data.pipe(map((data) => data['tabResolver'])),
-    { initialValue: null as DashboardData | null }
+    inject(ActivatedRoute).data.pipe(map((data) => data['tabResolver'] as DashboardData)),
+    { initialValue: { tabs: [] } }
   );
 
   test() {

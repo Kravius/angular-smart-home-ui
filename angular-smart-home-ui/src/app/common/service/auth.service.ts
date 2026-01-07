@@ -39,7 +39,7 @@ export class AuthService {
     });
   }
 
-  logout() {
+  public logout() {
     this.token.set('');
     this.userProfile.set({ fullName: '', initials: '' });
     localStorage.removeItem('token');
