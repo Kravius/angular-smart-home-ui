@@ -10,7 +10,6 @@ export const tabResolver: ResolveFn<DashboardData | null> = (route, state) => {
   if (!dashboardId) {
     return of(null);
   }
-
   return api.getDashboardData(dashboardId).pipe(
     catchError((err) => {
       console.error('Menu resolver error', err);
