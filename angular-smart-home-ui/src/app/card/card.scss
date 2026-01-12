@@ -1,0 +1,39 @@
+:host {
+
+  .example-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--padding-items);
+  }
+
+  .horizontal-layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+
+    .examp-card__item {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  .vertical-layout {
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  .single-device {
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  .active-light {
+    background-color: rgb(179, 236, 188);
+
+  }
+
+}

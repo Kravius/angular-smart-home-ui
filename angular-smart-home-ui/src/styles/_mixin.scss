@@ -1,0 +1,12 @@
+ @mixin link-states {
+   &:hover {
+     color: var(--color-link-hover);
+     box-shadow: var(--color-link-shadow);
+     background-color: var(--color-link-focus);
+   }
+
+   &:focus {
+     color: var(--color-link-hover);
+     background-color: var(--color-link-focus);
+   }
+ }

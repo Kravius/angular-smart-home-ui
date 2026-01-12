@@ -1,0 +1,7 @@
+<ul class="cards-container">
+  @for (tab of activeTab()!.cards; track tab.id) {
+  <li class="cards-container__item">
+    <app-card [entityCard]="tab" (onCardChange)="updateCard($event, activeTab()!.id)"></app-card>
+  </li>
+  }
+</ul>
