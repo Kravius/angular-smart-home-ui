@@ -18,6 +18,7 @@ export const routes: Routes = [
         loadComponent: () => import('./tab-switcher/tab-switcher').then((m) => m.TabSwitcher),
         resolve: { tabResolver: tabResolver },
         title: (route) => `${route.params['dashboardId']}`,
+        runGuardsAndResolvers: 'always',
         children: [
           {
             path: ':tabId',
