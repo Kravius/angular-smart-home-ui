@@ -2,8 +2,9 @@ import { Routes } from '@angular/router';
 import { guestGuardFn } from './layout/app-layout/guest-guard';
 import { isLoginGuard } from './layout/auth-layout/is-login-guard';
 import { AuthLayout } from './layout/auth-layout/auth-layout';
-import { menuResolver } from './sidebar/menu/menu-resolver';
 import { tabResolver } from './sidebar/menu/tab-resolver';
+import { provideEffects } from '@ngrx/effects';
+import { DashboardEffects } from './common/redux/dashboard.effects';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -11,7 +12,8 @@ export const routes: Routes = [
     path: 'dashboards',
     loadComponent: () => import('./layout/app-layout/app-layout').then((m) => m.AppLayout),
     canActivate: [guestGuardFn],
-    resolve: { DashboardListItem: menuResolver },
+    // resolve: { DashboardListItem: menuResolver }, //TODO: check work in future
+    providers: [provideEffects(DashboardEffects)],
     children: [
       {
         path: ':dashboardId',

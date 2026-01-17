@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DashboardTabsData, DashboardListItem } from '../../models/models';
@@ -19,10 +19,10 @@ export class ApiService {
     return this.#http.get<UserProfile>(`${URLS.baseUrl}${URLS.user.profile}`);
   }
 
-  public getDashboardListItem(): Observable<DashboardListItem> {
-    return this.#http.get<DashboardListItem>(`${URLS.baseUrl}${URLS.dashboards}`);
-  }
-  public getDashboardListItemQQQ(): Observable<DashboardListItem[]> {
+  // public getDashboardListItemTest(): Observable<DashboardListItem> {
+  //   return this.#http.get<DashboardListItem>(`${URLS.baseUrl}${URLS.dashboards}`);
+  // } //TODO: delete after test resolve
+  public getDashboardListItem(): Observable<DashboardListItem[]> {
     return this.#http.get<DashboardListItem[]>(`${URLS.baseUrl}${URLS.dashboards}`);
   }
 

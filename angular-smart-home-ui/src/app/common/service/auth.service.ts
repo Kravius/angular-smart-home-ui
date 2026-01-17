@@ -1,4 +1,4 @@
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { ApiService } from './api.service';
 import { LoginRequest, LoginResponse, UserProfile } from '../../models/api-models';
 
@@ -20,7 +20,6 @@ export class AuthService {
     if (localStorageToken) {
       this.token.set(localStorageToken);
       this.loadProfileApi();
-
     }
   }
 

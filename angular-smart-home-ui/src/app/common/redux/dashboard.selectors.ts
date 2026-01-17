@@ -22,5 +22,5 @@ export const selectDashboardMenuItemByID = createSelector(
 export const selectDashboardErrorMessage = createSelector(selectDashboardMenuItems, (items) => {
   if (items.length) return '';
 
-  return 'Create Your First Dashboard';
+  return 'You don’t have any dashboards yet. They’ll appear here as soon as you create them';
 });
