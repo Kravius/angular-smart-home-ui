@@ -8,7 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { Card } from '../card/card';
-import { DashboardData, ICard } from '../models/models';
+import { DashboardTabsData, ICard } from '../models/models';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
@@ -24,7 +24,7 @@ export class CardList {
   readonly tabId = input.required<string>();
   readonly dashboardId = input.required<string>();
 
-  public readonly state = signal<DashboardData>({ tabs: [] });
+  public readonly state = signal<DashboardTabsData>({ tabs: [] });
 
   constructor() {
     effect(() => {
@@ -35,11 +35,11 @@ export class CardList {
 
   readonly dashboardListTab = toSignal(
     inject(ActivatedRoute).parent!.data.pipe(map((data) => data['tabResolver'])),
-    { initialValue: { tabs: [] } as DashboardData | { tabs: [] } }
+    { initialValue: { tabs: [] } as DashboardTabsData | { tabs: [] } }
   );
 
   readonly activeTab = computed(() => {
-    const data: DashboardData = this.state();
+    const data: DashboardTabsData = this.state();
     const tabId = this.tabId();
     if (!data || !tabId) return null;
     return data.tabs.find((tab) => tab.id === tabId) ?? null;

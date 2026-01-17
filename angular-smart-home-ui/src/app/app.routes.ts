@@ -11,7 +11,7 @@ export const routes: Routes = [
     path: 'dashboards',
     loadComponent: () => import('./layout/app-layout/app-layout').then((m) => m.AppLayout),
     canActivate: [guestGuardFn],
-    resolve: { dashboardListItem: menuResolver },
+    resolve: { DashboardListItem: menuResolver },
     children: [
       {
         path: ':dashboardId',

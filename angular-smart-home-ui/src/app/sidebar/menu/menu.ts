@@ -3,7 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ApiService } from 'app/common/service/api.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { DashboardData, DashboardListItem } from 'app/models/models';
+import { DashboardTabsData, DashboardListItem } from 'app/models/models';
 import { filter, map, switchMap } from 'rxjs';
 
 @Component({
@@ -15,19 +15,19 @@ import { filter, map, switchMap } from 'rxjs';
 })
 export class Menu {
   dashboardsDataAPI = inject(ApiService);
-  private router = inject(Router);
+  readonly #router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  readonly dashboardListItem = toSignal(
+  readonly DashboardListItem = toSignal(
     inject(ActivatedRoute).data.pipe(
-      map((data) => data['dashboardListItem'] as DashboardListItem[])
+      map((data) => data['DashboardListItem'] as DashboardListItem[]),
     ),
-    { initialValue: [] }
+    { initialValue: [] },
   );
 
   readonly dashboardListTab = toSignal(
-    inject(ActivatedRoute).data.pipe(map((data) => data['tabResolver'] as DashboardData)),
-    { initialValue: { tabs: [] } }
+    inject(ActivatedRoute).data.pipe(map((data) => data['tabResolver'] as DashboardTabsData)),
+    { initialValue: { tabs: [] } },
   );
 
   readonly dashboardId = toSignal(
@@ -35,19 +35,19 @@ export class Menu {
       map(() => this.route.firstChild),
       filter((route): route is ActivatedRoute => !!route),
       switchMap((route) => route.paramMap),
-      map((params) => params.get('dashboardId') ?? '')
+      map((params) => params.get('dashboardId') ?? ''),
     ),
-    { initialValue: '' }
+    { initialValue: '' },
   );
 
   constructor() {
     effect(() => {
-      const dashboards = this.dashboardListItem();
-
+      const dashboards = this.DashboardListItem();
+      console.log(dashboards);
       if (!dashboards || dashboards.length === 0) return;
-      const currentUrl = this.router.url;
+      const currentUrl = this.#router.url;
       if (currentUrl === '/' || currentUrl === '' || currentUrl === '/dashboards') {
-        this.router.navigate(['/dashboards', dashboards[0].id], { replaceUrl: true });
+        this.#router.navigate(['/dashboards', dashboards[0].id], { replaceUrl: true });
       }
     });
   }

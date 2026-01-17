@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DashboardData, DashboardListItem } from '../../models/models';
+import { DashboardTabsData, DashboardListItem } from '../../models/models';
 import { URLS } from '@consts/urls';
 import { LoginRequest, LoginResponse, UserProfile } from '../../models/api-models';
 
@@ -22,8 +22,11 @@ export class ApiService {
   public getDashboardListItem(): Observable<DashboardListItem> {
     return this.#http.get<DashboardListItem>(`${URLS.baseUrl}${URLS.dashboards}`);
   }
+  public getDashboardListItemQQQ(): Observable<DashboardListItem[]> {
+    return this.#http.get<DashboardListItem[]>(`${URLS.baseUrl}${URLS.dashboards}`);
+  }
 
-  public getDashboardData(dashboardId: string): Observable<DashboardData> {
-    return this.#http.get<DashboardData>(`${URLS.baseUrl}${URLS.dashboards}/${dashboardId}`);
+  public getDashboardTabsData(dashboardId: string): Observable<DashboardTabsData> {
+    return this.#http.get<DashboardTabsData>(`${URLS.baseUrl}${URLS.dashboards}/${dashboardId}`);
   }
 }

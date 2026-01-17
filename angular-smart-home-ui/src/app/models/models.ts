@@ -47,7 +47,7 @@ export interface Tab {
   cards: ICard[];
 }
 
-export interface DashboardData {
+export interface DashboardTabsData {
   tabs: Tab[];
 }
 export type layoutDirection = 'horizontal-layout' | 'single-device' | 'vertical-layout';

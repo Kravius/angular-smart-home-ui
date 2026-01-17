@@ -1,5 +1,5 @@
 import { Component, inject, input, signal, effect, ChangeDetectionStrategy } from '@angular/core';
-import { DashboardData } from '../models/models';
+import { DashboardTabsData } from '../models/models';
 import { MatTabsModule } from '@angular/material/tabs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterOutlet, RouterLinkWithHref } from '@angular/router';
@@ -22,7 +22,7 @@ export class TabSwitcher {
   protected activeLink = signal('');
 
   readonly dashboardListTab = toSignal(
-    this.route.data.pipe(map((data) => data['tabResolver'] as DashboardData)),
+    this.route.data.pipe(map((data) => data['tabResolver'] as DashboardTabsData)),
     { initialValue: { tabs: [] } }
   );
 
@@ -55,6 +55,10 @@ export class TabSwitcher {
     effect(() => {
       const id = this.tabId();
       this.activeLink.set(id);
+      console.log(this.dashboardListTab());
     });
+  }
+  test() {
+    console.log(this.dashboardListTab());
   }
 }

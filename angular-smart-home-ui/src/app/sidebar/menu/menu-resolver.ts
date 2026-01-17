@@ -11,6 +11,6 @@ export const menuResolver: ResolveFn<DashboardListItem | null> = (route, state) 
     catchError((err) => {
       console.error('Menu resolver error', err);
       return of(null);
-    })
+    }),
   );
 };

@@ -7,15 +7,18 @@ import {
   createSelector,
   MetaReducer,
 } from '@ngrx/store';
+import { DashboardMenuState, menuDashboardReducer } from 'app/common/redux/dashboard.reducers';
 import { loginReducer, LoginState } from 'app/login/redux/login.reducers';
 // import { loginReducer, LoginState } from '../login/redux/login.reducers';
 
 export interface State {
   login: LoginState;
+  dashboardMenu: DashboardMenuState;
 }
 
 export const reducers: ActionReducerMap<State> = {
   login: loginReducer,
+  dashboardMenu: menuDashboardReducer,
 };
 
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
