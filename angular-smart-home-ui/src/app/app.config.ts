@@ -1,7 +1,8 @@
 import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection, isDevMode,
+  provideZoneChangeDetection,
+  isDevMode,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 
@@ -11,6 +12,8 @@ import { authInterceptor } from './common/interseptors/auth-interceptor-intercep
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { reducers, metaReducers } from './reducers';
+import { LoginEffects } from './login/redux/login.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,8 +21,8 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([authInterceptor])),
-    provideStore(),
-    provideEffects(),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
-],
+    provideStore(reducers, { metaReducers }),
+    provideEffects(LoginEffects),
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+  ],
 };

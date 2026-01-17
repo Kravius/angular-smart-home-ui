@@ -5,6 +5,8 @@ import {
   signal,
   effect,
   computed,
+  Injector,
+  DestroyRef,
 } from '@angular/core';
 import {
   FormsModule,
@@ -22,6 +24,12 @@ import { NgClass } from '@angular/common';
 
 import { Router } from '@angular/router';
 import { LoginForm } from 'app/common/service/login-form.service';
+import { Store } from '@ngrx/store';
+import { State } from 'app/reducers';
+import { selectIsLoggedIn, selectUnauthorizedErrorMessage } from './redux/login.selectors';
+import { LoginActionsGroup } from './redux/login.actions';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { distinctUntilChanged, EMPTY, filter, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -39,14 +47,31 @@ import { LoginForm } from 'app/common/service/login-form.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Login {
+  readonly #store: Store<State> = inject(Store);
+  protected readonly isLoggedIn = this.#store.selectSignal(selectIsLoggedIn);
   authService = inject(AuthService);
-  router = inject(Router);
   loginForm = inject(LoginForm);
+  readonly #router = inject(Router);
+  readonly #destroyRef = inject(DestroyRef);
+  readonly #injector = inject(Injector);
+  unauthorizedErrorMessage = this.#store.selectSignal(selectUnauthorizedErrorMessage);
 
-  constructor() {
-    effect(() => {
-      if (this.authService.isLoggedIn()) this.router.navigateByUrl('/dashboards');
-    });
+  protected ngOnInit(): void {
+    toObservable(this.isLoggedIn, { injector: this.#injector })
+      .pipe(
+        distinctUntilChanged(),
+        filter((isLoggedIn) => isLoggedIn),
+        switchMap(() => {
+          console.log(123);
+          this.#router.navigateByUrl('/dashboards');
+          this.loginForm.reset();
+          this.loginForm.userForm.markAsPristine();
+          this.loginForm.userForm.markAsUntouched();
+          return EMPTY;
+        }),
+        takeUntilDestroyed(this.#destroyRef)
+      )
+      .subscribe();
   }
 
   hide = signal(true);
@@ -55,19 +80,18 @@ export class Login {
     event.stopPropagation();
   }
 
-  loginInPage() {
+  submitLogin() {
     const { username, password } = this.loginForm.userForm.getRawValue();
     if (username && password) {
-      this.authService.login({
-        userName: username,
-        password: password,
-      });
+      this.#store.dispatch(
+        LoginActionsGroup.login({
+          request: { userName: username, password: password },
+        })
+      );
     }
   }
 
   loginErrorMassage() {
     return this.authService.messageError();
   }
-
-  isInvalidCredentials = computed(() => this.authService.messageError() === '401');
 }

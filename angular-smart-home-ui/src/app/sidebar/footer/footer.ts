@@ -8,9 +8,12 @@ import {
   signal,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { State } from 'app/reducers';
 import { ApiService } from 'app/common/service/api.service';
 import { AuthService } from 'app/common/service/auth.service';
 import { LoginForm } from 'app/common/service/login-form.service';
+import { LoginActionsGroup } from 'app/login/redux/login.actions';
 
 @Component({
   selector: 'app-footer',
@@ -20,14 +23,16 @@ import { LoginForm } from 'app/common/service/login-form.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Footer {
+  readonly #store: Store<State> = inject(Store);
   authService = inject(AuthService);
   router = inject(Router);
   loginForm = inject(LoginForm);
   userProfile = computed(() => this.authService.userProfile());
 
   userLogout() {
-    this.authService.logout();
-    this.loginForm.reset();
+    this.#store.dispatch(LoginActionsGroup.logout());
+    // this.authService.logout();
+    // this.loginForm.reset();
     this.router.navigate(['/login']);
   }
 }

@@ -12,7 +12,7 @@ export class AuthService {
 
   readonly token = signal<LoginResponse['token']>('');
 
-  isLoggedIn = computed(() => !!this.token());
+  // isLoggedIn = computed(() => !!this.token());
   messageError = signal<string>('');
 
   constructor() {
@@ -20,23 +20,18 @@ export class AuthService {
     if (localStorageToken) {
       this.token.set(localStorageToken);
       this.loadProfileApi();
+
     }
   }
 
-  public login(payload: LoginRequest) {
-    this.messageError.set('');
+  public login(request: LoginRequest) {
+    return this.#apiService.login(request);
+  }
 
-    this.#apiService.login(payload).subscribe({
-      next: (res) => {
-        localStorage.setItem('token', res.token);
-        this.token.set(res.token);
-        this.loadProfileApi();
-      },
-      error: (err) => {
-        console.error('Ошибка проверки login:', err);
-        this.messageError.set(err.status.toString());
-      },
-    });
+  public processLoginResponse(response: LoginResponse) {
+    localStorage.setItem('token', response.token);
+    this.token.set(response.token);
+    this.loadProfileApi();
   }
 
   public logout() {
