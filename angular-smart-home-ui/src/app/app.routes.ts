@@ -5,6 +5,7 @@ import { AuthLayout } from './layout/auth-layout/auth-layout';
 import { tabResolver } from './sidebar/menu/tab-resolver';
 import { provideEffects } from '@ngrx/effects';
 import { DashboardEffects } from './common/redux/dashboard.effects';
+import { DashboardTabsEffects } from './common/redux/tabs/tabs.effects';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -18,6 +19,7 @@ export const routes: Routes = [
       {
         path: ':dashboardId',
         loadComponent: () => import('./tab-switcher/tab-switcher').then((m) => m.TabSwitcher),
+        providers: [provideEffects(DashboardTabsEffects)],
         resolve: { tabResolver: tabResolver },
         title: (route) => `${route.params['dashboardId']}`,
         runGuardsAndResolvers: 'always',
