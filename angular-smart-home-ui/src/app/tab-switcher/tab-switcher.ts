@@ -41,63 +41,7 @@ export class TabSwitcher {
 
   protected activeLink = signal('');
 
-  // readonly dashboardTabsData = computed(() => {
-  //   const dashboardId = this.dashboardId();
-  //   console.log(dashboardId, 'computed');
-  //   if (!dashboardId) return { tabs: [] };
-  //   return this.#store.selectSignal(selectDashboardTabs)();
-  // });
-
-  // readonly dashboardListTab = toSignal(
-  //   this.route.data.pipe(map((data) => data['tabResolver'] as DashboardTabsData)),
-  //   { initialValue: { tabs: [] } },
-  // );
-
-  // readonly tabId = toSignal(
-  //   this.route.url.pipe(
-  //     map(() => this.route.firstChild),
-  //     filter((route): route is ActivatedRoute => !!route),
-  //     switchMap((route) => route.paramMap),
-  //     map((params) => params.get('tabId') ?? ''),
-  //   ),
-  //   { initialValue: '' },
-  // );
-
-  // constructor() {
-  //   effect(() => {
-  //     const tabs = this.dashboardListTab().tabs;
-
-  //     this.activeLink.set(tabs[0].id);
-  //     if (!tabs || tabs.length === 0) return;
-  //     const currentUrl = this.router.url;
-
-  //     if (currentUrl === `/dashboards/${this.dashboardITabStore()}`) {
-  //       this.router.navigate(['/dashboards', this.dashboardId(), tabs[0].id], {
-  //         replaceUrl: true,
-  //       });
-  //     }
-  //   });
-  constructor() {
-    // effect(() => {
-    //   const tabs = this.dashboardListTab().tabs;
-    //   //  const id = this.dashboardITabStore();
-    //   this.activeLink.set(tabs[0].id);
-    //   if (!tabs || tabs.length === 0) return;
-    //   const currentUrl = this.router.url;
-    //   console.log(this.dashboardITabStore(), 'store effect');
-    //   console.log(this.dashboardId(), 'copm effect');
-    //   if (currentUrl === `/dashboards/${this.dashboardId()}`) {
-    //     this.router.navigate(['/dashboards', this.dashboardId(), tabs[0].id], {
-    //       replaceUrl: true,
-    //     });
-    //   }
-    // });
-    //we use it to make active tab
-    // effect(() => {
-    //   const id = this.tabId();
-    //   this.activeLink.set(id);
-    // });
-  }
+  constructor() {}
 
   readonly dashboardId = input.required<string>();
 

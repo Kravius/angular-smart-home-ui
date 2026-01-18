@@ -15,6 +15,12 @@ import { map } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 import { DashboardTabsGroup } from 'app/common/redux/tabs/tabs.actions';
+import {
+  selectCardsFromCurrentTab,
+  selectDashboardTabItemByID,
+  selectDashboardTabs,
+  selectDashboardTabsErrorMessage,
+} from 'app/common/redux/tabs/tabs.selectors';
 
 @Component({
   selector: 'app-card-list',
@@ -30,9 +36,13 @@ export class CardList {
 
   public readonly state = signal<DashboardTabsData>({ tabs: [] });
 
+  readonly dashboardListTabOne = this.#store.selectSignal(selectCardsFromCurrentTab);
+  readonly dashboardListTabsAll = this.#store.selectSignal(selectDashboardTabs);
+  readonly dashboardTabsErrorMessage = this.#store.selectSignal(selectDashboardTabsErrorMessage);
+
   constructor() {
     effect(() => {
-      const state = this.dashboardListTab();
+      const state = this.dashboardListTabsAll();
       if (state) this.state.set(state);
     });
   }
@@ -43,10 +53,10 @@ export class CardList {
     );
   }
 
-  readonly dashboardListTab = toSignal(
-    inject(ActivatedRoute).parent!.data.pipe(map((data) => data['tabResolver'])),
-    { initialValue: { tabs: [] } as DashboardTabsData | { tabs: [] } },
-  );
+  // readonly dashboardListTab = toSignal(
+  //   inject(ActivatedRoute).parent!.data.pipe(map((data) => data['tabResolver'])),
+  //   { initialValue: { tabs: [] } as DashboardTabsData | { tabs: [] } },
+  // );
 
   readonly activeTab = computed(() => {
     const data: DashboardTabsData = this.state();

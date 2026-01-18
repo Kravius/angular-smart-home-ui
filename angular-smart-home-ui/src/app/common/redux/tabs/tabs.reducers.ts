@@ -37,4 +37,8 @@ export const dashboardTabsReducer = createReducer(
     ...state,
     activeTabItemID,
   })),
+
+  // on(DashboardTabsGroup.updateCard,state,{})
+
+  on(DashboardTabsGroup.updateDevice, (state, { card }) => ({ ...state })),
 );

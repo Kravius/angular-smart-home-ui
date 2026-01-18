@@ -20,7 +20,7 @@ export const routes: Routes = [
         path: ':dashboardId',
         loadComponent: () => import('./tab-switcher/tab-switcher').then((m) => m.TabSwitcher),
         providers: [provideEffects(DashboardTabsEffects)],
-        resolve: { tabResolver: tabResolver },
+        // resolve: { tabResolver: tabResolver },  //TODO: check work in future
         title: (route) => `${route.params['dashboardId']}`,
         runGuardsAndResolvers: 'always',
         children: [
