@@ -2,13 +2,13 @@
   @for (tab of dashboardListTab().tabs; track $index) {
     <a
       mat-tab-link
-      [routerLink]="['/dashboards', dashboardId(), tab.id]"
-      (click)="activeLink.set(tab.id)"
-      [active]="activeLink() === tab.id"
+      [routerLink]="['/dashboards', dashboardITabStore(), tab.id]"
+      (click)="setTabsIdStore(tab.id)"
+      [active]="tabId() === tab.id"
     >
       {{ tab.id | uppercase }}
     </a>
   }
 </nav>
-<button (click)="test()">sdfs</button>
+
 <mat-tab-nav-panel #tabPanel> <router-outlet /></mat-tab-nav-panel>

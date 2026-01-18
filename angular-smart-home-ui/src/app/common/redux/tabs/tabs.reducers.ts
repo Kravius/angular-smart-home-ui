@@ -25,7 +25,6 @@ export const dashboardTabsReducer = createReducer(
     ...state,
     dashboardTabsData,
     error: undefined,
-    activeTabItemID: dashboardTabsData.tabs[0].id,
   })),
 
   on(DashboardTabsGroup.getDashboardTabsFailure, (state, { error }) => ({

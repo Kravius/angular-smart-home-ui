@@ -38,10 +38,13 @@ export class Menu {
           return currentUrl === '/' || currentUrl === '' || currentUrl === '/dashboards';
         }),
         filter((items) => !!items.length),
-        map(() => {
-          this.#router.navigate(['/dashboards', this.activeDashboardListItemID()], {
-            replaceUrl: true,
-          });
+        map((dashboardListItems) => {
+          this.#router.navigate(
+            ['/dashboards', this.activeDashboardListItemID() ?? dashboardListItems[0].id],
+            {
+              replaceUrl: true,
+            },
+          );
         }),
         takeUntilDestroyed(),
       )

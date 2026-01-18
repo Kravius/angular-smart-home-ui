@@ -35,7 +35,6 @@ export const menuDashboardReducer = createReducer(
     ...state,
     dashboardListItems,
     error: undefined,
-    activeDashboardListItemID: dashboardListItems[0].id,
   })),
 
   on(MenuDashboardActionsGroup.getDashboardMenuItemsFailure, (state, { error }) => ({
