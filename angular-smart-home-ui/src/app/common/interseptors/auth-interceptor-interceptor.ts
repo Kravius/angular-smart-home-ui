@@ -11,7 +11,6 @@ export const authInterceptor: HttpInterceptorFn = (request, next) => {
   const updateReq = request.clone({
     setHeaders: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
     },
   });
 

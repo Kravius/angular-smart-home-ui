@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createReducer, on } from '@ngrx/store';
-import { DashboardTabsData } from 'app/models/models';
+import { DashboardTabsData, DeviceItem, ItemType } from 'app/models/models';
 import { DashboardTabsGroup } from './tabs.actions';
 
 export interface DashboardTabsState {
@@ -38,7 +38,25 @@ export const dashboardTabsReducer = createReducer(
     activeTabItemID,
   })),
 
-  // on(DashboardTabsGroup.updateCard,state,{})
-
-  on(DashboardTabsGroup.updateDevice, (state, { card }) => ({ ...state })),
+  on(DashboardTabsGroup.updateDeviceByID, (state, { updatedDevice, idCard }) => ({
+    ...state,
+    dashboardTabsData: {
+      ...state.dashboardTabsData,
+      tabs: state.dashboardTabsData.tabs.map((tab) => ({
+        ...tab,
+        cards: tab.cards.map((card) =>
+          card.id !== idCard
+            ? card
+            : {
+                ...card,
+                items: card.items.map((item) =>
+                  item.type === ItemType.DEVICE && item.id === updatedDevice.id
+                    ? updatedDevice
+                    : item,
+                ),
+              },
+        ),
+      })),
+    },
+  })),
 );

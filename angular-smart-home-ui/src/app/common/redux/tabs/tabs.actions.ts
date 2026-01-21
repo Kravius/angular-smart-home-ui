@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
-import { DashboardTabsData, ICard } from 'app/models/models';
+import { DashboardTabsData, DeviceItem, ICard } from 'app/models/models';
 
 export const dashboardTabs = 'Dashboard Tabs';
 
@@ -14,6 +14,6 @@ export const DashboardTabsGroup = createActionGroup({
 
     'Set Active Dashboard Tab Item ID': props<{ activeTabItemID: string }>(),
 
-    'Update Device': props<{ card: ICard; tabId: string }>(),
+    'Update Device By ID': props<{ updatedDevice: DeviceItem; idCard: string }>(),
   },
 });

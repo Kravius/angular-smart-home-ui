@@ -12,7 +12,7 @@ export const DevicesActionsGroup = createActionGroup({
     'Get All Devices Success': props<{ allDevicesData: Item[] }>(),
     'Get All Devices Failure': props<{ error: HttpErrorResponse }>(),
 
-    'Toggle Device State': props<{ deviceId: string; newState: boolean }>,
+    'Toggle Device State': props<{ deviceId: string; newState: boolean; idCard: string }>(),
     'Toggle Device State Success': props<{ updatedDevice: DeviceItem }>(),
     'Toggle Device State Failure': props<{ error: HttpErrorResponse }>(),
   },

@@ -7,21 +7,26 @@
   <mat-card-header class="example-card__header">
     <mat-card-title>{{ entityCard().title }}</mat-card-title>
     @if (isTitleSwitcher()) {
-    <mat-slide-toggle
-      [checked]="isAtLeastOneDeviceIsOn()"
-      (change)="onAllTogglesState($event.checked)"
-    ></mat-slide-toggle>
+      <mat-slide-toggle
+        [checked]="isAtLeastOneDeviceIsOn()"
+        (change)="onAllTogglesState($event.checked)"
+      ></mat-slide-toggle>
     }
   </mat-card-header>
   <mat-card-content>
     <ul [ngClass]="directionLayout()">
-      @for (item of entityCard().items; track $index) { @if (isSensor(item)) {
-      <app-sensor [entity]="item" [layout]="directionLayout()"></app-sensor>
-      }@else if(isDevice(item)){
-      <app-device [entity]="item" [layout]="directionLayout()">
-        <mat-slide-toggle [checked]="item.state" (change)="onToggleState(item)"></mat-slide-toggle
-      ></app-device>
-      } }
+      @for (item of entityCard().items; track $index) {
+        @if (isSensor(item)) {
+          <app-sensor [entity]="item" [layout]="directionLayout()"></app-sensor>
+        } @else if (isDevice(item)) {
+          <app-device [entity]="item" [layout]="directionLayout()">
+            <mat-slide-toggle
+              [checked]="item.state"
+              (change)="onToggleStateNew(item.id, !item.state)"
+            ></mat-slide-toggle
+          ></app-device>
+        }
+      }
     </ul>
   </mat-card-content>
 </mat-card>

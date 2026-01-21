@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DashboardTabsData, DashboardListItem, Item } from '../../models/models';
+import { DashboardTabsData, DashboardListItem, Item, DeviceItem } from '../../models/models';
 import { URLS } from '@consts/urls';
 import { LoginRequest, LoginResponse, UserProfile } from '../../models/api-models';
 
@@ -23,9 +23,12 @@ export class ApiService {
     return this.#http.get<Item[]>(`${URLS.baseUrl}${URLS.devices}`);
   }
 
-  // public getDashboardListItemTest(): Observable<DashboardListItem> {
-  //   return this.#http.get<DashboardListItem>(`${URLS.baseUrl}${URLS.dashboards}`);
-  // } //TODO: delete after test resolve
+  public updateDevices(devicesId: string, newState: boolean): Observable<DeviceItem> {
+    return this.#http.patch<DeviceItem>(`${URLS.baseUrl}${URLS.devices}/${devicesId}`, {
+      state: newState,
+    });
+  }
+
   public getDashboardListItem(): Observable<DashboardListItem[]> {
     return this.#http.get<DashboardListItem[]>(`${URLS.baseUrl}${URLS.dashboards}`);
   }

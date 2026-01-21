@@ -1,4 +1,4 @@
-import { Component, input, ChangeDetectionStrategy, output, computed } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy, output, computed, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ICard, Item } from '../models/models';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +10,9 @@ import { Sensor } from '../sensor/sensor';
 import { Device } from '../device/device';
 import { Highlighting } from '../common/directives/highlighting';
 import { resolveLayoutClass } from '../common/service/utilites';
+import { Store } from '@ngrx/store';
+import { AppState } from 'app/reducers';
+import { DevicesActionsGroup } from 'app/device/reducer/devices.actions';
 
 @Component({
   selector: 'app-card',
@@ -30,7 +33,7 @@ import { resolveLayoutClass } from '../common/service/utilites';
 export class Card {
   public readonly entityCard = input.required<ICard>();
   protected readonly directionLayout = computed(() => resolveLayoutClass(this.entityCard().layout));
-
+  readonly #store: Store<AppState> = inject(Store);
   public readonly onCardChange = output<ICard>();
 
   protected readonly isTitleSwitcher = computed(this.calcActiveDevice.bind(this));
@@ -41,7 +44,7 @@ export class Card {
   }
 
   ngOnInit() {
-    console.log(this.entityCard(), 'card');
+    // console.log(this.entityCard());
   }
 
   protected isAllActiveDevices(): boolean {
@@ -54,6 +57,13 @@ export class Card {
     return !!result;
   }
 
+  protected onToggleStateNew(deviceId: string, newState: boolean) {
+    this.#store.dispatch(
+      DevicesActionsGroup.toggleDeviceState({ deviceId, newState, idCard: this.entityCard().id }),
+    );
+    console.log(this.entityCard());
+  } // TODO rename onToggleState
+
   protected onToggleState(item: Item) {
     const updatedCard = {
       ...this.entityCard(),
@@ -64,7 +74,7 @@ export class Card {
       ),
     };
     this.onCardChange.emit(updatedCard);
-  }
+  } // TODO DELETE
 
   protected onAllTogglesState(state: boolean) {
     const updatedCard = {

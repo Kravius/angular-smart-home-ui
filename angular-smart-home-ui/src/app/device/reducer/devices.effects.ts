@@ -4,6 +4,7 @@ import { catchError, map, of, switchMap } from 'rxjs';
 // import { DashboardTabsGroup } from './cards.actions';
 import { ApiService } from 'app/common/service/api.service';
 import { DevicesActionsGroup } from './devices.actions';
+import { DashboardTabsGroup } from 'app/common/redux/tabs/tabs.actions';
 
 @Injectable()
 export class DashboardDevicesEffects {
@@ -26,10 +27,18 @@ export class DashboardDevicesEffects {
     );
   });
 
-  // readonly updateDevicesItem$ = createEffect(() => {
-  //   return (
-  //     this.#actions.pipe(ofType(DevicesActionsGroup.toggleDeviceState)),
-  //     switchMap(() => this.#apiService.updateDevices().pipe())
-  //   );
-  // });
+  readonly updateDevicesItem$ = createEffect(() =>
+    this.#actions.pipe(
+      ofType(DevicesActionsGroup.toggleDeviceState),
+      switchMap(({ deviceId, newState, idCard }) =>
+        this.#apiService.updateDevices(deviceId, newState).pipe(
+          map((updatedDevice) => DevicesActionsGroup.toggleDeviceStateSuccess({ updatedDevice })),
+          map(({ updatedDevice }) =>
+            DashboardTabsGroup.updateDeviceByID({ updatedDevice, idCard }),
+          ),
+          catchError((error) => of(DevicesActionsGroup.toggleDeviceStateFailure({ error }))),
+        ),
+      ),
+    ),
+  );
 }
