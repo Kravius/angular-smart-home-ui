@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 
-import { DashboardTabsData, DashboardListItem } from 'app/models/models';
+import { DashboardListItem } from 'app/models/models';
 
 export const menuDashboard = 'Menu Dashboard';
 

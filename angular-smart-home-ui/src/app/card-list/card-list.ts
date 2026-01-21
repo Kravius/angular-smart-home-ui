@@ -9,19 +9,16 @@ import {
 } from '@angular/core';
 import { Card } from '../card/card';
 import { DashboardTabsData, ICard } from '../models/models';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
-import { DashboardTabsGroup } from 'app/common/redux/tabs/tabs.actions';
+
+import { selectAllDevices } from 'app/layout/app-layout/reducer/devices.selectors';
 import {
   selectCardsFromCurrentTab,
-  selectDashboardTabItemByID,
   selectDashboardTabs,
   selectDashboardTabsErrorMessage,
-} from 'app/common/redux/tabs/tabs.selectors';
-import { selectAllDevices } from 'app/layout/app-layout/reducer/devices.selectors';
+} from 'app/tab-switcher/redux/tabs.selectors';
+import { DashboardTabsGroup } from 'app/tab-switcher/redux/tabs.actions';
 
 @Component({
   selector: 'app-card-list',
@@ -31,11 +28,12 @@ import { selectAllDevices } from 'app/layout/app-layout/reducer/devices.selector
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardList {
-  readonly tabId = input.required<string>();
-  readonly dashboardId = input.required<string>();
   readonly #store: Store<AppState> = inject(Store);
 
-  public readonly state = signal<DashboardTabsData>({ tabs: [] });
+  readonly tabId = input.required<string>();
+  readonly dashboardId = input.required<string>();
+
+  // public readonly state = signal<DashboardTabsData>({ tabs: [] });
 
   readonly dashboardListTabOne = this.#store.selectSignal(selectCardsFromCurrentTab);
   readonly allDevicesData = this.#store.selectSignal(selectAllDevices);
@@ -44,8 +42,8 @@ export class CardList {
 
   constructor() {
     effect(() => {
-      const state = this.dashboardListTabsAll();
-      if (state) this.state.set(state);
+      // const state = this.dashboardListTabsAll();
+      // if (state) this.state.set(state);
     });
   }
 
@@ -55,24 +53,24 @@ export class CardList {
     );
   }
 
-  readonly activeTab = computed(() => {
-    const data: DashboardTabsData = this.state();
-    const tabId = this.tabId();
-    if (!data || !tabId) return null;
-    return data.tabs.find((tab) => tab.id === tabId) ?? null;
-  });
+  // readonly activeTab = computed(() => {
+  //   const data: DashboardTabsData = this.state();
+  //   const tabId = this.tabId();
+  //   if (!data || !tabId) return null;
+  //   return data.tabs.find((tab) => tab.id === tabId) ?? null;
+  // });
 
-  public updateCard(updatedCard: ICard, tabId: string) {
-    this.state.update((state) => ({
-      ...state,
-      tabs: state.tabs.map((tab) =>
-        tab.id === tabId
-          ? {
-              ...tab,
-              cards: tab.cards.map((card) => (card.id === updatedCard.id ? updatedCard : card)),
-            }
-          : tab,
-      ),
-    }));
-  }
+  // public updateCard(updatedCard: ICard, tabId: string) {
+  //   this.state.update((state) => ({
+  //     ...state,
+  //     tabs: state.tabs.map((tab) =>
+  //       tab.id === tabId
+  //         ? {
+  //             ...tab,
+  //             cards: tab.cards.map((card) => (card.id === updatedCard.id ? updatedCard : card)),
+  //           }
+  //         : tab,
+  //     ),
+  //   }));
+  // } // TODO delete in future
 }

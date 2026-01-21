@@ -3,8 +3,8 @@ import { Sidebar } from 'app/sidebar/sidebar';
 import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
-import { MenuDashboardActionsGroup } from 'app/common/redux/dashboard.actions';
 import { DevicesActionsGroup } from 'app/layout/app-layout/reducer/devices.actions';
+import { MenuDashboardActionsGroup } from 'app/dashboard/dashboard.actions';
 
 @Component({
   selector: 'app-app-layout',

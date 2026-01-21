@@ -2,7 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { MenuDashboardActionsGroup } from './dashboard.actions';
-import { ApiService } from '../service/api.service';
+import { ApiService } from 'app/common/service/api.service';
+
 
 @Injectable()
 export class DashboardEffects {

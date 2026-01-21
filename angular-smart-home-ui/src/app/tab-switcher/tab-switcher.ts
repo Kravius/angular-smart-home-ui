@@ -3,28 +3,24 @@ import {
   inject,
   input,
   signal,
-  effect,
   ChangeDetectionStrategy,
-  computed,
   Injector,
   DestroyRef,
 } from '@angular/core';
-import { DashboardTabsData } from '../models/models';
+
 import { MatTabsModule } from '@angular/material/tabs';
-import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router, RouterOutlet, RouterLinkWithHref } from '@angular/router';
-import { filter, map, switchMap } from 'rxjs';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { Router, RouterOutlet, RouterLinkWithHref } from '@angular/router';
+import { filter, map } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { UpperCasePipe } from '@angular/common';
-import {
-  selectActiveDashboardTabID,
-  selectDashboardTabs,
-} from 'app/common/redux/tabs/tabs.selectors';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
-import { selectActiveDashboardListItemID } from 'app/common/redux/dashboard.selectors';
-import { DashboardTabsGroup } from 'app/common/redux/tabs/tabs.actions';
-import { MenuDashboardActionsGroup } from 'app/common/redux/dashboard.actions';
+
+import { selectActiveDashboardListItemID } from 'app/dashboard/dashboard.selectors';
+import { MenuDashboardActionsGroup } from 'app/dashboard/dashboard.actions';
+import { selectActiveDashboardTabID, selectDashboardTabs } from './redux/tabs.selectors';
+import { DashboardTabsGroup } from './redux/tabs.actions';
 
 @Component({
   selector: 'app-tab-switcher',
@@ -36,24 +32,19 @@ import { MenuDashboardActionsGroup } from 'app/common/redux/dashboard.actions';
 export class TabSwitcher {
   readonly #store: Store<AppState> = inject(Store);
   readonly #injector = inject(Injector);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
+  readonly #router = inject(Router);
+  readonly #destroyRef = inject(DestroyRef);
 
   protected activeLink = signal('');
-
-  constructor() {}
-
   readonly dashboardId = input.required<string>();
 
   dashboardITabStore = this.#store.selectSignal(selectActiveDashboardListItemID);
 
   readonly dashboardListTab = this.#store.selectSignal(selectDashboardTabs);
   readonly activeDashboardTabID = this.#store.selectSignal(selectActiveDashboardTabID);
-  readonly #destroyRef = inject(DestroyRef);
   protected readonly tabId = this.#store.selectSignal(selectActiveDashboardTabID);
 
   ngOnInit() {
-    console.log(this.tabId(), 'tabId before');
     this.#store.dispatch(
       MenuDashboardActionsGroup.setActiveDashboardListItemID({
         activeDashboardListItemID: this.dashboardId(),
@@ -73,14 +64,14 @@ export class TabSwitcher {
       .pipe(
         filter((tabsData) => !!tabsData.tabs.length),
         filter(() => {
-          const isCurrentUrl = this.router.url === `/dashboards/${this.dashboardITabStore()}`;
+          const isCurrentUrl = this.#router.url === `/dashboards/${this.dashboardITabStore()}`;
           return isCurrentUrl;
         }),
         map((tabsData) => tabsData),
         takeUntilDestroyed(this.#destroyRef),
       )
       .subscribe((tabsData) => {
-        this.router.navigate(['/dashboards', this.dashboardId(), tabsData.tabs[0].id], {
+        this.#router.navigate(['/dashboards', this.dashboardId(), tabsData.tabs[0].id], {
           replaceUrl: true,
         });
       });

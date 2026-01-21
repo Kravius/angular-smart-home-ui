@@ -1,4 +1,4 @@
-import { Component, input, ChangeDetectionStrategy, output, computed, inject } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy, computed, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ICard, Item } from '../models/models';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,11 +31,12 @@ import { DevicesActionsGroup } from 'app/layout/app-layout/reducer/devices.actio
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Card {
-  public readonly entityCard = input.required<ICard>(); // selector from parent
-  protected readonly directionLayout = computed(() => resolveLayoutClass(this.entityCard().layout));
   readonly #store: Store<AppState> = inject(Store);
-  public readonly onCardChange = output<ICard>();
 
+  public readonly entityCard = input.required<ICard>();
+  // public readonly onCardChange = output<ICard>();
+
+  protected readonly directionLayout = computed(() => resolveLayoutClass(this.entityCard().layout));
   protected readonly isTitleSwitcher = computed(this.calcActiveDevice.bind(this));
   protected readonly isAtLeastOneDeviceIsOn = computed(this.isAllActiveDevices.bind(this));
 
@@ -57,7 +58,6 @@ export class Card {
     this.#store.dispatch(
       DevicesActionsGroup.toggleDeviceState({ deviceId, newState, idCard: this.entityCard().id }),
     );
-    console.log(this.entityCard());
   }
 
   protected allTogglesState(state: boolean) {
@@ -68,7 +68,7 @@ export class Card {
         index.type === 'device' ? { ...index, state } : index,
       ),
     };
-    // this.onCardChange.emit(updatedCard);
+    // this.onCardChange.emit(updatedCard);//TODO delete
   }
 
   isDevice(item: Item) {

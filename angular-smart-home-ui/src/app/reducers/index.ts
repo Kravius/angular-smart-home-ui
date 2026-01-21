@@ -1,10 +1,10 @@
 import { isDevMode } from '@angular/core';
 import { Action, ActionReducer, ActionReducerMap, MetaReducer } from '@ngrx/store';
-import { DashboardMenuState, menuDashboardReducer } from 'app/common/redux/dashboard.reducers';
-import { dashboardTabsReducer, DashboardTabsState } from 'app/common/redux/tabs/tabs.reducers';
-import { selectDashboardTabsState } from 'app/common/redux/tabs/tabs.selectors';
+
+import { DashboardMenuState, menuDashboardReducer } from 'app/dashboard/dashboard.reducers';
 import { allDevicesReducer, AllDevicesState } from 'app/layout/app-layout/reducer/devices.reducers';
 import { loginReducer, LoginState } from 'app/login/redux/login.reducers';
+import { dashboardTabsReducer, DashboardTabsState } from 'app/tab-switcher/redux/tabs.reducers';
 
 export interface AppState {
   login: LoginState;

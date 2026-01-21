@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { ApiService } from 'app/common/service/api.service';
 import { DevicesActionsGroup } from './devices.actions';
-import { DashboardTabsGroup } from 'app/common/redux/tabs/tabs.actions';
+import { DashboardTabsGroup } from 'app/tab-switcher/redux/tabs.actions';
 
 @Injectable()
 export class DashboardDevicesEffects {

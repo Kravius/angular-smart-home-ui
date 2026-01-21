@@ -10,8 +10,8 @@ import {
   selectActiveDashboardListItemID,
   selectDashboardErrorMessage,
   selectDashboardMenuItems,
-} from 'app/common/redux/dashboard.selectors';
-import { MenuDashboardActionsGroup } from 'app/common/redux/dashboard.actions';
+} from 'app/dashboard/dashboard.selectors';
+import { MenuDashboardActionsGroup } from 'app/dashboard/dashboard.actions';
 
 @Component({
   selector: 'app-menu',

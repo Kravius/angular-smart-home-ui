@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createReducer, on } from '@ngrx/store';
-import { DashboardListItem, DashboardTabsData } from 'app/models/models';
+import { DashboardListItem } from 'app/models/models';
 import { MenuDashboardActionsGroup } from './dashboard.actions';
 
 export interface DashboardMenuState {

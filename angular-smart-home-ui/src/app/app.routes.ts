@@ -3,9 +3,10 @@ import { guestGuardFn } from './layout/app-layout/guest-guard';
 import { isLoginGuard } from './layout/auth-layout/is-login-guard';
 import { AuthLayout } from './layout/auth-layout/auth-layout';
 import { provideEffects } from '@ngrx/effects';
-import { DashboardEffects } from './common/redux/dashboard.effects';
-import { DashboardTabsEffects } from './common/redux/tabs/tabs.effects';
+
 import { DashboardDevicesEffects } from './layout/app-layout/reducer/devices.effects';
+import { DashboardEffects } from './dashboard/dashboard.effects';
+import { DashboardTabsEffects } from './tab-switcher/redux/tabs.effects';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
