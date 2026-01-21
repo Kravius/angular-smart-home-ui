@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 import { DevicesActionsGroup } from 'app/layout/app-layout/reducer/devices.actions';
-import { MenuDashboardActionsGroup } from 'app/dashboard/dashboard.actions';
+import { MenuDashboardActionsGroup } from 'app/dashboard/redux/dashboard.actions';
 
 @Component({
   selector: 'app-app-layout',

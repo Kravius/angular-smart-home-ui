@@ -6,12 +6,13 @@ import { Router, RouterLink } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
+
+import { MenuDashboardActionsGroup } from 'app/dashboard/redux/dashboard.actions';
 import {
   selectActiveDashboardListItemID,
   selectDashboardErrorMessage,
   selectDashboardMenuItems,
-} from 'app/dashboard/dashboard.selectors';
-import { MenuDashboardActionsGroup } from 'app/dashboard/dashboard.actions';
+} from 'app/dashboard/redux/dashboard.selectors';
 
 @Component({
   selector: 'app-menu',

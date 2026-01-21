@@ -5,7 +5,7 @@ import { AuthLayout } from './layout/auth-layout/auth-layout';
 import { provideEffects } from '@ngrx/effects';
 
 import { DashboardDevicesEffects } from './layout/app-layout/reducer/devices.effects';
-import { DashboardEffects } from './dashboard/dashboard.effects';
+import { DashboardEffects } from './dashboard/redux/dashboard.effects';
 import { DashboardTabsEffects } from './tab-switcher/redux/tabs.effects';
 
 export const routes: Routes = [

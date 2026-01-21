@@ -4,7 +4,6 @@ import { catchError, map, of, switchMap } from 'rxjs';
 import { MenuDashboardActionsGroup } from './dashboard.actions';
 import { ApiService } from 'app/common/service/api.service';
 
-
 @Injectable()
 export class DashboardEffects {
   readonly #actions = inject(Actions);

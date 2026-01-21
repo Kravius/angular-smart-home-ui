@@ -17,10 +17,10 @@ import { UpperCasePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 
-import { selectActiveDashboardListItemID } from 'app/dashboard/dashboard.selectors';
-import { MenuDashboardActionsGroup } from 'app/dashboard/dashboard.actions';
+import { MenuDashboardActionsGroup } from 'app/dashboard/redux/dashboard.actions';
 import { selectActiveDashboardTabID, selectDashboardTabs } from './redux/tabs.selectors';
 import { DashboardTabsGroup } from './redux/tabs.actions';
+import { selectActiveDashboardListItemID } from 'app/dashboard/redux/dashboard.selectors';
 
 @Component({
   selector: 'app-tab-switcher',
