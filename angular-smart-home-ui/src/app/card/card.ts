@@ -12,7 +12,7 @@ import { Highlighting } from '../common/directives/highlighting';
 import { resolveLayoutClass } from '../common/service/utilites';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
-import { DevicesActionsGroup } from 'app/device/reducer/devices.actions';
+import { DevicesActionsGroup } from 'app/layout/app-layout/reducer/devices.actions';
 
 @Component({
   selector: 'app-card',
@@ -43,10 +43,6 @@ export class Card {
     return this.entityCard().items.filter((element) => element.type === 'device').length > 1;
   }
 
-  ngOnInit() {
-    // console.log(this.entityCard());
-  }
-
   protected isAllActiveDevices(): boolean {
     const result = this.entityCard().items.filter((item) => {
       if (item.type === 'device') {
@@ -63,18 +59,6 @@ export class Card {
     );
     console.log(this.entityCard());
   }
-
-  // protected onToggleState(item: Item) {
-  //   const updatedCard = {
-  //     ...this.entityCard(),
-  //     items: this.entityCard().items.map((index) =>
-  //       index.label === item.label && index.type === 'device'
-  //         ? { ...index, state: !index.state }
-  //         : index,
-  //     ),
-  //   };
-  //   this.onCardChange.emit(updatedCard);
-  // } // TODO DELETE
 
   protected allTogglesState(state: boolean) {
     // this.#store.dispatch(DevicesActionsGroup.allTogglesState(state));

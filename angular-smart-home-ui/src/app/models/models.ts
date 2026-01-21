@@ -4,7 +4,7 @@ export enum ItemType {
 }
 
 export interface BaseItem {
-  id: string; // TODO i add ID will see what happened
+  id: string;
   type: ItemType;
   icon: string;
   label: string;

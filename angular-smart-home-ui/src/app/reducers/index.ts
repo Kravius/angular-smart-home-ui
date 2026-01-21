@@ -3,7 +3,7 @@ import { Action, ActionReducer, ActionReducerMap, MetaReducer } from '@ngrx/stor
 import { DashboardMenuState, menuDashboardReducer } from 'app/common/redux/dashboard.reducers';
 import { dashboardTabsReducer, DashboardTabsState } from 'app/common/redux/tabs/tabs.reducers';
 import { selectDashboardTabsState } from 'app/common/redux/tabs/tabs.selectors';
-import { allDevicesReducer, AllDevicesState } from 'app/device/reducer/devices.reducers';
+import { allDevicesReducer, AllDevicesState } from 'app/layout/app-layout/reducer/devices.reducers';
 import { loginReducer, LoginState } from 'app/login/redux/login.reducers';
 
 export interface AppState {

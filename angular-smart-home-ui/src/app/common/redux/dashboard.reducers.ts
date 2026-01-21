@@ -14,16 +14,6 @@ const initialDashboardMenuState: DashboardMenuState = {
   error: undefined,
 };
 
-// export interface DashboardTabsState {
-//   dashboardTabsData: DashboardTabsData;
-//   error?: HttpErrorResponse;
-// }
-
-// const initialDashboardTabsState: DashboardTabsState = {
-//   dashboardTabsData: { tabs: [] },
-//   error: undefined,
-// };
-
 export const menuDashboardReducer = createReducer(
   initialDashboardMenuState,
   on(MenuDashboardActionsGroup.getDashboardMenuItems, (state) => ({

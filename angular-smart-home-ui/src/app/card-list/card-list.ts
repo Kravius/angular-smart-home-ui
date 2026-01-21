@@ -21,7 +21,7 @@ import {
   selectDashboardTabs,
   selectDashboardTabsErrorMessage,
 } from 'app/common/redux/tabs/tabs.selectors';
-import { selectAllDevices } from 'app/device/reducer/devices.selectors';
+import { selectAllDevices } from 'app/layout/app-layout/reducer/devices.selectors';
 
 @Component({
   selector: 'app-card-list',
@@ -55,13 +55,6 @@ export class CardList {
     );
   }
 
-  // readonly dashboardListTab = toSignal(
-  //   inject(ActivatedRoute).parent!.data.pipe(map((data) => data['tabResolver'])),
-  //   { initialValue: { tabs: [] } as DashboardTabsData | { tabs: [] } },
-  // );
-  test() {
-    console.log(this.allDevicesData(), 'allDevicesData');
-  }
   readonly activeTab = computed(() => {
     const data: DashboardTabsData = this.state();
     const tabId = this.tabId();

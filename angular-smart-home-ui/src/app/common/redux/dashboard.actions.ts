@@ -14,14 +14,3 @@ export const MenuDashboardActionsGroup = createActionGroup({
     'Set Active Dashboard List Item ID': props<{ activeDashboardListItemID: string }>(),
   },
 });
-
-// export const dashboardTabs = 'Dashboard Tabs';
-
-// export const dashboardTabsGroup = createActionGroup({
-//   source: dashboardTabs,
-//   events: {
-//     'Get Dashboard Tabs': props<{ dashboardId: string }>(),
-//     'Get Dashboard Tabs Success': props<{ DashboardTabsData: DashboardTabsData }>(),
-//     'Get Dashboard Tabs Failure': props<{ error: HttpErrorResponse }>(),
-//   },
-// });

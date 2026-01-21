@@ -15,7 +15,5 @@ export const DevicesActionsGroup = createActionGroup({
     'Toggle Device State': props<{ deviceId: string; newState: boolean; idCard: string }>(),
     'Toggle Device State Success': props<{ updatedDevice: DeviceItem }>(),
     'Toggle Device State Failure': props<{ error: HttpErrorResponse }>(),
-
-    
   },
 });

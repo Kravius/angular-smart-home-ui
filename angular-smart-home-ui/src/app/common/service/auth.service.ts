@@ -12,7 +12,6 @@ export class AuthService {
 
   readonly token = signal<LoginResponse['token']>('');
 
-  // isLoggedIn = computed(() => !!this.token());
   messageError = signal<string>('');
 
   constructor() {
