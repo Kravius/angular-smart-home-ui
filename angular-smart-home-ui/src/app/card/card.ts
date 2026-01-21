@@ -31,7 +31,7 @@ import { DevicesActionsGroup } from 'app/device/reducer/devices.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Card {
-  public readonly entityCard = input.required<ICard>();
+  public readonly entityCard = input.required<ICard>(); // selector from parent
   protected readonly directionLayout = computed(() => resolveLayoutClass(this.entityCard().layout));
   readonly #store: Store<AppState> = inject(Store);
   public readonly onCardChange = output<ICard>();
@@ -57,33 +57,34 @@ export class Card {
     return !!result;
   }
 
-  protected onToggleStateNew(deviceId: string, newState: boolean) {
+  protected toggleDeviceState(deviceId: string, newState: boolean) {
     this.#store.dispatch(
       DevicesActionsGroup.toggleDeviceState({ deviceId, newState, idCard: this.entityCard().id }),
     );
     console.log(this.entityCard());
-  } // TODO rename onToggleState
+  }
 
-  protected onToggleState(item: Item) {
-    const updatedCard = {
-      ...this.entityCard(),
-      items: this.entityCard().items.map((index) =>
-        index.label === item.label && index.type === 'device'
-          ? { ...index, state: !index.state }
-          : index,
-      ),
-    };
-    this.onCardChange.emit(updatedCard);
-  } // TODO DELETE
+  // protected onToggleState(item: Item) {
+  //   const updatedCard = {
+  //     ...this.entityCard(),
+  //     items: this.entityCard().items.map((index) =>
+  //       index.label === item.label && index.type === 'device'
+  //         ? { ...index, state: !index.state }
+  //         : index,
+  //     ),
+  //   };
+  //   this.onCardChange.emit(updatedCard);
+  // } // TODO DELETE
 
-  protected onAllTogglesState(state: boolean) {
+  protected allTogglesState(state: boolean) {
+    // this.#store.dispatch(DevicesActionsGroup.allTogglesState(state));
     const updatedCard = {
       ...this.entityCard(),
       items: this.entityCard().items.map((index) =>
         index.type === 'device' ? { ...index, state } : index,
       ),
     };
-    this.onCardChange.emit(updatedCard);
+    // this.onCardChange.emit(updatedCard);
   }
 
   isDevice(item: Item) {

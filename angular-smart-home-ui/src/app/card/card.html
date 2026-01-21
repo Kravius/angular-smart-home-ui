@@ -9,7 +9,7 @@
     @if (isTitleSwitcher()) {
       <mat-slide-toggle
         [checked]="isAtLeastOneDeviceIsOn()"
-        (change)="onAllTogglesState($event.checked)"
+        (change)="allTogglesState($event.checked)"
       ></mat-slide-toggle>
     }
   </mat-card-header>
@@ -22,7 +22,7 @@
           <app-device [entity]="item" [layout]="directionLayout()">
             <mat-slide-toggle
               [checked]="item.state"
-              (change)="onToggleStateNew(item.id, !item.state)"
+              (change)="toggleDeviceState(item.id, !item.state)"
             ></mat-slide-toggle
           ></app-device>
         }
