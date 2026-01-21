@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { guestGuardFn } from './layout/app-layout/guest-guard';
 import { isLoginGuard } from './layout/auth-layout/is-login-guard';
 import { AuthLayout } from './layout/auth-layout/auth-layout';
-import { tabResolver } from './sidebar/menu/tab-resolver';
 import { provideEffects } from '@ngrx/effects';
 import { DashboardEffects } from './common/redux/dashboard.effects';
 import { DashboardTabsEffects } from './common/redux/tabs/tabs.effects';
