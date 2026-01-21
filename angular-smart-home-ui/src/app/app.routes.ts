@@ -6,6 +6,7 @@ import { tabResolver } from './sidebar/menu/tab-resolver';
 import { provideEffects } from '@ngrx/effects';
 import { DashboardEffects } from './common/redux/dashboard.effects';
 import { DashboardTabsEffects } from './common/redux/tabs/tabs.effects';
+import { DashboardDevicesEffects } from './device/reducer/devices.effects';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -14,12 +15,16 @@ export const routes: Routes = [
     loadComponent: () => import('./layout/app-layout/app-layout').then((m) => m.AppLayout),
     canActivate: [guestGuardFn],
     // resolve: { DashboardListItem: menuResolver }, //TODO: check work in future
-    providers: [provideEffects(DashboardEffects)],
+    providers: [
+      provideEffects(DashboardEffects),
+      provideEffects(DashboardTabsEffects), //TODO change
+      provideEffects(DashboardDevicesEffects),
+    ],
     children: [
       {
         path: ':dashboardId',
         loadComponent: () => import('./tab-switcher/tab-switcher').then((m) => m.TabSwitcher),
-        providers: [provideEffects(DashboardTabsEffects)],
+        // providers: [provideEffects(DashboardTabsEffects)], //TODO: check work in future
         // resolve: { tabResolver: tabResolver },  //TODO: check work in future
         title: (route) => `${route.params['dashboardId']}`,
         runGuardsAndResolvers: 'always',

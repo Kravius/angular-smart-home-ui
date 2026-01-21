@@ -2,18 +2,22 @@ import { isDevMode } from '@angular/core';
 import { Action, ActionReducer, ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { DashboardMenuState, menuDashboardReducer } from 'app/common/redux/dashboard.reducers';
 import { dashboardTabsReducer, DashboardTabsState } from 'app/common/redux/tabs/tabs.reducers';
+import { selectDashboardTabsState } from 'app/common/redux/tabs/tabs.selectors';
+import { allDevicesReducer, AllDevicesState } from 'app/device/reducer/devices.reducers';
 import { loginReducer, LoginState } from 'app/login/redux/login.reducers';
 
 export interface AppState {
   login: LoginState;
   dashboardMenu: DashboardMenuState;
   dashboardTabs: DashboardTabsState;
+  allDevices: AllDevicesState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
   login: loginReducer,
   dashboardMenu: menuDashboardReducer,
   dashboardTabs: dashboardTabsReducer,
+  allDevices: allDevicesReducer,
 };
 
 export function logger(reducer: ActionReducer<AppState>): ActionReducer<AppState> {

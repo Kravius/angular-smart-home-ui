@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 import { MenuDashboardActionsGroup } from 'app/common/redux/dashboard.actions';
+import { DevicesActionsGroup } from 'app/device/reducer/devices.actions';
 
 @Component({
   selector: 'app-app-layout',
@@ -17,5 +18,6 @@ export class AppLayout {
 
   ngOnInit() {
     this.#store.dispatch(MenuDashboardActionsGroup.getDashboardMenuItems());
+    this.#store.dispatch(DevicesActionsGroup.getAllDevices());
   }
 }

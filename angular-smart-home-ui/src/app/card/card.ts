@@ -40,6 +40,10 @@ export class Card {
     return this.entityCard().items.filter((element) => element.type === 'device').length > 1;
   }
 
+  ngOnInit() {
+    console.log(this.entityCard(), 'card');
+  }
+
   protected isAllActiveDevices(): boolean {
     const result = this.entityCard().items.filter((item) => {
       if (item.type === 'device') {
@@ -56,7 +60,7 @@ export class Card {
       items: this.entityCard().items.map((index) =>
         index.label === item.label && index.type === 'device'
           ? { ...index, state: !index.state }
-          : index
+          : index,
       ),
     };
     this.onCardChange.emit(updatedCard);
@@ -66,7 +70,7 @@ export class Card {
     const updatedCard = {
       ...this.entityCard(),
       items: this.entityCard().items.map((index) =>
-        index.type === 'device' ? { ...index, state } : index
+        index.type === 'device' ? { ...index, state } : index,
       ),
     };
     this.onCardChange.emit(updatedCard);

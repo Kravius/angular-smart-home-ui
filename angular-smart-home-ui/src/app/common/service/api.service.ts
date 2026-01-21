@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DashboardTabsData, DashboardListItem } from '../../models/models';
+import { DashboardTabsData, DashboardListItem, Item } from '../../models/models';
 import { URLS } from '@consts/urls';
 import { LoginRequest, LoginResponse, UserProfile } from '../../models/api-models';
 
@@ -17,6 +17,10 @@ export class ApiService {
 
   public checkToken() {
     return this.#http.get<UserProfile>(`${URLS.baseUrl}${URLS.user.profile}`);
+  }
+
+  public getAllDevices() {
+    return this.#http.get<Item[]>(`${URLS.baseUrl}${URLS.devices}`);
   }
 
   // public getDashboardListItemTest(): Observable<DashboardListItem> {
