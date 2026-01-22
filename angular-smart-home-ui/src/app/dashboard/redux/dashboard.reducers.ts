@@ -40,4 +40,6 @@ export const menuDashboardReducer = createReducer(
       activeDashboardListItemID,
     }),
   ),
+
+  on(MenuDashboardActionsGroup.postNewDashboardItem, (state) => ({ ...state, error: undefined })),
 );

@@ -13,10 +13,11 @@ import {
   selectDashboardErrorMessage,
   selectDashboardMenuItems,
 } from 'app/dashboard/redux/dashboard.selectors';
+import { CreateNewMenu } from "./create-new-menu/create-new-menu";
 
 @Component({
   selector: 'app-menu',
-  imports: [MatIconModule, RouterLink],
+  imports: [MatIconModule, RouterLink, CreateNewMenu],
   templateUrl: './menu.html',
   styleUrl: './menu.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

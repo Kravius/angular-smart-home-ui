@@ -1,0 +1,33 @@
+<mat-dialog-content>
+  <h2 mat-dialog-title>Create New Dashboard</h2>
+  <form class="modal-dashboard-form" [formGroup]="modalDashboardForm.modalDashboardFormGroup">
+    <mat-form-field>
+      <mat-label>id</mat-label>
+      <input matInput formControlName="id" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>title</mat-label>
+      <input matInput formControlName="title" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Select</mat-label>
+      <mat-select formControlName="icon">
+        <mat-option value="home">home</mat-option>
+        <mat-option value="dashboard">dashboard</mat-option>
+        <mat-option value="star">star</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="modal-button-container">
+  <button class="modal-btn" matButton (click)="close()">Cancel</button>
+  <button
+    class="modal-btn"
+    matButton
+    (click)="submit()"
+    [disabled]="modalDashboardForm.modalDashboardFormGroup.invalid"
+  >
+    Save
+  </button>
+</mat-dialog-actions>

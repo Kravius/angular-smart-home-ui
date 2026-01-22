@@ -12,5 +12,9 @@ export const MenuDashboardActionsGroup = createActionGroup({
     'Get Dashboard Menu Items Success': props<{ dashboardListItems: DashboardListItem[] }>(),
     'Get Dashboard Menu Items Failure': props<{ error: HttpErrorResponse }>(),
     'Set Active Dashboard List Item ID': props<{ activeDashboardListItemID: string }>(),
+
+    'Post New Dashboard Item': props<{ newDashboard: DashboardListItem }>(),
+    // 'Post New Dashboard Item Success': props<{ newDashboard: DashboardListItem }>(),
+    // 'Post New Dashboard Item Failure': props<{ error: HttpErrorResponse }>(),
   },
 });

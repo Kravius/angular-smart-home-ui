@@ -36,4 +36,12 @@ export class ApiService {
   public getDashboardTabsData(dashboardId: string): Observable<DashboardTabsData> {
     return this.#http.get<DashboardTabsData>(`${URLS.baseUrl}${URLS.dashboards}/${dashboardId}`);
   }
+
+  public postDashboardItem({ id, title, icon }: DashboardListItem) {
+    return this.#http.post<DashboardListItem>(`${URLS.baseUrl}${URLS.dashboards}`, {
+      id,
+      title,
+      icon,
+    });
+  }
 }
