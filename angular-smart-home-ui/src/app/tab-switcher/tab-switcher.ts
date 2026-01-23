@@ -20,11 +20,22 @@ import { AppState } from 'app/reducers';
 import { MenuDashboardActionsGroup } from 'app/dashboard/redux/dashboard.actions';
 import { selectActiveDashboardTabID, selectDashboardTabs } from './redux/tabs.selectors';
 import { DashboardTabsGroup } from './redux/tabs.actions';
-import { selectActiveDashboardListItemID } from 'app/dashboard/redux/dashboard.selectors';
+import {
+  selectActiveDashboardListItemID,
+  selectDashboardMenuItems,
+} from 'app/dashboard/redux/dashboard.selectors';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-tab-switcher',
-  imports: [RouterOutlet, RouterLinkWithHref, MatButtonModule, MatTabsModule, UpperCasePipe],
+  imports: [
+    RouterOutlet,
+    RouterLinkWithHref,
+    MatButtonModule,
+    MatTabsModule,
+    UpperCasePipe,
+    MatIcon,
+  ],
   templateUrl: './tab-switcher.html',
   styleUrl: './tab-switcher.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,10 +49,10 @@ export class TabSwitcher {
   protected activeLink = signal('');
   readonly dashboardId = input.required<string>();
 
-  dashboardITabStore = this.#store.selectSignal(selectActiveDashboardListItemID);
+  dashboardIdTabStore = this.#store.selectSignal(selectActiveDashboardListItemID);
 
   readonly dashboardListTab = this.#store.selectSignal(selectDashboardTabs);
-  readonly activeDashboardTabID = this.#store.selectSignal(selectActiveDashboardTabID);
+  // readonly activeDashboardTabID = this.#store.selectSignal(selectActiveDashboardTabID);
   protected readonly tabId = this.#store.selectSignal(selectActiveDashboardTabID);
 
   ngOnInit() {
@@ -50,6 +61,7 @@ export class TabSwitcher {
         activeDashboardListItemID: this.dashboardId(),
       }),
     );
+    console.log(this.dashboardListTab());
 
     toObservable(this.dashboardId, { injector: this.#injector })
       .pipe(
@@ -57,6 +69,11 @@ export class TabSwitcher {
         takeUntilDestroyed(this.#destroyRef),
       )
       .subscribe((dashboardId) => {
+        this.#store.dispatch(
+          MenuDashboardActionsGroup.setActiveDashboardListItemID({
+            activeDashboardListItemID: dashboardId,
+          }),
+        );
         this.#store.dispatch(DashboardTabsGroup.getDashboardTabs({ dashboardId }));
       });
 
@@ -64,7 +81,7 @@ export class TabSwitcher {
       .pipe(
         filter((tabsData) => !!tabsData.tabs.length),
         filter(() => {
-          const isCurrentUrl = this.#router.url === `/dashboards/${this.dashboardITabStore()}`;
+          const isCurrentUrl = this.#router.url === `/dashboards/${this.dashboardIdTabStore()}`;
           return isCurrentUrl;
         }),
         map((tabsData) => tabsData),
@@ -80,5 +97,9 @@ export class TabSwitcher {
   setTabsIdStore(activeTabItemID: string) {
     this.#store.dispatch(DashboardTabsGroup.setActiveDashboardTabItemID({ activeTabItemID }));
     this.activeLink.set(activeTabItemID);
+  }
+
+  deleteDashboardItem() {
+    this.#store.dispatch(MenuDashboardActionsGroup.deleteDashboardItem({ id: this.dashboardId() }));
   }
 }

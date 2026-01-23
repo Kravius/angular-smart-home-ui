@@ -16,5 +16,8 @@ export const MenuDashboardActionsGroup = createActionGroup({
     'Post New Dashboard Item': props<{ newDashboard: DashboardListItem }>(),
     // 'Post New Dashboard Item Success': props<{ newDashboard: DashboardListItem }>(),
     // 'Post New Dashboard Item Failure': props<{ error: HttpErrorResponse }>(),
+
+    'Delete Dashboard Item': props<{ id: string }>(),
+    'Navigate After Delete': props<{ id: string }>(),
   },
 });

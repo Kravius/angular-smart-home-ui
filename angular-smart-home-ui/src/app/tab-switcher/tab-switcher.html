@@ -1,14 +1,25 @@
-<nav mat-tab-nav-bar [tabPanel]="tabPanel">
+<nav mat-tab-nav-bar [tabPanel]="tabPanel" class="container">
+  @if (dashboardListTab().tabs.length === 0) {
+    <p>Create your first tab</p>
+  }
   @for (tab of dashboardListTab().tabs; track $index) {
     <a
       mat-tab-link
-      [routerLink]="['/dashboards', dashboardITabStore(), tab.id]"
+      [routerLink]="['/dashboards', dashboardIdTabStore(), tab.id]"
       (click)="setTabsIdStore(tab.id)"
       [active]="tabId() === tab.id"
     >
       {{ tab.id | uppercase }}
     </a>
   }
+  <div class="btn-container">
+    <button matMiniFab extended>
+      <mat-icon>create</mat-icon>
+    </button>
+    <button matMiniFab extended (click)="deleteDashboardItem()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
 </nav>
 
 <mat-tab-nav-panel #tabPanel> <router-outlet /></mat-tab-nav-panel>

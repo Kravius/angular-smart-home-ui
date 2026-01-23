@@ -7,4 +7,17 @@
     margin-top: 8px;
     margin-right: 8px;
   }
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+  }
+
+  .btn-container {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+  }
 }

@@ -42,4 +42,6 @@ export const menuDashboardReducer = createReducer(
   ),
 
   on(MenuDashboardActionsGroup.postNewDashboardItem, (state) => ({ ...state, error: undefined })),
+
+  on(MenuDashboardActionsGroup.deleteDashboardItem, (state) => ({ ...state, error: undefined })),
 );

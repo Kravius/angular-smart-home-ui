@@ -44,4 +44,8 @@ export class ApiService {
       icon,
     });
   }
+
+  public deleteDashboardItem(id: string) {
+    return this.#http.delete(`${URLS.baseUrl}${URLS.dashboards}/${id}`);
+  }
 }
