@@ -15,3 +15,11 @@ interface LayoutMap {
 export function resolveLayoutClass(layout: ICardLayout): layoutDirection {
   return layoutMap[layout] ?? 'horizontal-layout';
 }
+
+export function toKebabCase(str: string): string {
+  return str
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}

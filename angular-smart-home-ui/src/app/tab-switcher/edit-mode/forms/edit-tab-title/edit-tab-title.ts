@@ -7,6 +7,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { EditTitleService } from 'app/common/service/forms/edit-title.service';
+import { toKebabCase } from 'app/common/service/utilites';
 import { AppState } from 'app/reducers';
 import { DashboardTabsGroup } from 'app/tab-switcher/redux/tabs.actions';
 import { selectActiveDashboardTabID } from 'app/tab-switcher/redux/tabs.selectors';
@@ -50,23 +51,15 @@ export class EditTabTitle {
     this.isEditing.set(false);
   }
 
-  toKebabCase(str: string): string {
-    return str
-      .trim()
-      .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '');
-  }
-
   onSaveTabTitle() {
+    const id = toKebabCase(this.editService.tabTitleControl.value!);
     const event = {
       tabId: this.tabId(),
       title: this.editService.tabTitleControl.value!,
-      // idKebab: this.toKebabCase(this.editService.tabTitleControl.value!),
+      id,
     };
-    // TODO idKebab add
     this.#store.dispatch(DashboardTabsGroup.updateTabTitle(event));
+    this.#store.dispatch(DashboardTabsGroup.setActiveDashboardTabItemID({ activeTabItemID: id }));
     this.isEditing.set(false);
   }
 

@@ -90,11 +90,13 @@ export const dashboardTabsReducer = createReducer(
   })),
 
   // TODO id:idKebab add
-  on(DashboardTabsGroup.updateTabTitle, (state, { tabId, title }) => ({
+  on(DashboardTabsGroup.updateTabTitle, (state, { tabId, title, id }) => ({
     ...state,
     dashboardTabsData: {
       ...state.dashboardTabsData,
-      tabs: state.dashboardTabsData.tabs.map((tab) => (tab.id === tabId ? { ...tab, title } : tab)),
+      tabs: state.dashboardTabsData.tabs.map((tab) =>
+        tab.id === tabId ? { ...tab, title, id } : tab,
+      ),
     },
   })),
 
@@ -129,11 +131,11 @@ export const dashboardTabsReducer = createReducer(
     };
   }),
 
-  on(DashboardTabsGroup.addTab, (state, { title }) => ({
+  on(DashboardTabsGroup.addTab, (state, { id, title }) => ({
     ...state,
     dashboardTabsData: {
       ...state.dashboardTabsData,
-      tabs: [...state.dashboardTabsData.tabs, { id: title, title, cards: [] }],
+      tabs: [...state.dashboardTabsData.tabs, { id, title, cards: [] }],
     },
   })),
 

@@ -6,6 +6,7 @@ import { AppState } from 'app/reducers';
 import { DashboardTabsGroup } from 'app/tab-switcher/redux/tabs.actions';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { toKebabCase } from 'app/common/service/utilites';
 
 @Component({
   selector: 'app-edit-add-tab',
@@ -34,7 +35,9 @@ export class EditAddTab {
     const title = this.tabTitleControl.value?.trim();
     if (!title) return;
 
-    this.#store.dispatch(DashboardTabsGroup.addTab({ title }));
+    const id = toKebabCase(title);
+    console.log(id);
+    this.#store.dispatch(DashboardTabsGroup.addTab({ id, title }));
     this.#store.dispatch(
       DashboardTabsGroup.setActiveDashboardTabItemID({ activeTabItemID: title }),
     );

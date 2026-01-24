@@ -18,7 +18,7 @@ export const DashboardTabsGroup = createActionGroup({
     'Enter Edit Mode': emptyProps(),
     'Exit Edit Mode': emptyProps(),
 
-    'Add Tab': props<{ title: string }>(),
+    'Add Tab': props<{ title: string; id: string }>(),
     'Remove Tab': props<{ tabId: string }>(),
     'Reorder Tab': props<{ tabId: string; direction: 'left' | 'right' }>(),
 
@@ -35,7 +35,7 @@ export const DashboardTabsGroup = createActionGroup({
     'Discard Changes': emptyProps(),
     'Toggle Device State': props<{ deviceId: string; newState: boolean }>(),
 
-    'Update Tab Title': props<{ tabId: string; title: string }>(),
+    'Update Tab Title': props<{ tabId: string; title: string; id: string }>(),
     // TODO idKebab add
     'Update Dashboard Title': props<{ title: string }>(),
   },
