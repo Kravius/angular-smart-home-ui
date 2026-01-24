@@ -20,11 +20,9 @@ import { AppState } from 'app/reducers';
 import { MenuDashboardActionsGroup } from 'app/dashboard/redux/dashboard.actions';
 import { selectActiveDashboardTabID, selectDashboardTabs } from './redux/tabs.selectors';
 import { DashboardTabsGroup } from './redux/tabs.actions';
-import {
-  selectActiveDashboardListItemID,
-  selectDashboardMenuItems,
-} from 'app/dashboard/redux/dashboard.selectors';
+import { selectActiveDashboardListItemID } from 'app/dashboard/redux/dashboard.selectors';
 import { MatIcon } from '@angular/material/icon';
+import { DeleteDashboard } from 'app/sidebar/menu/action-menu/delete-dashboard/delete-dashboard';
 
 @Component({
   selector: 'app-tab-switcher',
@@ -35,6 +33,7 @@ import { MatIcon } from '@angular/material/icon';
     MatTabsModule,
     UpperCasePipe,
     MatIcon,
+    DeleteDashboard,
   ],
   templateUrl: './tab-switcher.html',
   styleUrl: './tab-switcher.scss',
@@ -52,7 +51,7 @@ export class TabSwitcher {
   dashboardIdTabStore = this.#store.selectSignal(selectActiveDashboardListItemID);
 
   readonly dashboardListTab = this.#store.selectSignal(selectDashboardTabs);
-  // readonly activeDashboardTabID = this.#store.selectSignal(selectActiveDashboardTabID);
+
   protected readonly tabId = this.#store.selectSignal(selectActiveDashboardTabID);
 
   ngOnInit() {
@@ -97,9 +96,5 @@ export class TabSwitcher {
   setTabsIdStore(activeTabItemID: string) {
     this.#store.dispatch(DashboardTabsGroup.setActiveDashboardTabItemID({ activeTabItemID }));
     this.activeLink.set(activeTabItemID);
-  }
-
-  deleteDashboardItem() {
-    this.#store.dispatch(MenuDashboardActionsGroup.deleteDashboardItem({ id: this.dashboardId() }));
   }
 }
