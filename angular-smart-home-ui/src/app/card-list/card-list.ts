@@ -33,8 +33,6 @@ export class CardList {
   readonly tabId = input.required<string>();
   readonly dashboardId = input.required<string>();
 
-  // public readonly state = signal<DashboardTabsData>({ tabs: [] });
-
   readonly dashboardListTabOne = this.#store.selectSignal(selectCardsFromCurrentTab);
   readonly allDevicesData = this.#store.selectSignal(selectAllDevices);
   readonly dashboardListTabsAll = this.#store.selectSignal(selectDashboardTabs);
@@ -52,25 +50,4 @@ export class CardList {
       DashboardTabsGroup.setActiveDashboardTabItemID({ activeTabItemID: this.tabId() }),
     );
   }
-
-  // readonly activeTab = computed(() => {
-  //   const data: DashboardTabsData = this.state();
-  //   const tabId = this.tabId();
-  //   if (!data || !tabId) return null;
-  //   return data.tabs.find((tab) => tab.id === tabId) ?? null;
-  // });
-
-  // public updateCard(updatedCard: ICard, tabId: string) {
-  //   this.state.update((state) => ({
-  //     ...state,
-  //     tabs: state.tabs.map((tab) =>
-  //       tab.id === tabId
-  //         ? {
-  //             ...tab,
-  //             cards: tab.cards.map((card) => (card.id === updatedCard.id ? updatedCard : card)),
-  //           }
-  //         : tab,
-  //     ),
-  //   }));
-  // } // TODO delete in future
 }

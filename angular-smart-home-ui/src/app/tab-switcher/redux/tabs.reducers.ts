@@ -139,6 +139,16 @@ export const dashboardTabsReducer = createReducer(
     },
   })),
 
+  on(DashboardTabsGroup.removeCard, (state, { tabId, cardId }) => ({
+    ...state,
+    dashboardTabsData: {
+      ...state.dashboardTabsData,
+      tabs: state.dashboardTabsData.tabs.map((tab) =>
+        tab.id === tabId ? { ...tab, cards: tab.cards.filter((c) => c.id !== cardId) } : tab,
+      ),
+    },
+  })),
+
   // on(DashboardTabsGroup.updateDashboardTitle, (state, { title }) => ({
   //   ...state,
   //   dashboardTabsData: {

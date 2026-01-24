@@ -34,7 +34,6 @@ export class Card {
   readonly #store: Store<AppState> = inject(Store);
 
   public readonly entityCard = input.required<ICard>();
-  // public readonly onCardChange = output<ICard>();
 
   protected readonly directionLayout = computed(() => resolveLayoutClass(this.entityCard().layout));
   protected readonly isTitleSwitcher = computed(this.calcActiveDevice.bind(this));
@@ -68,7 +67,6 @@ export class Card {
         index.type === 'device' ? { ...index, state } : index,
       ),
     };
-    // this.onCardChange.emit(updatedCard);//TODO delete
   }
 
   isDevice(item: Item) {

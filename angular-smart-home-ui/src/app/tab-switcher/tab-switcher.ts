@@ -31,22 +31,19 @@ import { EditSwitcher } from './edit-mode/edit-switcher/edit-switcher';
 import { MatIcon } from '@angular/material/icon';
 import { EditTabTitle } from './edit-mode/forms/edit-tab-title/edit-tab-title';
 import { EditTitleService } from 'app/common/service/forms/edit-title.service';
-import { EditAddTab } from "./edit-mode/forms/edit-add-tab/edit-add-tab";
+import { EditAddTab } from './edit-mode/forms/edit-add-tab/edit-add-tab';
 
 @Component({
   selector: 'app-tab-switcher',
   imports: [
     RouterOutlet,
-    RouterLinkWithHref,
     MatButtonModule,
     MatTabsModule,
-    UpperCasePipe,
     DeleteDashboard,
     EditSwitcher,
-    MatIcon,
     EditTabTitle,
-    EditAddTab
-],
+    EditAddTab,
+  ],
   templateUrl: './tab-switcher.html',
   styleUrl: './tab-switcher.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

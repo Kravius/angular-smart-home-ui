@@ -36,7 +36,7 @@ export class EditTabTitle {
 
   protected readonly tabIdActiveStore = this.#store.selectSignal(selectActiveDashboardTabID);
 
-  isActiveArrove() {
+  isActiveArrow() {
     return this.isEditMode() && !this.isEditing() && this.tabIdActiveStore() === this.tabId();
   }
 

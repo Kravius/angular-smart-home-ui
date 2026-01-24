@@ -1,5 +1,5 @@
 <div class="inline-form">
-  @if (isActiveArrove()) {
+  @if (isActiveArrow()) {
     <button mat-icon-button type="button" (click)="moveLeft()">
       <mat-icon>chevron_left</mat-icon>
     </button>
@@ -26,7 +26,7 @@
     <a mat-tab-link [routerLink]="link()" [active]="active()" (click)="select.emit(tabId())">
       {{ title() }}
     </a>
-    @if (isActiveArrove()) {
+    @if (isActiveArrow()) {
       <button mat-icon-button type="button" (click)="moveRight()">
         <mat-icon>chevron_right</mat-icon>
       </button>
