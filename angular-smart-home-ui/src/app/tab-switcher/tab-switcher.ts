@@ -6,6 +6,7 @@ import {
   ChangeDetectionStrategy,
   Injector,
   DestroyRef,
+  WritableSignal,
 } from '@angular/core';
 
 import { MatTabsModule } from '@angular/material/tabs';
@@ -18,12 +19,18 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 
 import { MenuDashboardActionsGroup } from 'app/dashboard/redux/dashboard.actions';
-import { selectActiveDashboardTabID, selectDashboardTabs } from './redux/tabs.selectors';
+import {
+  selectActiveDashboardTabID,
+  selectDashboardTabs,
+  selectIsEditMode,
+} from './redux/tabs.selectors';
 import { DashboardTabsGroup } from './redux/tabs.actions';
 import { selectActiveDashboardListItemID } from 'app/dashboard/redux/dashboard.selectors';
-import { MatIcon } from '@angular/material/icon';
 import { DeleteDashboard } from 'app/sidebar/menu/action-menu/delete-dashboard/delete-dashboard';
-import { EditSwitcher } from "./edit-mode/edit-switcher/edit-switcher";
+import { EditSwitcher } from './edit-mode/edit-switcher/edit-switcher';
+import { MatIcon } from '@angular/material/icon';
+import { EditTabTitle } from './edit-mode/forms/edit-tab-title/edit-tab-title';
+import { EditTitleService } from 'app/common/service/forms/edit-title.service';
 
 @Component({
   selector: 'app-tab-switcher',
@@ -33,10 +40,11 @@ import { EditSwitcher } from "./edit-mode/edit-switcher/edit-switcher";
     MatButtonModule,
     MatTabsModule,
     UpperCasePipe,
-    MatIcon,
     DeleteDashboard,
-    EditSwitcher
-],
+    EditSwitcher,
+    MatIcon,
+    EditTabTitle,
+  ],
   templateUrl: './tab-switcher.html',
   styleUrl: './tab-switcher.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -46,6 +54,7 @@ export class TabSwitcher {
   readonly #injector = inject(Injector);
   readonly #router = inject(Router);
   readonly #destroyRef = inject(DestroyRef);
+  readonly editTitleService = inject(EditTitleService);
 
   protected activeLink = signal('');
   readonly dashboardId = input.required<string>();
@@ -56,13 +65,20 @@ export class TabSwitcher {
 
   protected readonly tabId = this.#store.selectSignal(selectActiveDashboardTabID);
 
+  readonly isEditMode = this.#store.selectSignal(selectIsEditMode);
+
+  // protected isEditDashboardTitle = signal(false);
+  // protected newDashboardTitle = signal('');
+
+  // protected isEditTabTitle = signal(false);
+  // protected newTabTitle = signal('');
+
   ngOnInit() {
     this.#store.dispatch(
       MenuDashboardActionsGroup.setActiveDashboardListItemID({
         activeDashboardListItemID: this.dashboardId(),
       }),
     );
-    console.log(this.dashboardListTab());
 
     toObservable(this.dashboardId, { injector: this.#injector })
       .pipe(
@@ -100,4 +116,39 @@ export class TabSwitcher {
     this.activeLink.set(activeTabItemID);
   }
 
+  test() {
+    console.log(this.tabId());
+  }
+
+  onEditTabTitle() {
+    this.isEditTabTitle.update((current) => !current);
+  }
+
+  onSaveTabTitle(tabId: string) {
+    this.#store.dispatch(
+      DashboardTabsGroup.updateTabTitle({
+        tabId,
+        title: this.editTitleService.tabTitleControl.value!,
+      }),
+    );
+    this.isEditTabTitle.set(false);
+  }
+
+  cancelEdit() {
+    this.isEditTabTitle.set(false);
+  }
+
+  editModeDashboardTitle() {
+    this.isEditDashboardTitle.update((v) => !v);
+    this.editTitleService.startEditDashboardTitle(this.dashboardId());
+  }
+
+  saveDashboardTitle() {
+    this.#store.dispatch(
+      DashboardTabsGroup.updateDashboardTitle({
+        title: this.editTitleService.dashboardTitleControl.value!,
+      }),
+    );
+    this.isEditDashboardTitle.set(false);
+  }
 }

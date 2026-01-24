@@ -20,4 +20,14 @@
     gap: 10px;
     margin-left: auto;
   }
+
+  .dashboard-title {
+    font-size: large;
+  }
+
+  .dashboard-title-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 }
