@@ -1,0 +1,14 @@
+:host {
+
+  .container {
+    display: flex;
+  }
+
+  .small-field {
+    padding: 0;
+    margin: 0;
+    min-width: 30px;
+    max-width: 60px;
+
+  }
+}

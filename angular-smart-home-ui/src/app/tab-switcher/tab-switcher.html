@@ -10,24 +10,28 @@
     </button>
   </div>
 } -->
-<nav mat-tab-nav-bar [tabPanel]="tabPanel" class="container">
-  @if (dashboardListTab().tabs.length === 0) {
-    <p>Create your first tab</p>
-  }
-  @for (tab of dashboardListTab().tabs; track $index) {
-    <app-edit-tab-title
-      [isEditMode]="isEditMode()"
-      [tabId]="tab.id"
-      [title]="tab.title || tab.id"
-      [link]="['/dashboards', dashboardId(), tab.id]"
-      [active]="tabId() === tab.id"
-      (save)="onSaveTabTitle($event)"
-      (select)="setTabsIdStore($event)"
-    />
-  }
-  <div class="btn-container">
-    <app-edit-switcher></app-edit-switcher>
-    <app-delete-dashboard></app-delete-dashboard>
+<nav mat-tab-nav-bar [tabPanel]="tabPanel">
+  <div class="container">
+    @if (dashboardListTab().tabs.length === 0) {
+      <p>Create your first tab</p>
+    }
+    @for (tab of dashboardListTab().tabs; track $index) {
+      <app-edit-tab-title
+        [isEditMode]="isEditMode()"
+        [tabId]="tab.id"
+        [title]="tab.title || tab.id"
+        [link]="['/dashboards', dashboardId(), tab.id]"
+        [active]="tabId() === tab.id"
+        (select)="setTabsIdStore($event)"
+      />
+    }
+    @if (isEditMode()) {
+      <app-edit-add-tab></app-edit-add-tab>
+    }
+    <div class="btn-container">
+      <app-edit-switcher></app-edit-switcher>
+      <app-delete-dashboard></app-delete-dashboard>
+    </div>
   </div>
 </nav>
 

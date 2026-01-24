@@ -34,8 +34,9 @@ export const DashboardTabsGroup = createActionGroup({
 
     'Discard Changes': emptyProps(),
     'Toggle Device State': props<{ deviceId: string; newState: boolean }>(),
-    
+
     'Update Tab Title': props<{ tabId: string; title: string }>(),
+    // TODO idKebab add
     'Update Dashboard Title': props<{ title: string }>(),
   },
 });

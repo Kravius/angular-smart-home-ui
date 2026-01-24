@@ -31,6 +31,7 @@ import { EditSwitcher } from './edit-mode/edit-switcher/edit-switcher';
 import { MatIcon } from '@angular/material/icon';
 import { EditTabTitle } from './edit-mode/forms/edit-tab-title/edit-tab-title';
 import { EditTitleService } from 'app/common/service/forms/edit-title.service';
+import { EditAddTab } from "./edit-mode/forms/edit-add-tab/edit-add-tab";
 
 @Component({
   selector: 'app-tab-switcher',
@@ -44,7 +45,8 @@ import { EditTitleService } from 'app/common/service/forms/edit-title.service';
     EditSwitcher,
     MatIcon,
     EditTabTitle,
-  ],
+    EditAddTab
+],
   templateUrl: './tab-switcher.html',
   styleUrl: './tab-switcher.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -112,9 +114,5 @@ export class TabSwitcher {
 
   test() {
     console.log(this.tabId());
-  }
-
-  onSaveTabTitle(event: { tabId: string; title: string }) {
-    this.#store.dispatch(DashboardTabsGroup.updateTabTitle(event));
   }
 }

@@ -89,11 +89,51 @@ export const dashboardTabsReducer = createReducer(
     error,
   })),
 
+  // TODO id:idKebab add
   on(DashboardTabsGroup.updateTabTitle, (state, { tabId, title }) => ({
     ...state,
     dashboardTabsData: {
       ...state.dashboardTabsData,
       tabs: state.dashboardTabsData.tabs.map((tab) => (tab.id === tabId ? { ...tab, title } : tab)),
+    },
+  })),
+
+  on(DashboardTabsGroup.removeTab, (state, { tabId }) => ({
+    ...state,
+    dashboardTabsData: {
+      ...state.dashboardTabsData,
+      tabs: state.dashboardTabsData.tabs.filter((tab) => tab.id !== tabId),
+    },
+  })),
+
+  on(DashboardTabsGroup.reorderTab, (state, { tabId, direction }) => {
+    const tabs = [...state.dashboardTabsData.tabs];
+    const index = tabs.findIndex((t) => t.id === tabId);
+
+    if (index === -1) return state;
+
+    const targetIndex = direction === 'left' ? index - 1 : index + 1;
+
+    if (targetIndex < 0 || targetIndex >= tabs.length) {
+      return state;
+    }
+
+    [tabs[index], tabs[targetIndex]] = [tabs[targetIndex], tabs[index]];
+
+    return {
+      ...state,
+      dashboardTabsData: {
+        ...state.dashboardTabsData,
+        tabs,
+      },
+    };
+  }),
+
+  on(DashboardTabsGroup.addTab, (state, { title }) => ({
+    ...state,
+    dashboardTabsData: {
+      ...state.dashboardTabsData,
+      tabs: [...state.dashboardTabsData.tabs, { id: title, title, cards: [] }],
     },
   })),
 
