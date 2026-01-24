@@ -30,4 +30,12 @@ export const selectDashboardTabsErrorMessage = createSelector(selectDashboardTab
   return 'You don’t have any tabs yet. They’ll appear here as soon as you create them';
 });
 
+export const selectIsEditMode = createSelector(
+  selectDashboardTabsState,
+  (state) => state.isEditMode,
+);
 
+export const selectEditSnapshot = createSelector(
+  selectDashboardTabsState,
+  (state) => state.editSnapshot,
+);

@@ -23,6 +23,7 @@ import { DashboardTabsGroup } from './redux/tabs.actions';
 import { selectActiveDashboardListItemID } from 'app/dashboard/redux/dashboard.selectors';
 import { MatIcon } from '@angular/material/icon';
 import { DeleteDashboard } from 'app/sidebar/menu/action-menu/delete-dashboard/delete-dashboard';
+import { EditSwitcher } from "./edit-mode/edit-switcher/edit-switcher";
 
 @Component({
   selector: 'app-tab-switcher',
@@ -34,7 +35,8 @@ import { DeleteDashboard } from 'app/sidebar/menu/action-menu/delete-dashboard/d
     UpperCasePipe,
     MatIcon,
     DeleteDashboard,
-  ],
+    EditSwitcher
+],
   templateUrl: './tab-switcher.html',
   styleUrl: './tab-switcher.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -97,4 +99,5 @@ export class TabSwitcher {
     this.#store.dispatch(DashboardTabsGroup.setActiveDashboardTabItemID({ activeTabItemID }));
     this.activeLink.set(activeTabItemID);
   }
+
 }

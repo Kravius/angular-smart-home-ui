@@ -7,11 +7,15 @@ export interface DashboardTabsState {
   dashboardTabsData: DashboardTabsData;
   activeTabItemID?: string;
   error?: HttpErrorResponse;
+  editSnapshot?: DashboardTabsData;
+  isEditMode: boolean;
 }
 
 const initialDashboardTabsState: DashboardTabsState = {
   dashboardTabsData: { tabs: [] },
   error: undefined,
+  editSnapshot: undefined,
+  isEditMode: false,
 };
 
 export const dashboardTabsReducer = createReducer(
@@ -58,5 +62,30 @@ export const dashboardTabsReducer = createReducer(
         ),
       })),
     },
+  })),
+
+  on(DashboardTabsGroup.enterEditMode, (state) => ({
+    ...state,
+    isEditMode: true,
+    editSnapshot: structuredClone(state.dashboardTabsData),
+  })),
+
+  on(DashboardTabsGroup.discardChanges, (state) => ({
+    ...state,
+    dashboardTabsData: state.editSnapshot ?? state.dashboardTabsData,
+    editSnapshot: undefined,
+    isEditMode: false,
+  })),
+
+  on(DashboardTabsGroup.saveDashboardSuccess, (state, { updatedDashboard }) => ({
+    ...state,
+    dashboardTabsData: updatedDashboard,
+    editSnapshot: undefined,
+    isEditMode: false,
+  })),
+
+  on(DashboardTabsGroup.saveDashboardFailure, (state, { error }) => ({
+    ...state,
+    error,
   })),
 );

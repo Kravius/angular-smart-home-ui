@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
-import { selectActiveDashboardListItemID, selectDashboardMenuItems } from './dashboard.selectors';
+import { selectDashboardMenuItems } from './dashboard.selectors';
 @Injectable()
 export class DashboardEffects {
   readonly #actions = inject(Actions);
@@ -56,13 +56,10 @@ export class DashboardEffects {
     );
   });
 
-  readonly navigateToNewDashboard$ = createEffect(() =>
+  readonly deleteDashboardItem$ = createEffect(() =>
     this.#actions.pipe(
       ofType(MenuDashboardActionsGroup.deleteDashboardItem),
-      concatLatestFrom(() => [
-        this.#store.select(selectDashboardMenuItems),
-        // this.#store.select(selectActiveDashboardListItemID),
-      ]),
+      concatLatestFrom(() => [this.#store.select(selectDashboardMenuItems)]),
       switchMap(([{ id }, dashboards]) => {
         const nextId = dashboards.find((el) => el.id !== id);
         return this.#apiService.deleteDashboardItem(id).pipe(

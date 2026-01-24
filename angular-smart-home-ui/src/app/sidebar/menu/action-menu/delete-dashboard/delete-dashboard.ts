@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 import { MenuDashboardActionsGroup } from 'app/dashboard/redux/dashboard.actions';
 import { selectActiveDashboardListItemID } from 'app/dashboard/redux/dashboard.selectors';
+import { selectIsEditMode } from 'app/tab-switcher/redux/tabs.selectors';
 
 @Component({
   selector: 'app-delete-dashboard',
@@ -20,7 +21,8 @@ export class DeleteDashboard {
   readonly dialog = inject(MatDialog);
   readonly #store: Store<AppState> = inject(Store);
   dashboardIdTabStore = this.#store.selectSignal(selectActiveDashboardListItemID);
-
+  readonly isEditMode = this.#store.selectSignal(selectIsEditMode);
+  
   openDialog() {
     const dialogRef = this.dialog.open(DeleteForm);
 

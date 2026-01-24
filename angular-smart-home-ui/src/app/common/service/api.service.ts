@@ -45,6 +45,12 @@ export class ApiService {
     });
   }
 
+  public putDashboardTabsItem(dashboardId: string, dashboardTabsData: DashboardTabsData) {
+    return this.#http.put<DashboardTabsData>(`${URLS.baseUrl}${URLS.dashboards}/${dashboardId}`, {
+      ...dashboardTabsData,
+    });
+  }
+
   public deleteDashboardItem(id: string) {
     return this.#http.delete(`${URLS.baseUrl}${URLS.dashboards}/${id}`);
   }
