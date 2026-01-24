@@ -1,25 +1,27 @@
-@if (isEditing()) {
-  <form (ngSubmit)="save.emit()" class="inline-form">
-    <mat-form-field appearance="outline">
-      <input matInput [formControl]="editService.tabTitleControl" placeholder="Tab title" />
-    </mat-form-field>
-    <button
-      mat-icon-button
-      type="submit"
-      color="primary"
-      [disabled]="editService.tabTitleControl.invalid"
-    >
-      <mat-icon>check</mat-icon>
-    </button>
-    <button mat-icon-button type="button" (click)="cancel.emit()">
-      <mat-icon>close</mat-icon>
-    </button>
-  </form>
-} @else {
-  <a mat-tab-link [routerLink]="link()" [active]="active()" (click)="click.emit()">
-    {{ title() }}
-  </a>
-  <button mat-icon-button (click)="editClick.emit()">
-    <mat-icon>create</mat-icon>
-  </button>
-}
+<div class="inline-form">
+  @if (isEditing()) {
+    <form>
+      <mat-form-field appearance="outline">
+        <input matInput [formControl]="editService.tabTitleControl" />
+      </mat-form-field>
+
+      <button mat-icon-button type="button" (click)="submit()">
+        <mat-icon>check</mat-icon>
+      </button>
+
+      <button mat-icon-button type="button" (click)="cancel()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </form>
+  } @else {
+    <a mat-tab-link [routerLink]="link()" [active]="active()" (click)="select.emit(tabId())">
+      {{ title() }}
+    </a>
+
+    @if (isEditMode()) {
+      <button mat-icon-button (click)="startEdit()">
+        <mat-icon>create</mat-icon>
+      </button>
+    }
+  }
+</div>

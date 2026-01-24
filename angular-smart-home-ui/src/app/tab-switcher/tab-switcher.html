@@ -1,4 +1,4 @@
-@if (isEditMode()) {
+<!-- @if (isEditMode()) {
   <div class="dashboard-title-container">
     @if (isEditDashboardTitle()) {
       <input type="text" />
@@ -9,39 +9,20 @@
       <mat-icon>create</mat-icon>
     </button>
   </div>
-}
+} -->
 <nav mat-tab-nav-bar [tabPanel]="tabPanel" class="container">
   @if (dashboardListTab().tabs.length === 0) {
     <p>Create your first tab</p>
   }
   @for (tab of dashboardListTab().tabs; track $index) {
-    <!-- @if (isEditTabTitle() && tabId() === tab.id) {
-      <input type="text" />
-    } @else {
-      <a
-        mat-tab-link
-        [routerLink]="['/dashboards', dashboardIdTabStore(), tab.id]"
-        (click)="setTabsIdStore(tab.id)"
-        [active]="tabId() === tab.id"
-      >
-        {{ tab.id | uppercase }}
-      </a>
-    }
-
-    @if (isEditMode() && tabId() === tab.id) {
-      <button matMiniFab extended (click)="editModeTabTitle()">
-        <mat-icon>create</mat-icon>
-      </button>
-    } -->
     <app-edit-tab-title
-      [isEditing]="isEditTabTitle() && tabId() === tab.id"
+      [isEditMode]="isEditMode()"
+      [tabId]="tab.id"
       [title]="tab.title || tab.id"
       [link]="['/dashboards', dashboardId(), tab.id]"
       [active]="tabId() === tab.id"
-      (click)="setTabsIdStore(tab.id)"
-      (editClick)="onEditTabTitle()"
-      (save)="onSaveTabTitle(tab.id)"
-      (cancel)="cancelEdit()"
+      (save)="onSaveTabTitle($event)"
+      (select)="setTabsIdStore($event)"
     />
   }
   <div class="btn-container">

@@ -1,6 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { dashboardTabsReducer, DashboardTabsState } from './tabs.reducers';
-import { DashboardTabsData } from 'app/models/models';
+import { DashboardTabsState } from './tabs.reducers';
 
 export const selectDashboardTabsState = createFeatureSelector<DashboardTabsState>('dashboardTabs');
 

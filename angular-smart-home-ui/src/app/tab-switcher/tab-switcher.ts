@@ -67,12 +67,6 @@ export class TabSwitcher {
 
   readonly isEditMode = this.#store.selectSignal(selectIsEditMode);
 
-  // protected isEditDashboardTitle = signal(false);
-  // protected newDashboardTitle = signal('');
-
-  // protected isEditTabTitle = signal(false);
-  // protected newTabTitle = signal('');
-
   ngOnInit() {
     this.#store.dispatch(
       MenuDashboardActionsGroup.setActiveDashboardListItemID({
@@ -120,35 +114,7 @@ export class TabSwitcher {
     console.log(this.tabId());
   }
 
-  onEditTabTitle() {
-    this.isEditTabTitle.update((current) => !current);
-  }
-
-  onSaveTabTitle(tabId: string) {
-    this.#store.dispatch(
-      DashboardTabsGroup.updateTabTitle({
-        tabId,
-        title: this.editTitleService.tabTitleControl.value!,
-      }),
-    );
-    this.isEditTabTitle.set(false);
-  }
-
-  cancelEdit() {
-    this.isEditTabTitle.set(false);
-  }
-
-  editModeDashboardTitle() {
-    this.isEditDashboardTitle.update((v) => !v);
-    this.editTitleService.startEditDashboardTitle(this.dashboardId());
-  }
-
-  saveDashboardTitle() {
-    this.#store.dispatch(
-      DashboardTabsGroup.updateDashboardTitle({
-        title: this.editTitleService.dashboardTitleControl.value!,
-      }),
-    );
-    this.isEditDashboardTitle.set(false);
+  onSaveTabTitle(event: { tabId: string; title: string }) {
+    this.#store.dispatch(DashboardTabsGroup.updateTabTitle(event));
   }
 }
