@@ -6,7 +6,7 @@ import { ApiService } from 'app/common/service/api.service';
 import { AppState } from 'app/reducers';
 import { Store } from '@ngrx/store';
 import { concatLatestFrom } from '@ngrx/operators';
-import { selectActiveDashboardListItemID } from 'app/dashboard/redux/dashboard.selectors';
+import { selectActiveDashboardListItemId } from 'app/dashboard/redux/dashboard.selectors';
 import { selectDashboardTabs } from './tabs.selectors';
 
 @Injectable()
@@ -35,7 +35,7 @@ export class DashboardTabsEffects {
     return this.#actions.pipe(
       ofType(DashboardTabsGroup.saveDashboard),
       concatLatestFrom(() => [
-        this.#store.select(selectActiveDashboardListItemID),
+        this.#store.select(selectActiveDashboardListItemId),
         this.#store.select(selectDashboardTabs),
       ]),
       filter(

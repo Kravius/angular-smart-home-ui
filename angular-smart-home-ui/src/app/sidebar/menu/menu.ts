@@ -3,17 +3,17 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
-import { filter, map } from 'rxjs';
+import { filter, map, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 
 import { MenuDashboardActionsGroup } from 'app/dashboard/redux/dashboard.actions';
 import {
-  selectActiveDashboardListItemID,
+  selectActiveDashboardListItemId,
   selectDashboardErrorMessage,
   selectDashboardMenuItems,
 } from 'app/dashboard/redux/dashboard.selectors';
-import { CreateNewMenu } from "./create-new-menu/create-new-menu";
+import { CreateNewMenu } from './create-new-menu/create-new-menu';
 
 @Component({
   selector: 'app-menu',
@@ -27,8 +27,8 @@ export class Menu {
   readonly #store: Store<AppState> = inject(Store);
 
   protected readonly dashboardListItems = this.#store.selectSignal(selectDashboardMenuItems);
-  protected readonly activeDashboardListItemID = this.#store.selectSignal(
-    selectActiveDashboardListItemID,
+  protected readonly activeDashboardListItemId = this.#store.selectSignal(
+    selectActiveDashboardListItemId,
   );
   protected readonly dashboardErrorMessage = this.#store.selectSignal(selectDashboardErrorMessage);
 
@@ -40,9 +40,9 @@ export class Menu {
           return currentUrl === '/' || currentUrl === '' || currentUrl === '/dashboards';
         }),
         filter((items) => !!items.length),
-        map((dashboardListItems) => {
+        tap((dashboardListItems) => {
           this.#router.navigate(
-            ['/dashboards', this.activeDashboardListItemID() ?? dashboardListItems[0].id],
+            ['/dashboards', this.activeDashboardListItemId() ?? dashboardListItems[0].id],
             {
               replaceUrl: true,
             },
@@ -54,12 +54,12 @@ export class Menu {
   }
 
   protected isActiveLink(id: string) {
-    return this.activeDashboardListItemID() === id;
+    return this.activeDashboardListItemId() === id;
   }
 
-  protected setDashboardId(activeDashboardListItemID: string) {
+  protected setDashboardId(activeDashboardListItemId: string) {
     this.#store.dispatch(
-      MenuDashboardActionsGroup.setActiveDashboardListItemID({ activeDashboardListItemID }),
+      MenuDashboardActionsGroup.setActiveDashboardListItemId({ activeDashboardListItemId }),
     );
   }
 }

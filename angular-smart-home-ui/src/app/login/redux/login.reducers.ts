@@ -4,12 +4,12 @@ import { LoginActionsGroup } from './login.actions';
 
 export interface LoginState {
   isLoggedIn: boolean;
-  error?: HttpErrorResponse;
+  error: HttpErrorResponse | null;
 }
 
 const initialLoginState: LoginState = {
   isLoggedIn: false,
-  error: undefined,
+  error: null,
 };
 
 export const loginReducer = createReducer(
@@ -17,13 +17,13 @@ export const loginReducer = createReducer(
   on(LoginActionsGroup.login, (state) => ({
     ...state,
     isLoggedIn: false,
-    error: undefined,
+    error: null,
   })),
 
   on(LoginActionsGroup.loginSuccess, (state) => ({
     ...state,
     isLoggedIn: true,
-    error: undefined,
+    error: null,
   })),
 
   on(LoginActionsGroup.loginFailure, (state, { error }) => ({
@@ -32,5 +32,5 @@ export const loginReducer = createReducer(
     error,
   })),
 
-  on(LoginActionsGroup.logout, () => initialLoginState)
+  on(LoginActionsGroup.logout, () => initialLoginState),
 );

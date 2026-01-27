@@ -64,7 +64,7 @@ export class EditTabTitle {
   }
 
   removeTab() {
-    if (this.tabId() && typeof this.tabId() === 'string') {
+    if (this.tabId()) {
       this.#store.dispatch(DashboardTabsGroup.removeTab({ tabId: this.tabId() as string }));
     }
     this.isEditing.set(false);

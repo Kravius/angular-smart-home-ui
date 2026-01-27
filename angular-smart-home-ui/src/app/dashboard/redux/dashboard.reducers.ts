@@ -5,43 +5,43 @@ import { MenuDashboardActionsGroup } from './dashboard.actions';
 
 export interface DashboardMenuState {
   dashboardListItems: DashboardListItem[];
-  error?: HttpErrorResponse;
-  activeDashboardListItemID?: string;
+  error: HttpErrorResponse | null;
+  activeDashboardListItemId?: string;
 }
 
 const initialDashboardMenuState: DashboardMenuState = {
   dashboardListItems: [],
-  error: undefined,
+  error: null,
 };
 
 export const menuDashboardReducer = createReducer(
   initialDashboardMenuState,
   on(MenuDashboardActionsGroup.getDashboardMenuItems, (state) => ({
     ...state,
-    error: undefined,
+    error: null,
   })),
 
   on(MenuDashboardActionsGroup.getDashboardMenuItemsSuccess, (state, { dashboardListItems }) => ({
     ...state,
     dashboardListItems,
-    error: undefined,
+    error: null,
   })),
 
   on(MenuDashboardActionsGroup.getDashboardMenuItemsFailure, (state, { error }) => ({
     ...state,
     error,
-    activeDashboardListItemID: undefined,
+    activeDashboardListItemId: undefined,
   })),
 
   on(
-    MenuDashboardActionsGroup.setActiveDashboardListItemID,
-    (state, { activeDashboardListItemID }) => ({
+    MenuDashboardActionsGroup.setActiveDashboardListItemId,
+    (state, { activeDashboardListItemId }) => ({
       ...state,
-      activeDashboardListItemID,
+      activeDashboardListItemId,
     }),
   ),
 
-  on(MenuDashboardActionsGroup.postNewDashboardItem, (state) => ({ ...state, error: undefined })),
+  on(MenuDashboardActionsGroup.postNewDashboardItem, (state) => ({ ...state, error: null })),
 
-  on(MenuDashboardActionsGroup.deleteDashboardItem, (state) => ({ ...state, error: undefined })),
+  on(MenuDashboardActionsGroup.deleteDashboardItem, (state) => ({ ...state, error: null })),
 );

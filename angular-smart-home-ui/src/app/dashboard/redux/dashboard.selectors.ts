@@ -8,15 +8,15 @@ export const selectDashboardMenuItems = createSelector(
   (state) => state.dashboardListItems,
 );
 
-export const selectActiveDashboardListItemID = createSelector(
+export const selectActiveDashboardListItemId = createSelector(
   selectDashboardState,
-  (state) => state.activeDashboardListItemID,
+  (state) => state.activeDashboardListItemId,
 );
 
 export const selectDashboardMenuItemByID = createSelector(
   selectDashboardMenuItems,
-  selectActiveDashboardListItemID,
-  (items, id) => items.filter((item) => item.id === id),
+  selectActiveDashboardListItemId,
+  (items, id) => items.find((item) => item.id === id),
 );
 
 export const selectDashboardErrorMessage = createSelector(selectDashboardMenuItems, (items) => {

@@ -1,14 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  inject,
-  input,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { Card } from '../card/card';
-import { DashboardTabsData, ICard } from '../models/models';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 
@@ -37,13 +28,6 @@ export class CardList {
   readonly allDevicesData = this.#store.selectSignal(selectAllDevices);
   readonly dashboardListTabsAll = this.#store.selectSignal(selectDashboardTabs);
   readonly dashboardTabsErrorMessage = this.#store.selectSignal(selectDashboardTabsErrorMessage);
-
-  constructor() {
-    effect(() => {
-      // const state = this.dashboardListTabsAll();
-      // if (state) this.state.set(state);
-    });
-  }
 
   ngOnInit() {
     this.#store.dispatch(

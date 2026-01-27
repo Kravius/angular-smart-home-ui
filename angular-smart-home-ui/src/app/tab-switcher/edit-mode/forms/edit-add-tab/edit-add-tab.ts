@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
+import { Component, effect, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
@@ -23,7 +23,7 @@ export class EditAddTab {
 
   startEdit() {
     this.isEditing.set(true);
-    setTimeout(() => this.inputRef?.nativeElement.focus());
+    Promise.resolve().then(() => this.inputRef?.nativeElement.focus());
   }
 
   cancel() {
@@ -35,8 +35,7 @@ export class EditAddTab {
     const title = this.tabTitleControl.value?.trim();
     if (!title) return;
 
-    const id = toKebabCase(title);
-    console.log(id);
+    const id = `${toKebabCase(title)}-${Date.now()}`;
     this.#store.dispatch(DashboardTabsGroup.addTab({ id, title }));
     this.#store.dispatch(
       DashboardTabsGroup.setActiveDashboardTabItemID({ activeTabItemID: title }),
@@ -44,11 +43,5 @@ export class EditAddTab {
 
     this.tabTitleControl.setValue('');
     this.isEditing.set(false);
-  }
-
-  ngAfterViewInit() {
-    if (this.isEditing()) {
-      this.inputRef?.nativeElement.focus();
-    }
   }
 }

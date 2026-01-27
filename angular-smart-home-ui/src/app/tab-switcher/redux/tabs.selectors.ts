@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { DashboardTabsState } from './tabs.reducers';
+import { errorMessage } from '@consts/massages';
 
 export const selectDashboardTabsState = createFeatureSelector<DashboardTabsState>('dashboardTabs');
 
@@ -24,9 +25,9 @@ export const selectCardsFromCurrentTab = createSelector(selectDashboardTabItemBy
 });
 
 export const selectDashboardTabsErrorMessage = createSelector(selectDashboardTabs, (items) => {
-  if (items.tabs.length) return 'You don’t have any tabs';
+  if (items.tabs.length) return errorMessage.noTabsDevice;
 
-  return 'You don’t have any tabs yet. They’ll appear here as soon as you create them';
+  return errorMessage.noTabs;
 });
 
 export const selectIsEditMode = createSelector(

@@ -7,7 +7,7 @@ import { MatIcon } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
 import { AppState } from 'app/reducers';
 import { MenuDashboardActionsGroup } from 'app/dashboard/redux/dashboard.actions';
-import { selectActiveDashboardListItemID } from 'app/dashboard/redux/dashboard.selectors';
+import { selectActiveDashboardListItemId } from 'app/dashboard/redux/dashboard.selectors';
 import { selectIsEditMode } from 'app/tab-switcher/redux/tabs.selectors';
 
 @Component({
@@ -20,13 +20,13 @@ import { selectIsEditMode } from 'app/tab-switcher/redux/tabs.selectors';
 export class DeleteDashboard {
   readonly dialog = inject(MatDialog);
   readonly #store: Store<AppState> = inject(Store);
-  dashboardIdTabStore = this.#store.selectSignal(selectActiveDashboardListItemID);
+  dashboardIdTabStore = this.#store.selectSignal(selectActiveDashboardListItemId);
   readonly isEditMode = this.#store.selectSignal(selectIsEditMode);
-  
+
   openDialog() {
     const dialogRef = this.dialog.open(DeleteForm);
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(() => {
       const dashboardId = this.dashboardIdTabStore();
 
       if (dashboardId) {

@@ -5,36 +5,37 @@ import { DashboardTabsGroup } from './tabs.actions';
 
 export interface DashboardTabsState {
   dashboardTabsData: DashboardTabsData;
-  activeTabItemID?: string;
-  error?: HttpErrorResponse;
+  activeTabItemID: string | null;
+  error: HttpErrorResponse | null;
   editSnapshot?: DashboardTabsData;
   isEditMode: boolean;
 }
 
 const initialDashboardTabsState: DashboardTabsState = {
   dashboardTabsData: { tabs: [] },
-  error: undefined,
+  error: null,
   editSnapshot: undefined,
   isEditMode: false,
+  activeTabItemID: null,
 };
 
 export const dashboardTabsReducer = createReducer(
   initialDashboardTabsState,
   on(DashboardTabsGroup.getDashboardTabs, (state, { dashboardId }) => ({
     ...state,
-    error: undefined,
+    error: null,
   })),
 
   on(DashboardTabsGroup.getDashboardTabsSuccess, (state, { dashboardTabsData }) => ({
     ...state,
     dashboardTabsData,
-    error: undefined,
+    error: null,
   })),
 
   on(DashboardTabsGroup.getDashboardTabsFailure, (state, { error }) => ({
     ...state,
     error,
-    activeTabItemID: undefined,
+    activeTabItemID: null,
   })),
 
   on(DashboardTabsGroup.setActiveDashboardTabItemID, (state, { activeTabItemID }) => ({

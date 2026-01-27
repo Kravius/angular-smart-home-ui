@@ -25,7 +25,7 @@ import {
   selectIsEditMode,
 } from './redux/tabs.selectors';
 import { DashboardTabsGroup } from './redux/tabs.actions';
-import { selectActiveDashboardListItemID } from 'app/dashboard/redux/dashboard.selectors';
+import { selectActiveDashboardListItemId } from 'app/dashboard/redux/dashboard.selectors';
 import { DeleteDashboard } from 'app/sidebar/menu/action-menu/delete-dashboard/delete-dashboard';
 import { EditSwitcher } from './edit-mode/edit-switcher/edit-switcher';
 import { MatIcon } from '@angular/material/icon';
@@ -58,7 +58,7 @@ export class TabSwitcher {
   protected activeLink = signal('');
   readonly dashboardId = input.required<string>();
 
-  dashboardIdTabStore = this.#store.selectSignal(selectActiveDashboardListItemID);
+  dashboardIdTabStore = this.#store.selectSignal(selectActiveDashboardListItemId);
 
   readonly dashboardListTab = this.#store.selectSignal(selectDashboardTabs);
 
@@ -68,8 +68,8 @@ export class TabSwitcher {
 
   ngOnInit() {
     this.#store.dispatch(
-      MenuDashboardActionsGroup.setActiveDashboardListItemID({
-        activeDashboardListItemID: this.dashboardId(),
+      MenuDashboardActionsGroup.setActiveDashboardListItemId({
+        activeDashboardListItemId: this.dashboardId(),
       }),
     );
 
@@ -80,8 +80,8 @@ export class TabSwitcher {
       )
       .subscribe((dashboardId) => {
         this.#store.dispatch(
-          MenuDashboardActionsGroup.setActiveDashboardListItemID({
-            activeDashboardListItemID: dashboardId,
+          MenuDashboardActionsGroup.setActiveDashboardListItemId({
+            activeDashboardListItemId: dashboardId,
           }),
         );
         this.#store.dispatch(DashboardTabsGroup.getDashboardTabs({ dashboardId }));

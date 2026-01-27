@@ -20,7 +20,7 @@ import { AppState } from 'app/reducers';
 import { selectIsLoggedIn, selectUnauthorizedErrorMessage } from './redux/login.selectors';
 import { LoginActionsGroup } from './redux/login.actions';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { distinctUntilChanged, EMPTY, filter, switchMap } from 'rxjs';
+import { distinctUntilChanged, EMPTY, filter, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -53,12 +53,11 @@ export class Login {
       .pipe(
         distinctUntilChanged(),
         filter((isLoggedIn) => isLoggedIn),
-        switchMap(() => {
+        tap(() => {
           this.#router.navigateByUrl('/dashboards');
           this.loginForm.reset();
           this.loginForm.userForm.markAsPristine();
           this.loginForm.userForm.markAsUntouched();
-          return EMPTY;
         }),
         takeUntilDestroyed(this.#destroyRef),
       )

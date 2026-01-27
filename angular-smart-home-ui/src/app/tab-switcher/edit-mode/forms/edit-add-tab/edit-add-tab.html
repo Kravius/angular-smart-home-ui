@@ -14,9 +14,8 @@
       </button>
     </form>
   </ng-container>
-}
 
-@if (!isEditing()) {
+} @else {
   <button mat-icon-button type="button" (click)="startEdit()">
     <mat-icon>add</mat-icon>
   </button>

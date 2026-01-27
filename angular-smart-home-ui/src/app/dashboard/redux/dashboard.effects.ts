@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, of, switchMap, tap } from 'rxjs';
+import { catchError, concatMap, map, of, switchMap, tap } from 'rxjs';
 import { MenuDashboardActionsGroup } from './dashboard.actions';
 import { ApiService } from 'app/common/service/api.service';
 import { Router } from '@angular/router';
@@ -35,14 +35,14 @@ export class DashboardEffects {
   readonly postDashboardNewItem$ = createEffect(() => {
     return this.#actions.pipe(
       ofType(MenuDashboardActionsGroup.postNewDashboardItem),
-      switchMap(({ newDashboard }) =>
+      concatMap(({ newDashboard }) =>
         this.#apiService.postDashboardItem(newDashboard).pipe(
           tap(() => this.#router.navigate(['/dashboards', newDashboard.id])),
 
-          switchMap(() =>
+          concatMap(() =>
             of(
-              MenuDashboardActionsGroup.setActiveDashboardListItemID({
-                activeDashboardListItemID: newDashboard.id,
+              MenuDashboardActionsGroup.setActiveDashboardListItemId({
+                activeDashboardListItemId: newDashboard.id,
               }),
               MenuDashboardActionsGroup.getDashboardMenuItems(),
             ),
@@ -64,7 +64,6 @@ export class DashboardEffects {
         const nextId = dashboards.find((el) => el.id !== id);
         return this.#apiService.deleteDashboardItem(id).pipe(
           tap(() => {
-            console.log(nextId?.id);
             return this.#router.navigate([`/dashboards/${nextId?.id}`]);
           }),
           map(() => MenuDashboardActionsGroup.getDashboardMenuItems()),

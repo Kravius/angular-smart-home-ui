@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { LoginState } from './login.reducers';
 import { HttpStatusCode } from '@angular/common/http';
-import { loginErrorMassage } from '@consts/massages';
+import { errorMessage } from '@consts/massages';
 
 export const selectLoginState = createFeatureSelector<LoginState>('login');
 
@@ -11,10 +11,9 @@ export const selectLoginError = createSelector(selectLoginState, (state) => stat
 
 export const selectUnauthorizedErrorMessage = createSelector(selectLoginError, (error) => {
   if (error?.status === HttpStatusCode.Unauthorized) {
-    return loginErrorMassage.invalidLogin;
+    return errorMessage.invalidLogin;
   } else if (error) {
-    console.log(error);
-    return loginErrorMassage.unknownLogin;
+    return errorMessage.unknownLogin;
   }
-  return'';
+  return '';
 });

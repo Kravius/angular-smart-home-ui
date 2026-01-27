@@ -8,7 +8,6 @@ export const isLoginGuard: CanActivateFn = (route, state) => {
   const store: Store<AppState> = inject(Store);
   const router = inject(Router);
   const isLoggedIn = store.selectSignal(selectIsLoggedIn);
-  console.log(isLoggedIn());
   if (!isLoggedIn()) {
     return true;
   }

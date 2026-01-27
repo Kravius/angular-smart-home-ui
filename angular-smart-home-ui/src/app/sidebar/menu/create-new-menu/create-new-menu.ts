@@ -29,9 +29,9 @@ export class CreateNewMenu {
     });
 
     dialogRef.afterClosed().subscribe((newDashboard: DashboardListItem) => {
-      if (newDashboard !== undefined) {
-        this.#store.dispatch(MenuDashboardActionsGroup.postNewDashboardItem({ newDashboard }));
-      }
+      if (!newDashboard) return;
+
+      this.#store.dispatch(MenuDashboardActionsGroup.postNewDashboardItem({ newDashboard }));
     });
   }
 
