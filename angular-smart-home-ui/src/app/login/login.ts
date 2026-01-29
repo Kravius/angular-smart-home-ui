@@ -3,25 +3,24 @@ import {
   Component,
   inject,
   signal,
-  effect,
-  computed,
+  Injector,
+  DestroyRef,
 } from '@angular/core';
-import {
-  FormsModule,
-  FormControl,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { AuthService } from '../common/service/auth.service';
 import { NgClass } from '@angular/common';
 
 import { Router } from '@angular/router';
 import { LoginForm } from 'app/common/service/login-form.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'app/reducers';
+import { selectIsLoggedIn, selectUnauthorizedErrorMessage } from './redux/login.selectors';
+import { LoginActionsGroup } from './redux/login.actions';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { distinctUntilChanged, EMPTY, filter, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -39,14 +38,30 @@ import { LoginForm } from 'app/common/service/login-form.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Login {
-  authService = inject(AuthService);
-  router = inject(Router);
-  loginForm = inject(LoginForm);
+  readonly #store: Store<AppState> = inject(Store);
+  readonly #router = inject(Router);
+  readonly #destroyRef = inject(DestroyRef);
+  readonly #injector = inject(Injector);
 
-  constructor() {
-    effect(() => {
-      if (this.authService.isLoggedIn()) this.router.navigateByUrl('/dashboards');
-    });
+  protected readonly isLoggedIn = this.#store.selectSignal(selectIsLoggedIn);
+  loginForm = inject(LoginForm);
+  unauthorizedErrorMessage = this.#store.selectSignal(selectUnauthorizedErrorMessage);
+
+  protected ngOnInit(): void {
+    // TODO read about it injector: this.#injector
+    toObservable(this.isLoggedIn, { injector: this.#injector })
+      .pipe(
+        distinctUntilChanged(),
+        filter((isLoggedIn) => isLoggedIn),
+        tap(() => {
+          this.#router.navigateByUrl('/dashboards');
+          this.loginForm.reset();
+          this.loginForm.userForm.markAsPristine();
+          this.loginForm.userForm.markAsUntouched();
+        }),
+        takeUntilDestroyed(this.#destroyRef),
+      )
+      .subscribe();
   }
 
   hide = signal(true);
@@ -55,19 +70,14 @@ export class Login {
     event.stopPropagation();
   }
 
-  loginInPage() {
+  submitLogin() {
     const { username, password } = this.loginForm.userForm.getRawValue();
     if (username && password) {
-      this.authService.login({
-        userName: username,
-        password: password,
-      });
+      this.#store.dispatch(
+        LoginActionsGroup.login({
+          request: { userName: username, password: password },
+        }),
+      );
     }
   }
-
-  loginErrorMassage() {
-    return this.authService.messageError();
-  }
-
-  isInvalidCredentials = computed(() => this.authService.messageError() === '401');
 }

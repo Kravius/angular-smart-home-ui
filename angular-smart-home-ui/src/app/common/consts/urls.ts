@@ -8,3 +8,4 @@ export const URLS = Object.freeze({
   dashboards: '/dashboards',
   devices: '/devices',
 });
+

@@ -1,16 +1,10 @@
-import { SlicePipe } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  inject,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from 'app/common/service/api.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'app/reducers';
 import { AuthService } from 'app/common/service/auth.service';
 import { LoginForm } from 'app/common/service/login-form.service';
+import { LoginActionsGroup } from 'app/login/redux/login.actions';
 
 @Component({
   selector: 'app-footer',
@@ -20,14 +14,14 @@ import { LoginForm } from 'app/common/service/login-form.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Footer {
+  readonly #store: Store<AppState> = inject(Store);
   authService = inject(AuthService);
   router = inject(Router);
   loginForm = inject(LoginForm);
   userProfile = computed(() => this.authService.userProfile());
 
   userLogout() {
-    this.authService.logout();
-    this.loginForm.reset();
+    this.#store.dispatch(LoginActionsGroup.logout());
     this.router.navigate(['/login']);
   }
 }

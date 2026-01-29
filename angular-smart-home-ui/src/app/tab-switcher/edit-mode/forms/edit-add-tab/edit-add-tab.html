@@ -1,0 +1,22 @@
+@if (isEditing()) {
+  <ng-container>
+    <form class="container">
+      <mat-form-field appearance="outline" class="small-field">
+        <input #inputRef matInput [formControl]="tabTitleControl" placeholder="Tab title" />
+      </mat-form-field>
+
+      <button mat-icon-button type="button" (click)="addTab()">
+        <mat-icon>check</mat-icon>
+      </button>
+
+      <button mat-icon-button type="button" (click)="cancel()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </form>
+  </ng-container>
+
+} @else {
+  <button mat-icon-button type="button" (click)="startEdit()">
+    <mat-icon>add</mat-icon>
+  </button>
+}

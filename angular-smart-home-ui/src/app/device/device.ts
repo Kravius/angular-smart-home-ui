@@ -11,6 +11,9 @@ import { Highlighting } from '../common/directives/highlighting';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Device {
+
   public readonly entity = input.required<DeviceItem>();
   public readonly layout = input.required<layoutDirection>();
+
+
 }

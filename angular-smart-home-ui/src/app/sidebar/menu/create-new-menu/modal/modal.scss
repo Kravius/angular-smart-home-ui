@@ -1,0 +1,21 @@
+@use 'mixin' as mix;
+
+.modal-button-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal-dashboard-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.modal-btn {
+  transition: var(--transition);
+  font-size: var(--first-font-size);
+  padding: var(--padding-full);
+  color: var(--color-link);
+
+  @include mix.link-states;
+}

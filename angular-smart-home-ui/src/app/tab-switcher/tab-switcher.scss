@@ -7,4 +7,27 @@
     margin-top: 8px;
     margin-right: 8px;
   }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .btn-container {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .dashboard-title {
+    font-size: large;
+  }
+
+  .dashboard-title-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 }

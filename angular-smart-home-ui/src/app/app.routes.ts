@@ -2,8 +2,11 @@ import { Routes } from '@angular/router';
 import { guestGuardFn } from './layout/app-layout/guest-guard';
 import { isLoginGuard } from './layout/auth-layout/is-login-guard';
 import { AuthLayout } from './layout/auth-layout/auth-layout';
-import { menuResolver } from './sidebar/menu/menu-resolver';
-import { tabResolver } from './sidebar/menu/tab-resolver';
+import { provideEffects } from '@ngrx/effects';
+
+import { DashboardDevicesEffects } from './layout/app-layout/reducer/devices.effects';
+import { DashboardEffects } from './dashboard/redux/dashboard.effects';
+import { DashboardTabsEffects } from './tab-switcher/redux/tabs.effects';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -11,13 +14,17 @@ export const routes: Routes = [
     path: 'dashboards',
     loadComponent: () => import('./layout/app-layout/app-layout').then((m) => m.AppLayout),
     canActivate: [guestGuardFn],
-    resolve: { dashboardListItem: menuResolver },
+    providers: [
+      provideEffects(DashboardEffects),
+      provideEffects(DashboardTabsEffects),
+      provideEffects(DashboardDevicesEffects),
+    ],
     children: [
       {
         path: ':dashboardId',
         loadComponent: () => import('./tab-switcher/tab-switcher').then((m) => m.TabSwitcher),
-        resolve: { tabResolver: tabResolver },
         title: (route) => `${route.params['dashboardId']}`,
+        runGuardsAndResolvers: 'always',
         children: [
           {
             path: ':tabId',

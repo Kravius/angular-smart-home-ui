@@ -1,4 +1,4 @@
-import { Component, input, ChangeDetectionStrategy, output, computed } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy, computed, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ICard, Item } from '../models/models';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +10,9 @@ import { Sensor } from '../sensor/sensor';
 import { Device } from '../device/device';
 import { Highlighting } from '../common/directives/highlighting';
 import { resolveLayoutClass } from '../common/service/utilites';
+import { Store } from '@ngrx/store';
+import { AppState } from 'app/reducers';
+import { DevicesActionsGroup } from 'app/layout/app-layout/reducer/devices.actions';
 
 @Component({
   selector: 'app-card',
@@ -28,11 +31,11 @@ import { resolveLayoutClass } from '../common/service/utilites';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Card {
+  readonly #store: Store<AppState> = inject(Store);
+
   public readonly entityCard = input.required<ICard>();
+
   protected readonly directionLayout = computed(() => resolveLayoutClass(this.entityCard().layout));
-
-  public readonly onCardChange = output<ICard>();
-
   protected readonly isTitleSwitcher = computed(this.calcActiveDevice.bind(this));
   protected readonly isAtLeastOneDeviceIsOn = computed(this.isAllActiveDevices.bind(this));
 
@@ -50,26 +53,20 @@ export class Card {
     return !!result;
   }
 
-  protected onToggleState(item: Item) {
-    const updatedCard = {
-      ...this.entityCard(),
-      items: this.entityCard().items.map((index) =>
-        index.label === item.label && index.type === 'device'
-          ? { ...index, state: !index.state }
-          : index
-      ),
-    };
-    this.onCardChange.emit(updatedCard);
+  protected toggleDeviceState(deviceId: string, newState: boolean) {
+    this.#store.dispatch(
+      DevicesActionsGroup.toggleDeviceState({ deviceId, newState, idCard: this.entityCard().id }),
+    );
   }
 
-  protected onAllTogglesState(state: boolean) {
+  protected allTogglesState(state: boolean) {
+    // this.#store.dispatch(DevicesActionsGroup.allTogglesState(state));
     const updatedCard = {
       ...this.entityCard(),
       items: this.entityCard().items.map((index) =>
-        index.type === 'device' ? { ...index, state } : index
+        index.type === 'device' ? { ...index, state } : index,
       ),
     };
-    this.onCardChange.emit(updatedCard);
   }
 
   isDevice(item: Item) {

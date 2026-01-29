@@ -1,12 +1,14 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from 'app/common/service/auth.service';
+import { Store } from '@ngrx/store';
+import { selectIsLoggedIn } from 'app/login/redux/login.selectors';
+import { AppState } from 'app/reducers';
 
 export const isLoginGuard: CanActivateFn = (route, state) => {
-  const auth = inject(AuthService);
+  const store: Store<AppState> = inject(Store);
   const router = inject(Router);
-
-  if (!auth.isLoggedIn()) {
+  const isLoggedIn = store.selectSignal(selectIsLoggedIn);
+  if (!isLoggedIn()) {
     return true;
   }
   return router.createUrlTree(['/dashboards']);

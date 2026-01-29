@@ -4,6 +4,7 @@ export enum ItemType {
 }
 
 export interface BaseItem {
+  id: string;
   type: ItemType;
   icon: string;
   label: string;
@@ -47,7 +48,7 @@ export interface Tab {
   cards: ICard[];
 }
 
-export interface DashboardData {
+export interface DashboardTabsData {
   tabs: Tab[];
 }
 export type layoutDirection = 'horizontal-layout' | 'single-device' | 'vertical-layout';

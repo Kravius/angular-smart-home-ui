@@ -1,0 +1,38 @@
+<div class="inline-form">
+  @if (isActiveArrow()) {
+    <button mat-icon-button type="button" (click)="moveLeft()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+  }
+
+  @if (isEditing()) {
+    <form>
+      <mat-form-field appearance="outline">
+        <input matInput [formControl]="editService.tabTitleControl" />
+      </mat-form-field>
+
+      <button mat-icon-button type="button" (click)="onSaveTabTitle()">
+        <mat-icon>check</mat-icon>
+      </button>
+
+      <button mat-icon-button type="button" (click)="cancel()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button mat-icon-button type="button" (click)="removeTab()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </form>
+  } @else {
+    <a mat-tab-link [routerLink]="link()" [active]="active()" (click)="select.emit(tabId())">
+      {{ title() }}
+    </a>
+    @if (isActiveArrow()) {
+      <button mat-icon-button type="button" (click)="moveRight()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+      <button mat-icon-button (click)="startEdit()">
+        <mat-icon>create</mat-icon>
+      </button>
+    }
+  }
+</div>

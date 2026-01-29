@@ -1,13 +1,20 @@
 <div class="sidebar-menu">
-  @if (!dashboardListItem()|| dashboardListItem().length === 0) {
-  <h1>You don’t have any dashboards yet. They’ll appear here as soon as you create them</h1>
-  } @for (item of dashboardListItem(); track item.id) {
-  <a
-    [routerLink]="['/dashboards', item.id]"
-    class="sidebar-menu__items"
-    [class.active]="isActiveLink(item.id)"
-    ><mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="item.icon"></mat-icon
-    >{{ item.title }}</a
-  >
+  @if (dashboardErrorMessage()) {
+    <h1>{{ dashboardErrorMessage() }}</h1>
   }
+  @for (item of dashboardListItems(); track item.id) {
+    <a
+      [routerLink]="['/dashboards', item.id]"
+      class="sidebar-menu__items"
+      [class.active]="isActiveLink(item.id)"
+      (click)="setDashboardId(item.id)"
+      ><mat-icon
+        aria-hidden="false"
+        aria-label="Example home icon"
+        [fontIcon]="item.icon"
+      ></mat-icon
+      >{{ item.title }}</a
+    >
+  }
+  <app-create-new-menu></app-create-new-menu>
 </div>
